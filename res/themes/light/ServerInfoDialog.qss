@@ -1,0 +1,23 @@
+ServerInfoDialog QPushButton[state="success"] {
+    background-color: #6400FF00;
+    color: black;
+}
+
+ServerInfoDialog QPushButton[state="success"]:!default:hover {
+    background: #6400FF00;
+}
+
+ServerInfoDialog QPushButton[state="failed"] {
+    background-color: #64FF0000;
+    color: black;
+}
+
+ServerInfoDialog QPushButton[state="failed"]:!default:hover {
+    background: #64FF0000;
+}
+
+ServerInfoDialog QLineEdit[state="success"] {}
+
+ServerInfoDialog QLineEdit[state="failed"] {
+    border: 1px solid red;
+}

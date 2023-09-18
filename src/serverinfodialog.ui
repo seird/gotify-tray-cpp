@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ServerInfoDialog</class>
+ <widget class="QDialog" name="ServerInfoDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>130</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Server info</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1" colspan="2">
+    <widget class="QLabel" name="label_server_info">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="5">
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Server url:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="line_url">
+       <property name="placeholderText">
+        <string>https://gotify.example.com</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Client token:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="line_token"/>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="5">
+    <widget class="QPushButton" name="pb_test">
+     <property name="text">
+      <string>Test</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="4">
+    <widget class="QPushButton" name="pb_import">
+     <property name="maximumSize">
+      <size>
+       <width>30</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Import settings</string>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ServerInfoDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ServerInfoDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>line_url</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ServerInfoDialog</receiver>
+   <slot>inputChangedCallback()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>line_token</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ServerInfoDialog</receiver>
+   <slot>inputChangedCallback()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>28</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_test</sender>
+   <signal>clicked()</signal>
+   <receiver>ServerInfoDialog</receiver>
+   <slot>testCallback()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>67</x>
+     <y>119</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_import</sender>
+   <signal>clicked()</signal>
+   <receiver>ServerInfoDialog</receiver>
+   <slot>importCallback()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>101</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>inputChangedCallback()</slot>
+  <slot>testCallback()</slot>
+  <slot>importCallback()</slot>
+ </slots>
+</ui>
