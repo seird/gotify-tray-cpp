@@ -14,6 +14,7 @@ void writeFile(QString fileName, QByteArray data);
 QString extractImage(QString text);
 QString getUuid();
 bool isImage(const QString& fileName);
+qint64 dirSize(const QString& dirName);
 
 }
 

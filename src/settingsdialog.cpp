@@ -9,6 +9,7 @@
 #include <QDesktopServices>
 #include <QFontDialog>
 #include <QMessageBox>
+#include <QThread>
 
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
@@ -23,13 +24,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->label_app_icon->setPixmap(QIcon(":/res/icons/gotify-tray++.ico").pixmap(22, 22));
     ui->label_qt_icon->setPixmap(QIcon(":/res/icons/qt.png").pixmap(22, 16));
 
+    cacheThread = QThread::create([this]{ui->label_cache->setText(QString::number(cache->size()/1e6, 'f', 2) + " MB");});
+    cacheThread->start();
+
 #ifdef Q_OS_WIN
     ui->label_notification_duration->hide();
     ui->label_notification_duration_ms->hide();
     ui->spin_duration->hide();
 #endif
 
-    ui->label_cache->hide();
     ui->groupBox_watchdog->hide();
     ui->groupBox_logging->hide();
 
@@ -43,6 +46,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 SettingsDialog::~SettingsDialog()
 {
     delete ui;
+    cacheThread->deleteLater();
 }
 
 
@@ -157,6 +161,7 @@ void SettingsDialog::fontChanged()
 void SettingsDialog::clearCache()
 {
     cache->clear();
+    ui->label_cache->setText("0 MB");
 }
 
 

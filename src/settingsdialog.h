@@ -2,6 +2,7 @@
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QThread>
 
 
 namespace Ui {
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::SettingsDialog * ui;
+    QThread * cacheThread;
 
     bool bChanged = false;
     bool bFontChanged = false;

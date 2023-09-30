@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QRegularExpression>
 #include <QUuid>
+#include <QDirIterator>
 
 
 namespace Utils
@@ -73,6 +74,18 @@ bool isImage(const QString& fileName)
     QString ext = fi.suffix();
     static QStringList imageExts = {"jpg", "jpeg", "png", "gif", "svg", "webp", "ico", "tiff", "bmp"};
     return imageExts.contains(ext);
+}
+
+
+qint64 dirSize(const QString& dirName)
+{
+    QDirIterator it(dirName, QDirIterator::Subdirectories);
+    qint64 size = 0;
+    while (it.hasNext()) {
+        it.next();
+        size += it.fileInfo().size();
+    }
+    return size;
 }
 
 

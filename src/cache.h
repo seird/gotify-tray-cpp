@@ -18,6 +18,11 @@ public:
     QString lookup(QVariant key);
     bool store(QVariant key, QString value);
     void clear();
+    /**
+     * @brief Get the cache size in bytes
+     * @return
+     */
+    qint64 size();
 
     /**
      * @brief getFile Returns the associated cache value prepended with the filesDirectory

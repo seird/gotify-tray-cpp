@@ -1,4 +1,5 @@
 #include "cache.h"
+#include "utils.h"
 
 #include <QDir>
 #include <QStandardPaths>
@@ -47,6 +48,12 @@ Cache * Cache::getInstance()
         cache = new Cache();
     }
     return cache;
+}
+
+
+qint64 Cache::size()
+{
+    return Utils::dirSize(getDir());
 }
 
 
