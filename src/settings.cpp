@@ -337,6 +337,24 @@ QFont Settings::selectedApplicationFont()
 
 
 //------------------------------------------------------------------------------
+void Settings::setApplicationFont(QFont font)
+{
+    setValue("font/application", font.toString());
+}
+
+
+QFont Settings::applicationFont()
+{
+    QFont font;
+    QString s = value("font/application", "").toString();
+    if (!s.isEmpty()) {
+        font.fromString(s);
+    }
+    return font;
+}
+
+
+//------------------------------------------------------------------------------
 void Settings::setTitleFont(QFont font)
 {
     setValue("font/title", font.toString());

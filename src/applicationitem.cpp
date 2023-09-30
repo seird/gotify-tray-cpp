@@ -1,4 +1,5 @@
 #include "applicationitem.h"
+#include "settings.h"
 
 
 ApplicationItem::ApplicationItem(const QString &text, GotifyModel::Application * application)
@@ -15,6 +16,7 @@ ApplicationItem::ApplicationItem(const QString &text, GotifyModel::Application *
     } else {
         setData(true, ApplicationRole::AllMessages);
     }
+    setFont(settings->applicationFont());
 }
 
 

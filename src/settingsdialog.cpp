@@ -63,7 +63,7 @@ void SettingsDialog::serverInfo()
 void SettingsDialog::titleFont()
 {
     bool accepted = false;
-    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_title->font(), this, "Select a title font");
+    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_title->font(), this, "Choose a title font");
     if (accepted) {
         ui->label_title->setFont(font);
         fontChanged();
@@ -74,7 +74,7 @@ void SettingsDialog::titleFont()
 void SettingsDialog::dateFont()
 {
     bool accepted = false;
-    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_date->font(), this, "Select a date font");
+    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_date->font(), this, "Choose a date font");
     if (accepted) {
         ui->label_date->setFont(font);
         fontChanged();
@@ -86,9 +86,32 @@ void SettingsDialog::dateFont()
 void SettingsDialog::messageFont()
 {
     bool accepted = false;
-    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_message->font(), this, "Select a message font");
+    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_message->font(), this, "Choose a message font");
     if (accepted) {
         ui->label_message->setFont(font);
+        fontChanged();
+    }
+}
+
+
+void SettingsDialog::applicationFont()
+{
+    bool accepted = false;
+    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_application1->font(), this, "Choose an application font");
+    if (accepted) {
+        ui->label_application1->setFont(font);
+        ui->label_application2->setFont(font);
+        fontChanged();
+    }
+}
+
+
+void SettingsDialog::selectedApplicationFont()
+{
+    bool accepted = false;
+    QFont font = QFontDialog::QFontDialog::getFont(&accepted, ui->label_selected_application->font(), this, "Choose a selected application font");
+    if (accepted) {
+        ui->label_selected_application->setFont(font);
         fontChanged();
     }
 }
@@ -99,6 +122,9 @@ void SettingsDialog::loadFonts()
     ui->label_title->setFont(settings->titleFont());
     ui->label_date->setFont(settings->dateFont());
     ui->label_message->setFont(settings->messageFont());
+    ui->label_application1->setFont(settings->applicationFont());
+    ui->label_application2->setFont(settings->applicationFont());
+    ui->label_selected_application->setFont(settings->selectedApplicationFont());
 }
 
 
@@ -190,6 +216,8 @@ void SettingsDialog::saveSettings()
         settings->setTitleFont(ui->label_title->font());
         settings->setDateFont(ui->label_date->font());
         settings->setMessageFont(ui->label_message->font());
+        settings->setApplicationFont(ui->label_application1->font());
+        settings->setSelectedApplicationFont(ui->label_selected_application->font());
         emit settings->fontChanged();
     }
 

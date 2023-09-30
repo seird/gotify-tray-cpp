@@ -37,6 +37,8 @@ private slots:
     void titleFont();
     void dateFont();
     void messageFont();
+    void applicationFont();
+    void selectedApplicationFont();
     void resetFonts();
 
     void clearCache();

@@ -96,6 +96,9 @@ public:
     void setSelectedApplicationFont(QFont font);
     QFont selectedApplicationFont();
 
+    void setApplicationFont(QFont font);
+    QFont applicationFont();
+
     void setTitleFont(QFont font);
     QFont titleFont();
 
