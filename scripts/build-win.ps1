@@ -26,6 +26,7 @@ New-Item -ItemType "directory" -Path $PACKAGE_DIR
 Copy-Item $BUILD_DIR/gotify-tray++.exe -Destination $PACKAGE_DIR
 
 # 2 - copy dlls
+# windeployqt $PACKAGE_DIR/gotify-tray++.exe --no-translations --no-system-d3d-compiler --no-opengl-sw
 Copy-Item $Qt_ROOT_DIR/bin/Qt6Core.dll           -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/Qt6Gui.dll            -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/Qt6Network.dll        -Destination $PACKAGE_DIR

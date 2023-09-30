@@ -3,7 +3,7 @@
 
 #define MyAppName "Gotify Tray++"
 #define MyAppVersion "0.0.1"
-#define MyAppURL "https://github.com/seird/gotify-tray-plus-plus"
+#define MyAppURL "https://github.com/seird/gotify-tray-cpp"
 #define MyAppExeName "gotify-tray++.exe"
 
 [Setup]
