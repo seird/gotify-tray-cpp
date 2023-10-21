@@ -31,6 +31,7 @@ Copy-Item $Qt_ROOT_DIR/bin/Qt6Core.dll           -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/Qt6Gui.dll            -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/Qt6Network.dll        -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/Qt6Sql.dll            -Destination $PACKAGE_DIR
+Copy-Item $Qt_ROOT_DIR/bin/Qt6Svg.dll            -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/Qt6WebSockets.dll     -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/Qt6Widgets.dll        -Destination $PACKAGE_DIR
 Copy-Item $Qt_ROOT_DIR/bin/libgcc_s_seh-1.dll    -Destination $PACKAGE_DIR
