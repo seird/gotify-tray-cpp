@@ -184,7 +184,7 @@ void MainApplication::trayActivated(QSystemTrayIcon::ActivationReason reason)
 
 void MainApplication::mainWindowHidden()
 {
-    // close image popup
+    imagePopup->close();
 }
 
 
