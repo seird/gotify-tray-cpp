@@ -21,8 +21,9 @@ private:
     Ui::SettingsDialog * ui;
     QThread * cacheThread;
 
-    bool bChanged = false;
-    bool bFontChanged = false;
+    bool bChanged;
+    bool bFontChanged;
+    bool bSizeChanged;
 
     void readSettings();
     void loadFonts();
@@ -34,14 +35,20 @@ private slots:
 
     void changed();
     void fontChanged();
+    void sizeChanged();
 
     void serverInfo();
+    void resetFonts();
     void titleFont();
     void dateFont();
     void messageFont();
     void applicationFont();
     void selectedApplicationFont();
-    void resetFonts();
+    void applicationIcon();
+    void messageApplicationIcon();
+    void mainButton();
+    void statusLabel();
+    void messageButton();
 
     void clearCache();
     void openCache();

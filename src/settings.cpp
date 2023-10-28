@@ -63,26 +63,38 @@ bool Settings::notifyMissed()
 
 
 //------------------------------------------------------------------------------
-void Settings::setLabelSize(QSize size)
+void Settings::setStatusLabelSize(QSize size)
 {
-    setValue("labelSize", size);
+    setValue("statusLabelSize", size);
 }
 
-QSize Settings::labelSize()
+QSize Settings::statusLabelSize()
 {
-    return value("labelSize", QSize(25, 25)).toSize();
+    return value("statusLabelSize", QSize(25, 25)).toSize();
 }
 
 
 //------------------------------------------------------------------------------
-void Settings::setButtonSize(QSize size)
+void Settings::setMainButtonSize(QSize size)
 {
-    setValue("buttonSize", size);
+    setValue("mainButtonSize", size);
 }
 
-QSize Settings::buttonSize()
+QSize Settings::mainButtonSize()
 {
-    return value("buttonSize", QSize(33, 33)).toSize();
+    return value("mainButtonSize", QSize(33, 33)).toSize();
+}
+
+
+//------------------------------------------------------------------------------
+void Settings::setMessageButtonSize(QSize size)
+{
+    setValue("messageButtonSize", size);
+}
+
+QSize Settings::messageButtonSize()
+{
+    return value("messageButtonSize", QSize(25, 25)).toSize();
 }
 
 
@@ -95,6 +107,18 @@ void Settings::setApplicationIconSize(QSize size)
 QSize Settings::applicationIconSize()
 {
     return value("applicationIconSize", QSize(40, 40)).toSize();
+}
+
+
+//------------------------------------------------------------------------------
+void Settings::setMessageApplicationIconSize(QSize size)
+{
+    setValue("messageApplicationIconSize", size);
+}
+
+QSize Settings::messageApplicationIconSize()
+{
+    return value("messageApplicationIconSize", QSize(33, 33)).toSize();
 }
 
 

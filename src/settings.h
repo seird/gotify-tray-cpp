@@ -30,14 +30,20 @@ public:
     void setNotifyMissed(bool mode);
     bool notifyMissed();
 
-    void setLabelSize(QSize size);
-    QSize labelSize();
+    void setStatusLabelSize(QSize size);
+    QSize statusLabelSize();
 
-    void setButtonSize(QSize size);
-    QSize buttonSize();
+    void setMainButtonSize(QSize size);
+    QSize mainButtonSize();
+
+    void setMessageButtonSize(QSize size);
+    QSize messageButtonSize();
 
     void setApplicationIconSize(QSize size);
     QSize applicationIconSize();
+
+    void setMessageApplicationIconSize(QSize size);
+    QSize messageApplicationIconSize();
 
     void setWindowGeometry(QByteArray geometry);
     QByteArray windowGeometry();
@@ -116,6 +122,7 @@ public:
 
 signals:
     void serverChanged();
+    void sizeChanged();
     void fontChanged();
     void quitRequested();
 

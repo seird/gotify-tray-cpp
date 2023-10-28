@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>446</height>
+    <width>419</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -244,12 +244,15 @@
           </font>
          </property>
          <property name="text">
-          <string>Click on an element to change its font.</string>
+          <string>Click on an element to change its font or size.</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QFrame" name="frame">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -267,7 +270,7 @@
              </widget>
             </item>
             <item row="0" column="8">
-             <widget class="QLabel" name="label_delete_all">
+             <widget class="ClickableLabel" name="label_delete_all">
               <property name="maximumSize">
                <size>
                 <width>20</width>
@@ -296,7 +299,7 @@
              </spacer>
             </item>
             <item row="0" column="7">
-             <widget class="QLabel" name="label_refresh">
+             <widget class="ClickableLabel" name="label_refresh">
               <property name="maximumSize">
                <size>
                 <width>18</width>
@@ -342,7 +345,7 @@
                <string>Selected application font</string>
               </property>
               <property name="styleSheet">
-               <string notr="true">ClickableLabel {border: 1px solid red;}</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string>ALL MESSAGES</string>
@@ -350,7 +353,7 @@
              </widget>
             </item>
             <item row="0" column="3">
-             <widget class="QLabel" name="label_status">
+             <widget class="ClickableLabel" name="label_status">
               <property name="maximumSize">
                <size>
                 <width>20</width>
@@ -372,6 +375,9 @@
                 <property name="text">
                  <string/>
                 </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
                </widget>
               </item>
               <item row="1" column="2" colspan="4">
@@ -380,7 +386,7 @@
                  <string>Message font</string>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">ClickableLabel {border: 1px solid red;}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus.</string>
@@ -396,7 +402,7 @@
                  <string>Title font</string>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">ClickableLabel {border: 1px solid red;}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Title</string>
@@ -422,7 +428,7 @@
                  <string>Date font</string>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">ClickableLabel {border: 1px solid red;}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>31/01/2021 11:11</string>
@@ -468,7 +474,7 @@
               <item row="1" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <item>
-                 <widget class="QLabel" name="label_6">
+                 <widget class="ClickableLabel" name="label_application_icon2">
                   <property name="maximumSize">
                    <size>
                     <width>33</width>
@@ -492,7 +498,7 @@
                    <string>Application font</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">ClickableLabel {border: 1px solid red;}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>App 2</string>
@@ -504,7 +510,7 @@
               <item row="0" column="0">
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <item>
-                 <widget class="QLabel" name="label_5">
+                 <widget class="ClickableLabel" name="label_application_icon1">
                   <property name="maximumSize">
                    <size>
                     <width>33</width>
@@ -528,7 +534,7 @@
                    <string>Application font</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">ClickableLabel {border: 1px solid red;}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>App 1</string>
@@ -868,8 +874,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>314</x>
-     <y>436</y>
+     <x>409</x>
+     <y>477</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -884,8 +890,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
-     <y>436</y>
+     <x>409</x>
+     <y>477</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -900,11 +906,11 @@
    <slot>clearCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>224</y>
+     <x>111</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>534</x>
+     <x>414</x>
      <y>219</y>
     </hint>
    </hints>
@@ -916,11 +922,11 @@
    <slot>openCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>185</x>
-     <y>224</y>
+     <x>197</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>470</x>
+     <x>414</x>
      <y>266</y>
     </hint>
    </hints>
@@ -932,12 +938,12 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>424</y>
+     <x>365</x>
+     <y>477</y>
     </hint>
     <hint type="destinationlabel">
      <x>23</x>
-     <y>492</y>
+     <y>445</y>
     </hint>
    </hints>
   </connection>
@@ -964,8 +970,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>277</x>
-     <y>106</y>
+     <x>305</x>
+     <y>132</y>
     </hint>
     <hint type="destinationlabel">
      <x>411</x>
@@ -980,8 +986,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>38</x>
-     <y>136</y>
+     <x>61</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>408</x>
@@ -996,8 +1002,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>107</x>
-     <y>166</y>
+     <x>130</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -1012,8 +1018,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>193</y>
+     <x>147</x>
+     <y>216</y>
     </hint>
     <hint type="destinationlabel">
      <x>409</x>
@@ -1028,8 +1034,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>76</x>
-     <y>246</y>
+     <x>99</x>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
      <x>409</x>
@@ -1044,8 +1050,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>58</x>
-     <y>274</y>
+     <x>81</x>
+     <y>315</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -1060,8 +1066,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>81</x>
-     <y>304</y>
+     <x>104</x>
+     <y>343</y>
     </hint>
     <hint type="destinationlabel">
      <x>413</x>
@@ -1080,7 +1086,7 @@
      <y>102</y>
     </hint>
     <hint type="destinationlabel">
-     <x>486</x>
+     <x>414</x>
      <y>128</y>
     </hint>
    </hints>
@@ -1096,7 +1102,7 @@
      <y>91</y>
     </hint>
     <hint type="destinationlabel">
-     <x>474</x>
+     <x>414</x>
      <y>162</y>
     </hint>
    </hints>
@@ -1112,7 +1118,7 @@
      <y>91</y>
     </hint>
     <hint type="destinationlabel">
-     <x>467</x>
+     <x>414</x>
      <y>191</y>
     </hint>
    </hints>
@@ -1128,7 +1134,7 @@
      <y>168</y>
     </hint>
     <hint type="destinationlabel">
-     <x>577</x>
+     <x>414</x>
      <y>183</y>
     </hint>
    </hints>
@@ -1144,7 +1150,7 @@
      <y>157</y>
     </hint>
     <hint type="destinationlabel">
-     <x>594</x>
+     <x>414</x>
      <y>286</y>
     </hint>
    </hints>
@@ -1156,11 +1162,11 @@
    <slot>serverInfo()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>361</y>
+     <x>126</x>
+     <y>416</y>
     </hint>
     <hint type="destinationlabel">
-     <x>445</x>
+     <x>414</x>
      <y>390</y>
     </hint>
    </hints>
@@ -1176,7 +1182,7 @@
      <y>57</y>
     </hint>
     <hint type="destinationlabel">
-     <x>546</x>
+     <x>414</x>
      <y>66</y>
     </hint>
    </hints>
@@ -1192,7 +1198,7 @@
      <y>176</y>
     </hint>
     <hint type="destinationlabel">
-     <x>488</x>
+     <x>414</x>
      <y>112</y>
     </hint>
    </hints>
@@ -1204,11 +1210,11 @@
    <slot>dateFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>176</y>
+     <x>374</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>596</x>
+     <x>414</x>
      <y>206</y>
     </hint>
    </hints>
@@ -1224,7 +1230,7 @@
      <y>230</y>
     </hint>
     <hint type="destinationlabel">
-     <x>600</x>
+     <x>414</x>
      <y>265</y>
     </hint>
    </hints>
@@ -1236,11 +1242,11 @@
    <slot>resetSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>79</x>
-     <y>330</y>
+     <x>90</x>
+     <y>367</y>
     </hint>
     <hint type="destinationlabel">
-     <x>529</x>
+     <x>414</x>
      <y>179</y>
     </hint>
    </hints>
@@ -1256,7 +1262,7 @@
      <y>183</y>
     </hint>
     <hint type="destinationlabel">
-     <x>591</x>
+     <x>414</x>
      <y>346</y>
     </hint>
    </hints>
@@ -1272,7 +1278,7 @@
      <y>140</y>
     </hint>
     <hint type="destinationlabel">
-     <x>524</x>
+     <x>414</x>
      <y>380</y>
     </hint>
    </hints>
@@ -1284,12 +1290,124 @@
    <slot>selectedApplicationFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
-     <y>127</y>
+     <x>289</x>
+     <y>130</y>
     </hint>
     <hint type="destinationlabel">
-     <x>646</x>
+     <x>414</x>
      <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_application_icon1</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>applicationIcon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>45</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_application_icon2</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>applicationIcon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>159</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_icon</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>messageApplicationIcon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_refresh</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>mainButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>375</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>874</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_delete_all</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>mainButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>880</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_status</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>statusLabel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>119</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>995</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_delete</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>messageButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>384</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>547</x>
+     <y>287</y>
     </hint>
    </hints>
   </connection>
@@ -1307,5 +1425,10 @@
   <slot>resetSettings()</slot>
   <slot>applicationFont()</slot>
   <slot>selectedApplicationFont()</slot>
+  <slot>applicationIcon()</slot>
+  <slot>messageApplicationIcon()</slot>
+  <slot>statusLabel()</slot>
+  <slot>mainButton()</slot>
+  <slot>messageButton()</slot>
  </slots>
 </ui>

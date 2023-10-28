@@ -9,13 +9,17 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <QFontDialog>
+#include <QInputDialog>
 #include <QMessageBox>
 #include <QThread>
 
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SettingsDialog)
+    ui(new Ui::SettingsDialog),
+    bChanged(false),
+    bFontChanged(false),
+    bSizeChanged(false)
 {
     ui->setupUi(this);
     setWindowTitle("Preferences — " + qApp->applicationName());
@@ -30,6 +34,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->label_delete_all->setPixmap(QPixmap(":/res/themes/" + theme + "/trashcan.svg"));
     ui->label_delete->setPixmap(QPixmap(":/res/themes/" + theme + "/trashcan.svg"));
     ui->label_refresh->setPixmap(QPixmap(":/res/themes/" + theme + "/refresh.svg"));
+
+    ui->label_application_icon1->setFixedSize(settings->applicationIconSize());
+    ui->label_application_icon2->setFixedSize(settings->applicationIconSize());
+    ui->label_refresh->setFixedSize(0.7*settings->mainButtonSize());
+    ui->label_delete_all->setFixedSize(0.9*settings->mainButtonSize());
+    ui->label_delete->setFixedSize(settings->messageButtonSize());
+    ui->label_status->setFixedSize(settings->statusLabelSize());
+    ui->label_icon->setFixedSize(settings->messageApplicationIconSize());
 
     cacheThread = QThread::create([this]{ui->label_cache->setText(QString::number(cache->size()/1e6, 'f', 2) + " MB");});
     cacheThread->start();
@@ -64,6 +76,63 @@ void SettingsDialog::serverInfo()
 
     ServerInfoDialog dialog(this, url, clientToken, false);
     dialog.exec();
+}
+
+
+void SettingsDialog::applicationIcon()
+{
+    int currentSize = settings->applicationIconSize().width();
+    int size = QInputDialog::getInt(this, "Application Icon Size", "Size in pixels", currentSize, 10, 100);
+    if (currentSize != size) {
+        ui->label_application_icon1->setFixedSize(QSize(size, size));
+        ui->label_application_icon2->setFixedSize(QSize(size, size));
+        sizeChanged();
+    }
+}
+
+
+void SettingsDialog::messageApplicationIcon()
+{
+    int currentSize = settings->messageApplicationIconSize().width();
+    int size = QInputDialog::getInt(this, "Message Application Icon Size", "Size in pixels", currentSize, 10, 100);
+    if (currentSize != size) {
+        ui->label_icon->setFixedSize(QSize(size, size));
+        sizeChanged();
+    }
+}
+
+
+void SettingsDialog::mainButton()
+{
+    int currentSize = settings->mainButtonSize().width();
+    int size = QInputDialog::getInt(this, "Main Button Size", "Size in pixels", currentSize, 10, 100);
+    if (currentSize != size) {
+        ui->label_refresh->setFixedSize(0.7*QSize(size, size));
+        ui->label_delete_all->setFixedSize(0.9*QSize(size, size));
+        sizeChanged();
+    }
+}
+
+
+void SettingsDialog::statusLabel()
+{
+    int currentSize = settings->statusLabelSize().width();
+    int size = QInputDialog::getInt(this, "Status Label Size", "Size in pixels", currentSize, 10, 100);
+    if (currentSize != size) {
+        ui->label_status->setFixedSize(QSize(size, size));
+        sizeChanged();
+    }
+}
+
+
+void SettingsDialog::messageButton()
+{
+    int currentSize = settings->messageButtonSize().width();
+    int size = QInputDialog::getInt(this, "Message Button Size", "Size in pixels", currentSize, 10, 100);
+    if (currentSize != size) {
+        ui->label_delete->setFixedSize(QSize(size, size));
+        sizeChanged();
+    }
 }
 
 
@@ -161,6 +230,13 @@ void SettingsDialog::fontChanged()
 }
 
 
+void SettingsDialog::sizeChanged()
+{
+    bSizeChanged = true;
+    changed();
+}
+
+
 void SettingsDialog::clearCache()
 {
     cache->clear();
@@ -227,6 +303,17 @@ void SettingsDialog::saveSettings()
         settings->setApplicationFont(ui->label_application1->font());
         settings->setSelectedApplicationFont(ui->label_selected_application->font());
         emit settings->fontChanged();
+    }
+
+    // --------------------------- Sizes ---------------------------
+    if (bSizeChanged) {
+        settings->setApplicationIconSize(ui->label_application_icon1->size());
+        settings->setMessageApplicationIconSize(ui->label_icon->size());
+        settings->setMainButtonSize(ui->label_refresh->size() / 0.7);
+        settings->setStatusLabelSize(ui->label_status->size());
+        settings->setMessageButtonSize(ui->label_delete->size());
+
+        emit settings->sizeChanged();
     }
 
     // -------------------------- Advanced -------------------------

@@ -62,11 +62,11 @@ void MainWindow::setIcons()
     ui->pb_refresh->setIcon(QIcon("://res/themes/" + theme + "/refresh.svg"));
     ui->pb_delete_all->setIcon(QIcon("://res/themes/" + theme + "/trashcan.svg"));
 
-    QSize labelSize = settings->labelSize();
+    QSize labelSize = settings->statusLabelSize();
     ui->statusWidget->setFixedSize(labelSize);
     ui->statusWidget->refresh();
 
-    QSize buttonSize = settings->buttonSize();
+    QSize buttonSize = settings->mainButtonSize();
     ui->pb_refresh->setFixedSize(buttonSize);
     ui->pb_delete_all->setFixedSize(buttonSize);
     ui->pb_refresh->setIconSize(0.7*buttonSize);

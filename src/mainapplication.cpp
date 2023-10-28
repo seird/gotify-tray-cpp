@@ -137,6 +137,7 @@ void MainApplication::connectComponents()
     connect(listener, &Listener::messageReceived, this, &MainApplication::messageReceivedCallback);
 
     connect(settings, &Settings::serverChanged, this, &MainApplication::serverChangedCallback);
+    connect(settings, &Settings::sizeChanged, mainWindow, &MainWindow::setIcons);
     connect(settings, &Settings::quitRequested, this, &MainApplication::quit);
 }
 
