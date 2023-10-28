@@ -1,5 +1,7 @@
 #include "utils.h"
 
+#include <QApplication>
+#include <QStyleHints>
 #include <QStyle>
 #include <QFile>
 #include <QFileInfo>
@@ -10,6 +12,13 @@
 
 namespace Utils
 {
+
+
+QString getTheme()
+{
+    return qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark ? QStringLiteral("dark") : QStringLiteral("light");
+}
+
 
 void updateWidgetProperty(QWidget * widget, const char *name, const QVariant &value)
 {

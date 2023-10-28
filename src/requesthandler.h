@@ -2,11 +2,7 @@
 #define REQUESTHANDLER_H
 
 #include <QObject>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QNetworkReply>
-#include <QApplication>
 #include <QPoint>
 
 #include "gotifymodels.h"
@@ -34,8 +30,6 @@ public:
     void messages(bool missed=false);
     void testServer();
     void imagePopup(QPoint pos);
-
-private:
 
 signals:
     /* Finished - successful or not */

@@ -2,12 +2,8 @@
 #define GOTIFYAPI_H
 
 
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QApplication>
 #include <QUrlQuery>
 
 

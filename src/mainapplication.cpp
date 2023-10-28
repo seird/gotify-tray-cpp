@@ -10,12 +10,9 @@
 
 #include <QShortcut>
 #include <QKeySequence>
-#include <QtCore/Qt>
 #include <QStyleHints>
-#include <QSystemTrayIcon>
-#include <QFile>
-#include <QFileInfo>
 #include <QStyle>
+#include <QSystemTrayIcon>
 
 
 MainApplication::MainApplication(int &argc, char *argv[])
@@ -33,7 +30,6 @@ MainApplication::MainApplication(int &argc, char *argv[])
     cache = Cache::getInstance();
     requestHandler = RequestHandler::getInstance();
 
-    settings->setTheme(styleHints()->colorScheme());
     lockfile = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + applicationName() + ".lock");
 }
 
@@ -104,13 +100,7 @@ bool MainApplication::verifyServer(bool forceNew, bool import)
 
     if (forceNew || url.isEmpty() || clientToken.isEmpty()) {
         ServerInfoDialog dialog(url, clientToken, import);
-        if (dialog.exec()) {
-            settings->setServerUrl(dialog.getUrl());
-            settings->setClientToken(dialog.getToken());
-            return true;
-        } else {
-            return false;
-        }
+        return dialog.exec();
     } else {
         return true;
     }
@@ -371,7 +361,6 @@ void MainApplication::showImagePopup(const QString& fileName, const QUrl& url, Q
 
 void MainApplication::themeChangedCallback(Qt::ColorScheme colorScheme)
 {
-    settings->setTheme(colorScheme);
     mainWindow->setIcons();
     applyStyle();
 }

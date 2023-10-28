@@ -2,6 +2,7 @@
 #include "ui_settingsdialog.h"
 #include "settings.h"
 #include "cache.h"
+#include "utils.h"
 #include "serverinfodialog.h"
 
 #include <QApplication>
@@ -23,6 +24,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->label_qt_version->setText(qVersion());
     ui->label_app_icon->setPixmap(QIcon(":/res/icons/gotify-tray++.ico").pixmap(22, 22));
     ui->label_qt_icon->setPixmap(QIcon(":/res/icons/qt.png").pixmap(22, 16));
+
+    QString theme = Utils::getTheme();
+    ui->label_status->setPixmap(QPixmap(":/res/themes/" + theme + "/status_active.svg"));
+    ui->label_delete_all->setPixmap(QPixmap(":/res/themes/" + theme + "/trashcan.svg"));
+    ui->label_delete->setPixmap(QPixmap(":/res/themes/" + theme + "/trashcan.svg"));
+    ui->label_refresh->setPixmap(QPixmap(":/res/themes/" + theme + "/refresh.svg"));
 
     cacheThread = QThread::create([this]{ui->label_cache->setText(QString::number(cache->size()/1e6, 'f', 2) + " MB");});
     cacheThread->start();
@@ -56,11 +63,7 @@ void SettingsDialog::serverInfo()
     QByteArray clientToken = settings->clientToken();
 
     ServerInfoDialog dialog(url, clientToken, false);
-    if (dialog.exec()) {
-        settings->setServerUrl(dialog.getUrl());
-        settings->setClientToken(dialog.getToken());
-        emit settings->serverChanged();
-    }
+    dialog.exec();
 }
 
 

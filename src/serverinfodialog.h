@@ -18,10 +18,9 @@ class ServerInfoDialog : public QDialog
 public:
     explicit ServerInfoDialog(QUrl url = QUrl(), QByteArray clientToken = nullptr, bool import = true, QWidget * parent = nullptr);
     ~ServerInfoDialog();
-    QUrl getUrl();
-    QByteArray getToken();
 
 private slots:
+    void acceptedCallback();
     void inputChangedCallback();
     void importCallback();
     void testCallback();

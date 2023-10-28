@@ -413,21 +413,6 @@ QFont Settings::messageFont()
 
 
 //------------------------------------------------------------------------------
-void Settings::setTheme(Qt::ColorScheme colorScheme)
-{
-
-    setValue("theme", colorScheme == Qt::ColorScheme::Dark ? "dark" : "light");
-}
-
-
-QString Settings::theme()
-{
-    QString theme = value("theme").toString();
-    return theme.isNull() ? "light" : theme;
-}
-
-
-//------------------------------------------------------------------------------
 void Settings::setUseLocale(bool mode)
 {
     setValue("useLocale", mode);

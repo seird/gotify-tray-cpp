@@ -108,9 +108,6 @@ public:
     void setMessageFont(QFont font);
     QFont messageFont();
 
-    void setTheme(Qt::ColorScheme colorScheme);
-    QString theme();
-
     void setUseLocale(bool mode);
     bool useLocale();
 

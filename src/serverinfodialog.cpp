@@ -1,8 +1,8 @@
 #include "serverinfodialog.h"
 #include "ui_serverinfodialog.h"
 #include "utils.h"
-#include "settings.h"
 #include "requesthandler.h"
+#include "settings.h"
 
 #include <QDialogButtonBox>
 
@@ -16,13 +16,14 @@ ServerInfoDialog::ServerInfoDialog(QUrl url, QByteArray clientToken, bool import
     ui->line_token->setText(clientToken);
     ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok)->setDisabled(true);
     ui->pb_import->setVisible(import);
-    setStyleSheet(Utils::readFile(":/res/themes/" + settings->theme() + "/ServerInfoDialog.qss"));
+    setStyleSheet(Utils::readFile(":/res/themes/" + Utils::getTheme() + "/ServerInfoDialog.qss"));
 
     gotifyApi = new GotifyApi(QUrl(), "");
 
     connect(requestHandler, &RequestHandler::serverOk, this, &ServerInfoDialog::testSuccessCallback);
     connect(requestHandler, &RequestHandler::replyError, this, &ServerInfoDialog::testErrorCallback);
     connect(requestHandler, &RequestHandler::finished, this, [this]{ui->pb_test->setEnabled(true);});
+    connect(this, &QDialog::accepted, this, &ServerInfoDialog::acceptedCallback);
 }
 
 
@@ -33,15 +34,11 @@ ServerInfoDialog::~ServerInfoDialog()
 }
 
 
-QUrl ServerInfoDialog::getUrl()
+void ServerInfoDialog::acceptedCallback()
 {
-    return QUrl(ui->line_url->text());
-}
-
-
-QByteArray ServerInfoDialog::getToken()
-{
-    return ui->line_token->text().toUtf8();
+    settings->setServerUrl(ui->line_url->text());
+    settings->setClientToken(ui->line_token->text().toUtf8());
+    emit settings->serverChanged();
 }
 
 

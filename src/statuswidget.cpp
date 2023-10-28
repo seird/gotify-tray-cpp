@@ -1,5 +1,5 @@
 #include "statuswidget.h"
-#include "settings.h"
+#include "utils.h"
 
 
 StatusWidget::StatusWidget(QWidget * parent) : QLabel(parent)
@@ -14,7 +14,7 @@ void
 StatusWidget::setStatus(QString image)
 {
     this->image = image;
-    QString resource = ":/res/themes/" + settings->theme() + "/" + image;
+    QString resource = ":/res/themes/" + Utils::getTheme() + "/" + image;
     setPixmap(QPixmap(resource));
 }
 

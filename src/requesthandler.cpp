@@ -2,6 +2,10 @@
 #include "utils.h"
 #include "cache.h"
 
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+
 
 RequestHandler * requestHandler = nullptr;
 

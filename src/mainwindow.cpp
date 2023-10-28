@@ -3,10 +3,10 @@
 #include "ui_mainwindow.h"
 #include "messagewidget.h"
 #include "cache.h"
+#include "utils.h"
 
 #include <QtCore>
 #include <QApplication>
-#include <QStyleHints>
 #include <QMessageBox>
 
 
@@ -58,7 +58,7 @@ void MainWindow::connectComponents()
 
 void MainWindow::setIcons()
 {
-    QString theme = settings->theme();
+    QString theme = Utils::getTheme();
     ui->pb_refresh->setIcon(QIcon("://res/themes/" + theme + "/refresh.svg"));
     ui->pb_delete_all->setIcon(QIcon("://res/themes/" + theme + "/trashcan.svg"));
 
@@ -147,7 +147,7 @@ void MainWindow::setError()
 
 void MainWindow::displayMessageWidgets(const QModelIndex &parent, int first, int last)
 {
-    QString theme = settings->theme();
+    QString theme = Utils::getTheme();
     QApplication * app = qApp;
 
     for (int i=first; i<=last; ++i) {

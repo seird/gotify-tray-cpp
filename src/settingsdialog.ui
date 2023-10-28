@@ -267,7 +267,7 @@
              </widget>
             </item>
             <item row="0" column="8">
-             <widget class="QLabel" name="label_11">
+             <widget class="QLabel" name="label_delete_all">
               <property name="maximumSize">
                <size>
                 <width>20</width>
@@ -276,9 +276,6 @@
               </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="../resources.qrc">:/res/themes/light/trashcan.svg</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -299,7 +296,7 @@
              </spacer>
             </item>
             <item row="0" column="7">
-             <widget class="QLabel" name="label_10">
+             <widget class="QLabel" name="label_refresh">
               <property name="maximumSize">
                <size>
                 <width>18</width>
@@ -308,9 +305,6 @@
               </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="../resources.qrc">:/res/themes/light/refresh.svg</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -356,7 +350,7 @@
              </widget>
             </item>
             <item row="0" column="3">
-             <widget class="QLabel" name="label_9">
+             <widget class="QLabel" name="label_status">
               <property name="maximumSize">
                <size>
                 <width>20</width>
@@ -365,9 +359,6 @@
               </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="../resources.qrc">:/res/themes/light/status_active.svg</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -380,9 +371,6 @@
                <widget class="ClickableLabel" name="label_delete">
                 <property name="text">
                  <string/>
-                </property>
-                <property name="pixmap">
-                 <pixmap resource="../resources.qrc">:/res/themes/light/trashcan.svg</pixmap>
                 </property>
                </widget>
               </item>
