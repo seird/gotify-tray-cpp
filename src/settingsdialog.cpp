@@ -62,7 +62,7 @@ void SettingsDialog::serverInfo()
     QUrl url = settings->serverUrl();
     QByteArray clientToken = settings->clientToken();
 
-    ServerInfoDialog dialog(url, clientToken, false);
+    ServerInfoDialog dialog(this, url, clientToken, false);
     dialog.exec();
 }
 

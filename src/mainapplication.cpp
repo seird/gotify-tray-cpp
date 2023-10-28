@@ -99,7 +99,7 @@ bool MainApplication::verifyServer(bool forceNew, bool import)
     QByteArray clientToken = settings->clientToken();
 
     if (forceNew || url.isEmpty() || clientToken.isEmpty()) {
-        ServerInfoDialog dialog(url, clientToken, import);
+        ServerInfoDialog dialog(NULL, url, clientToken, import);
         return dialog.exec();
     } else {
         return true;

@@ -7,7 +7,7 @@
 #include <QDialogButtonBox>
 
 
-ServerInfoDialog::ServerInfoDialog(QUrl url, QByteArray clientToken, bool import, QWidget *parent) :
+ServerInfoDialog::ServerInfoDialog(QWidget * parent, QUrl url, QByteArray clientToken, bool import) :
     QDialog(parent),
     ui(new Ui::ServerInfoDialog)
 {

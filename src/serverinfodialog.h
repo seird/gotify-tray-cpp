@@ -16,7 +16,7 @@ class ServerInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ServerInfoDialog(QUrl url = QUrl(), QByteArray clientToken = nullptr, bool import = true, QWidget * parent = nullptr);
+    explicit ServerInfoDialog(QWidget * parent = nullptr, QUrl url = QUrl(), QByteArray clientToken = nullptr, bool import = true);
     ~ServerInfoDialog();
 
 private slots:
