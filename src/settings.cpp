@@ -203,7 +203,7 @@ void Settings::setNotificationPriority(int priority)
 
 int Settings::notificationPriority()
 {
-    return value("notificationPriority", 5).toInt();
+    return value("notificationPriority", 4).toInt();
 }
 
 
