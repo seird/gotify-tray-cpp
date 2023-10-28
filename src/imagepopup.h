@@ -16,7 +16,7 @@ public:
     ImagePopup(QWidget * parent=nullptr);
     void display(const QString& filePath, const QUrl& url, QPoint pos);
 
-    virtual bool eventFilter(QObject * watched, QEvent * event);
+    virtual bool eventFilter(QObject * obj, QEvent * event);
     void mousePressEvent(QMouseEvent * event);
 
 public slots:

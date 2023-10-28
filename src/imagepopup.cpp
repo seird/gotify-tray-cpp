@@ -57,13 +57,24 @@ void ImagePopup::mousePressEvent(QMouseEvent * event)
 }
 
 
-bool ImagePopup::eventFilter(QObject * watched, QEvent * event)
+bool ImagePopup::eventFilter(QObject * obj, QEvent * event)
 {
+    switch (event->type()) {
 #ifndef Q_OS_MAC
-    if (event->type() == QEvent::Type::Leave) {
+    case QEvent::Leave:
         close();
-    }
+        break;
 #endif
+    case QEvent::KeyPress: {
+        QKeyEvent * keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Escape) {
+            close();
+        }
+        break;
+    }
+    default:
+        break;
+    }
 
-    return QLabel::eventFilter(watched, event);
+    return QLabel::eventFilter(obj, event);
 }
