@@ -92,7 +92,8 @@ void MessageWidget::setIcons(QString theme)
 {
     ui->pb_delete->setIcon(QIcon(":/res/themes/" + theme + "/trashcan.svg"));
     ui->label_image->setFixedSize(settings->messageApplicationIconSize());
-    ui->pb_delete->setIconSize(settings->messageButtonSize());
+    ui->pb_delete->setIconSize(0.9*settings->messageButtonSize());
+    ui->pb_delete->setFixedSize(settings->messageButtonSize());
 }
 
 
