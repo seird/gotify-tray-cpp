@@ -35,14 +35,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->label_delete->setPixmap(QPixmap(":/res/themes/" + theme + "/trashcan.svg"));
     ui->label_refresh->setPixmap(QPixmap(":/res/themes/" + theme + "/refresh.svg"));
 
-    ui->label_application_icon1->setFixedSize(settings->applicationIconSize());
-    ui->label_application_icon2->setFixedSize(settings->applicationIconSize());
-    ui->label_refresh->setFixedSize(0.7*settings->mainButtonSize());
-    ui->label_delete_all->setFixedSize(0.9*settings->mainButtonSize());
-    ui->label_delete->setFixedSize(settings->messageButtonSize());
-    ui->label_status->setFixedSize(settings->statusLabelSize());
-    ui->label_icon->setFixedSize(settings->messageApplicationIconSize());
-
     cacheThread = QThread::create([this]{ui->label_cache->setText(QString::number(cache->size()/1e6, 'f', 2) + " MB");});
     cacheThread->start();
 
@@ -193,6 +185,18 @@ void SettingsDialog::selectedApplicationFont()
 }
 
 
+void SettingsDialog::loadSizes()
+{
+    ui->label_application_icon1->setFixedSize(settings->applicationIconSize());
+    ui->label_application_icon2->setFixedSize(settings->applicationIconSize());
+    ui->label_refresh->setFixedSize(0.7*settings->mainButtonSize());
+    ui->label_delete_all->setFixedSize(0.9*settings->mainButtonSize());
+    ui->label_delete->setFixedSize(settings->messageButtonSize());
+    ui->label_status->setFixedSize(settings->statusLabelSize());
+    ui->label_icon->setFixedSize(settings->messageApplicationIconSize());
+}
+
+
 void SettingsDialog::loadFonts()
 {
     ui->label_title->setFont(settings->titleFont());
@@ -204,14 +208,18 @@ void SettingsDialog::loadFonts()
 }
 
 
-void SettingsDialog::resetFonts()
+void SettingsDialog::resetFontsSizes()
 {
-    if (QMessageBox::warning(this, "Are you sure?", "Reset all fonts?",
+    if (QMessageBox::warning(this, "Are you sure?", "Reset all fonts and sizes?",
                              QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::Cancel,
                              QMessageBox::StandardButton::Cancel)
         == QMessageBox::StandardButton::Ok) {
         settings->remove("font");
+        settings->remove("size");
         loadFonts();
+        loadSizes();
+        emit settings->fontChanged();
+        emit settings->sizeChanged();
     }
 }
 
@@ -270,6 +278,7 @@ void SettingsDialog::readSettings()
 
     // --------------------------- Fonts ---------------------------
     loadFonts();
+    loadSizes();
 
     // -------------------------- Advanced -------------------------
     ui->groupbox_image_popup->setChecked(settings->popupEnabled());

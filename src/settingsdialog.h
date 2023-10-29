@@ -26,6 +26,7 @@ private:
     bool bSizeChanged;
 
     void readSettings();
+    void loadSizes();
     void loadFonts();
     void connectComponents();
 
@@ -38,7 +39,7 @@ private slots:
     void sizeChanged();
 
     void serverInfo();
-    void resetFonts();
+    void resetFontsSizes();
     void titleFont();
     void dateFont();
     void messageFont();

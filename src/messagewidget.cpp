@@ -24,59 +24,41 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     manager(nullptr)
 {
     ui->setupUi(this);
+    this->item = item;
 
-    ui->label_title->setFont(settings->titleFont());
-    ui->label_date->setFont(settings->dateFont());
-    ui->label_message->setFont(settings->messageFont());
+    setFonts();
+    setIcons();
+    setPriorityColor(item->priority());
 
+    // Application Icon
+    QPixmap pixmap = icon.pixmap(settings->messageWidgetImageSize());
+    ui->label_image->setPixmap(pixmap);
+
+    // Title
     ui->label_title->setText(item->title());
 
-    QString dateStr;
-    if (settings->useLocale())
-        dateStr = QLocale::system().toString(item->date(), QLocale::FormatType::ShortFormat);
-    else
-        dateStr = item->date().toString("yyyy-MM-dd, hh:mm");
-    ui->label_date->setText(dateStr + " ");
+    // Date
+    ui->label_date->setText(
+        (settings->useLocale() ?
+            QLocale::system().toString(item->date(), QLocale::FormatType::ShortFormat) :
+            item->date().toString("yyyy-MM-dd, hh:mm"))
+        + " "
+    );
 
+    // Message -- if it's an image, display it in the message label
     QString image = Utils::extractImage(item->message());
     if (!image.isNull()) {
-        QString filePath = cache->getFile(image);
-        if (!filePath.isNull()) {
-            setImage(filePath);
-        } else {
-            // Make a get request
-            if (!manager) manager = new QNetworkAccessManager();
-            QNetworkRequest request;
-            QEventLoop eventLoop;
-            request.setUrl(QUrl(image));
-            QNetworkReply * reply = manager->get(request);
-            connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
-            eventLoop.exec();
-
-            // Write the file and store in cache
-            QString fileName = Utils::getUuid();
-            QString filePath = cache->getFilesDir() + fileName;
-            Utils::writeFile(filePath, reply->readAll());
-            cache->store(image, fileName);
-            reply->deleteLater();
-
-            // Set the image
-            setImage(filePath);
-        }
+        setImage(image);
     } else {
         ui->label_message->setText(replaceLinks(item->message()));
         if (item->markdown())
             ui->label_message->setTextFormat(Qt::MarkdownText);
     }
 
-    QPixmap pixmap = icon.pixmap(settings->messageWidgetImageSize());
-    ui->label_image->setPixmap(pixmap);
-
+    // Size
     adjustSize();
     int minHeight = settings->messageWidgetHeightMin();
     item->setSizeHint(QSize(item->sizeHint().width(), MAX(minHeight, height())));
-
-    setPriorityColor(item->priority());
 
     connect(ui->label_message, &QLabel::linkHovered, this, &MessageWidget::linkHoveredCallback);
 }
@@ -88,18 +70,46 @@ MessageWidget::~MessageWidget()
 }
 
 
-void MessageWidget::setIcons(QString theme)
+void MessageWidget::setFonts()
 {
-    ui->pb_delete->setIcon(QIcon(":/res/themes/" + theme + "/trashcan.svg"));
+    ui->label_title->setFont(settings->titleFont());
+    ui->label_date->setFont(settings->dateFont());
+    ui->label_message->setFont(settings->messageFont());
+}
+
+
+void MessageWidget::setIcons()
+{
+    ui->pb_delete->setIcon(QIcon(":/res/themes/" + Utils::getTheme() + "/trashcan.svg"));
     ui->label_image->setFixedSize(settings->messageApplicationIconSize());
     ui->pb_delete->setIconSize(0.9*settings->messageButtonSize());
     ui->pb_delete->setFixedSize(settings->messageButtonSize());
 }
 
 
-void MessageWidget::setImage(QString fileName)
+void MessageWidget::setImage(QString url)
 {
-    QPixmap pixmap(fileName);
+    QString filePath = cache->getFile(url);
+    if (filePath.isNull()) {
+        // Make a get request
+        if (!manager) manager = new QNetworkAccessManager();
+        QNetworkRequest request;
+        QEventLoop eventLoop;
+        request.setUrl(QUrl(url));
+        QNetworkReply * reply = manager->get(request);
+        connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+        eventLoop.exec();
+
+        // Write the file and store in cache
+        QString fileName = Utils::getUuid();
+        filePath = cache->getFilesDir() + fileName;
+        Utils::writeFile(filePath, reply->readAll());
+        cache->store(url, fileName);
+        reply->deleteLater();
+    }
+
+    // Set the image
+    QPixmap pixmap(filePath);
     float W = settings->messageWidgetContentImageWidth();
     float H = settings->messageWidgetContentImageHeight();
     QListView * lv = static_cast<QListView *>(parent());

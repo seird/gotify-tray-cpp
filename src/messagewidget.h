@@ -19,7 +19,8 @@ class MessageWidget : public QWidget
 public:
     explicit MessageWidget(MessageItem * item, QIcon icon, QWidget *parent = nullptr);
     ~MessageWidget();
-    void setIcons(QString theme);
+    void setFonts();
+    void setIcons();
 
 signals:
     void deletionRequested();
@@ -30,9 +31,10 @@ private slots:
 
 private:
     Ui::MessageWidget * ui;
+    MessageItem * item;
     QNetworkAccessManager * manager;
 
-    void setImage(QString filePath);
+    void setImage(QString url);
     QString replaceLinks(QString text);
     void setPriorityColor(int priority);
 };

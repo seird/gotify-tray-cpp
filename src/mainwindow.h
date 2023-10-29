@@ -32,6 +32,7 @@ public:
     void setError();
     void storeWindowState();
     void restoreWindowState();
+    void setFonts();
     void setIcons();
     QModelIndex selectedApplication();
     bool eventFilter(QObject * watched, QEvent * event);

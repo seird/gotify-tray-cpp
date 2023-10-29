@@ -65,60 +65,60 @@ bool Settings::notifyMissed()
 //------------------------------------------------------------------------------
 void Settings::setStatusLabelSize(QSize size)
 {
-    setValue("statusLabelSize", size);
+    setValue("size/statusLabelSize", size);
 }
 
 QSize Settings::statusLabelSize()
 {
-    return value("statusLabelSize", QSize(25, 25)).toSize();
+    return value("size/statusLabelSize", QSize(25, 25)).toSize();
 }
 
 
 //------------------------------------------------------------------------------
 void Settings::setMainButtonSize(QSize size)
 {
-    setValue("mainButtonSize", size);
+    setValue("size/mainButtonSize", size);
 }
 
 QSize Settings::mainButtonSize()
 {
-    return value("mainButtonSize", QSize(33, 33)).toSize();
+    return value("size/mainButtonSize", QSize(33, 33)).toSize();
 }
 
 
 //------------------------------------------------------------------------------
 void Settings::setMessageButtonSize(QSize size)
 {
-    setValue("messageButtonSize", size);
+    setValue("size/messageButtonSize", size);
 }
 
 QSize Settings::messageButtonSize()
 {
-    return value("messageButtonSize", QSize(25, 25)).toSize();
+    return value("size/messageButtonSize", QSize(25, 25)).toSize();
 }
 
 
 //------------------------------------------------------------------------------
 void Settings::setApplicationIconSize(QSize size)
 {
-    setValue("applicationIconSize", size);
+    setValue("size/applicationIconSize", size);
 }
 
 QSize Settings::applicationIconSize()
 {
-    return value("applicationIconSize", QSize(40, 40)).toSize();
+    return value("size/applicationIconSize", QSize(40, 40)).toSize();
 }
 
 
 //------------------------------------------------------------------------------
 void Settings::setMessageApplicationIconSize(QSize size)
 {
-    setValue("messageApplicationIconSize", size);
+    setValue("size/messageApplicationIconSize", size);
 }
 
 QSize Settings::messageApplicationIconSize()
 {
-    return value("messageApplicationIconSize", QSize(33, 33)).toSize();
+    return value("size/messageApplicationIconSize", QSize(33, 33)).toSize();
 }
 
 
@@ -173,12 +173,12 @@ int Settings::messageWidgetHeightMin()
 //------------------------------------------------------------------------------
 void Settings::setMessageWidgetImageSize(QSize size)
 {
-    setValue("messageWidgetImageSizeMax", size);
+    setValue("size/messageWidgetImageSizeMax", size);
 }
 
 QSize Settings::messageWidgetImageSize()
 {
-    return value("messageWidgetImageSizeMax", QSize(33, 33)).toSize();
+    return value("size/messageWidgetImageSizeMax", QSize(33, 33)).toSize();
 }
 
 

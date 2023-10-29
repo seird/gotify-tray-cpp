@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>419</width>
-    <height>487</height>
+    <width>415</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -228,9 +228,9 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QPushButton" name="pb_reset_fonts">
+          <widget class="QPushButton" name="pb_reset_fonts_sizes">
            <property name="text">
-            <string>Reset all fonts</string>
+            <string>Reset all fonts and sizes to default values</string>
            </property>
           </widget>
          </item>
@@ -852,7 +852,7 @@
   <tabstop>cb_locale</tabstop>
   <tabstop>cb_sort_applications</tabstop>
   <tabstop>pb_change_server_info</tabstop>
-  <tabstop>pb_reset_fonts</tabstop>
+  <tabstop>pb_reset_fonts_sizes</tabstop>
   <tabstop>groupbox_image_popup</tabstop>
   <tabstop>spin_popup_w</tabstop>
   <tabstop>spin_popup_h</tabstop>
@@ -874,7 +874,7 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>409</x>
+     <x>405</x>
      <y>477</y>
     </hint>
     <hint type="destinationlabel">
@@ -890,7 +890,7 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>409</x>
+     <x>405</x>
      <y>477</y>
     </hint>
     <hint type="destinationlabel">
@@ -906,8 +906,8 @@
    <slot>clearCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>252</y>
+     <x>104</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -922,8 +922,8 @@
    <slot>openCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
-     <y>252</y>
+     <x>185</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -970,8 +970,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>305</x>
-     <y>132</y>
+     <x>297</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
      <x>411</x>
@@ -986,8 +986,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>61</x>
-     <y>160</y>
+     <x>82</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>408</x>
@@ -1002,8 +1002,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>130</x>
-     <y>188</y>
+     <x>151</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -1018,8 +1018,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>216</y>
+     <x>168</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>409</x>
@@ -1034,8 +1034,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>287</y>
+     <x>120</x>
+     <y>258</y>
     </hint>
     <hint type="destinationlabel">
      <x>409</x>
@@ -1050,8 +1050,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>81</x>
-     <y>315</y>
+     <x>102</x>
+     <y>284</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -1066,8 +1066,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>343</y>
+     <x>125</x>
+     <y>310</y>
     </hint>
     <hint type="destinationlabel">
      <x>413</x>
@@ -1162,28 +1162,12 @@
    <slot>serverInfo()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>126</x>
-     <y>416</y>
+     <x>136</x>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
      <y>390</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pb_reset_fonts</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>resetFonts()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>263</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -1210,8 +1194,8 @@
    <slot>dateFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>374</x>
-     <y>179</y>
+     <x>368</x>
+     <y>176</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1242,8 +1226,8 @@
    <slot>resetSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
-     <y>367</y>
+     <x>101</x>
+     <y>330</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1290,8 +1274,8 @@
    <slot>selectedApplicationFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>289</x>
-     <y>130</y>
+     <x>286</x>
+     <y>127</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1354,11 +1338,11 @@
    <slot>mainButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>375</x>
-     <y>129</y>
+     <x>369</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
-     <x>874</x>
+     <x>414</x>
      <y>82</y>
     </hint>
    </hints>
@@ -1370,11 +1354,11 @@
    <slot>mainButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>387</x>
-     <y>130</y>
+     <x>381</x>
+     <y>127</y>
     </hint>
     <hint type="destinationlabel">
-     <x>880</x>
+     <x>414</x>
      <y>124</y>
     </hint>
    </hints>
@@ -1390,7 +1374,7 @@
      <y>119</y>
     </hint>
     <hint type="destinationlabel">
-     <x>995</x>
+     <x>414</x>
      <y>145</y>
     </hint>
    </hints>
@@ -1402,12 +1386,28 @@
    <slot>messageButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>384</x>
+     <x>380</x>
      <y>164</y>
     </hint>
     <hint type="destinationlabel">
-     <x>547</x>
+     <x>414</x>
      <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_reset_fonts_sizes</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>resetFontsSizes()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>136</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>42</y>
     </hint>
    </hints>
   </connection>
@@ -1421,7 +1421,7 @@
   <slot>titleFont()</slot>
   <slot>dateFont()</slot>
   <slot>messageFont()</slot>
-  <slot>resetFonts()</slot>
+  <slot>resetFontsSizes()</slot>
   <slot>resetSettings()</slot>
   <slot>applicationFont()</slot>
   <slot>selectedApplicationFont()</slot>

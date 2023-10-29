@@ -33,8 +33,7 @@ MainWindow::MainWindow(MessageItemModel * messageItemModel, ApplicationItemModel
     // Do not collapse the message list
     ui->splitter->setCollapsible(1, false);
 
-    ui->label_application->setFont(settings->selectedApplicationFont());
-
+    setFonts();
     setIcons();
     restoreWindowState();
     connectComponents();
@@ -53,6 +52,23 @@ void MainWindow::connectComponents()
 {
     connect(messageItemModel, &MessageItemModel::rowsInserted, this, &MainWindow::displayMessageWidgets);
     connect(ui->listView_applications->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::currentChangedCallback);
+    connect(settings, &Settings::fontChanged, this, &MainWindow::setFonts);
+    connect(settings, &Settings::sizeChanged, this, &MainWindow::setIcons);
+}
+
+
+void MainWindow::setFonts()
+{
+    ui->label_application->setFont(settings->selectedApplicationFont());
+
+    QFont font = settings->applicationFont();
+    for (int r=0; r<applicationItemModel->rowCount(); ++r)
+        applicationItemModel->item(r)->setFont(font);
+
+    for (int r=0; r<messageItemModel->rowCount(); ++r) {
+        MessageWidget * messageWidget = static_cast<MessageWidget *>(ui->listView_messages->indexWidget(messageItemModel->index(r, 0)));
+        messageWidget->setFonts();
+    }
 }
 
 
@@ -76,7 +92,7 @@ void MainWindow::setIcons()
 
     for (int r=0; r<messageItemModel->rowCount(); ++r) {
         MessageWidget * messageWidget = static_cast<MessageWidget *>(ui->listView_messages->indexWidget(messageItemModel->index(r, 0)));
-        messageWidget->setIcons(theme);
+        messageWidget->setIcons();
     }
 }
 
@@ -156,7 +172,6 @@ void MainWindow::displayMessageWidgets(const QModelIndex &parent, int first, int
             continue;
         MessageItem * item = messageItemModel->itemFromIndex(index);
         MessageWidget * messageWidget = new MessageWidget(item, QIcon(cache->getFile(item->appId())), ui->listView_messages);
-        messageWidget->setIcons(theme);
         connect(messageWidget, &MessageWidget::deletionRequested, this, [this, item]{emit deleteMessage(item);});
         ui->listView_messages->setIndexWidget(index, messageWidget);
 
