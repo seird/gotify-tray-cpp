@@ -75,7 +75,7 @@ void SettingsDialog::serverInfo()
 
 void SettingsDialog::applicationIcon()
 {
-    int currentSize = settings->applicationIconSize().width();
+    int currentSize = ui->label_application_icon1->width();
     int size = QInputDialog::getInt(this, "Application Icon Size", "Size in pixels", currentSize, 10, 100);
     if (currentSize != size) {
         ui->label_application_icon1->setFixedSize(QSize(size, size));
@@ -87,7 +87,7 @@ void SettingsDialog::applicationIcon()
 
 void SettingsDialog::messageApplicationIcon()
 {
-    int currentSize = settings->messageApplicationIconSize().width();
+    int currentSize = ui->label_icon->width();
     int size = QInputDialog::getInt(this, "Message Application Icon Size", "Size in pixels", currentSize, 10, 100);
     if (currentSize != size) {
         ui->label_icon->setFixedSize(QSize(size, size));
@@ -98,7 +98,7 @@ void SettingsDialog::messageApplicationIcon()
 
 void SettingsDialog::mainButton()
 {
-    int currentSize = settings->mainButtonSize().width();
+    int currentSize = ui->label_refresh->width()/0.7; // TODO
     int size = QInputDialog::getInt(this, "Main Button Size", "Size in pixels", currentSize, 10, 100);
     if (currentSize != size) {
         ui->label_refresh->setFixedSize(0.7*QSize(size, size));
@@ -110,7 +110,7 @@ void SettingsDialog::mainButton()
 
 void SettingsDialog::statusLabel()
 {
-    int currentSize = settings->statusLabelSize().width();
+    int currentSize = ui->label_status->width();
     int size = QInputDialog::getInt(this, "Status Label Size", "Size in pixels", currentSize, 10, 100);
     if (currentSize != size) {
         ui->label_status->setFixedSize(QSize(size, size));
@@ -121,7 +121,7 @@ void SettingsDialog::statusLabel()
 
 void SettingsDialog::messageButton()
 {
-    int currentSize = settings->messageButtonSize().width();
+    int currentSize = ui->label_delete->width();
     int size = QInputDialog::getInt(this, "Message Button Size", "Size in pixels", currentSize, 10, 100);
     if (currentSize != size) {
         ui->label_delete->setFixedSize(QSize(size, size));
@@ -148,7 +148,6 @@ void SettingsDialog::dateFont()
     if (accepted) {
         ui->label_date->setFont(font);
         fontChanged();
-
     }
 }
 
