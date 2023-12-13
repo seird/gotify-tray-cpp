@@ -54,6 +54,7 @@ void MainWindow::connectComponents()
     connect(ui->listView_applications->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::currentChangedCallback);
     connect(settings, &Settings::fontChanged, this, &MainWindow::setFonts);
     connect(settings, &Settings::sizeChanged, this, &MainWindow::setIcons);
+    connect(settings, &Settings::showPriorityChanged, this, &MainWindow::showPriority);
 }
 
 
@@ -93,6 +94,15 @@ void MainWindow::setIcons()
     for (int r=0; r<messageItemModel->rowCount(); ++r) {
         MessageWidget * messageWidget = static_cast<MessageWidget *>(ui->listView_messages->indexWidget(messageItemModel->index(r, 0)));
         messageWidget->setIcons();
+    }
+}
+
+
+void MainWindow::showPriority(bool enabled)
+{
+    for (int r=0; r<messageItemModel->rowCount(); ++r) {
+        MessageWidget * messageWidget = static_cast<MessageWidget *>(ui->listView_messages->indexWidget(messageItemModel->index(r, 0)));
+        messageWidget->showPriority(enabled);
     }
 }
 

@@ -454,6 +454,13 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="0" rowspan="2">
+               <widget class="ClickableLabel" name="label_priority">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item row="0" column="1" rowspan="3">
@@ -875,7 +882,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>405</x>
-     <y>477</y>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -891,7 +898,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>405</x>
-     <y>477</y>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -938,8 +945,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>365</x>
-     <y>477</y>
+     <x>405</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>23</x>
@@ -1024,22 +1031,6 @@
     <hint type="destinationlabel">
      <x>409</x>
      <y>212</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cb_priority_colors</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>120</x>
-     <y>258</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>409</x>
-     <y>247</y>
     </hint>
    </hints>
   </connection>
@@ -1178,7 +1169,7 @@
    <slot>titleFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>181</x>
+     <x>213</x>
      <y>176</y>
     </hint>
     <hint type="destinationlabel">
@@ -1322,7 +1313,7 @@
    <slot>messageApplicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>135</x>
+     <x>167</x>
      <y>166</y>
     </hint>
     <hint type="destinationlabel">
@@ -1411,6 +1402,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cb_priority_colors</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showPriorityChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>73</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>407</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>label_priority</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>messagePriority()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>137</x>
+     <y>209</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>clearCache()</slot>
@@ -1430,5 +1453,7 @@
   <slot>statusLabel()</slot>
   <slot>mainButton()</slot>
   <slot>messageButton()</slot>
+  <slot>showPriorityChanged()</slot>
+  <slot>messagePriority()</slot>
  </slots>
 </ui>

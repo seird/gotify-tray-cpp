@@ -19,7 +19,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui(new Ui::SettingsDialog),
     bChanged(false),
     bFontChanged(false),
-    bSizeChanged(false)
+    bSizeChanged(false),
+    bShowPriorityChanged(false)
 {
     ui->setupUi(this);
     setWindowTitle("Preferences — " + qApp->applicationName());
@@ -34,6 +35,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->label_delete_all->setPixmap(QPixmap(":/res/themes/" + theme + "/trashcan.svg"));
     ui->label_delete->setPixmap(QPixmap(":/res/themes/" + theme + "/trashcan.svg"));
     ui->label_refresh->setPixmap(QPixmap(":/res/themes/" + theme + "/refresh.svg"));
+    ui->label_priority->setStyleSheet("background-color: #b3e67e22;");
 
     cacheThread = QThread::create([this]{ui->label_cache->setText(QString::number(cache->size()/1e6, 'f', 2) + " MB");});
     cacheThread->start();
@@ -185,6 +187,17 @@ void SettingsDialog::selectedApplicationFont()
 }
 
 
+void SettingsDialog::messagePriority()
+{
+    int currentWidth = ui->label_priority->width();
+    int width = QInputDialog::getInt(this, "Priority Color Width", "Width in pixels", currentWidth, 1, 50);
+    if (currentWidth != width) {
+        ui->label_priority->setFixedWidth(width);
+        showPriorityChanged();
+    }
+}
+
+
 void SettingsDialog::loadSizes()
 {
     ui->label_application_icon1->setFixedSize(settings->applicationIconSize());
@@ -194,6 +207,7 @@ void SettingsDialog::loadSizes()
     ui->label_delete->setFixedSize(settings->messageButtonSize());
     ui->label_status->setFixedSize(settings->statusLabelSize());
     ui->label_icon->setFixedSize(settings->messageApplicationIconSize());
+    ui->label_priority->setFixedWidth(settings->priorityColorWidth());
 }
 
 
@@ -241,6 +255,13 @@ void SettingsDialog::fontChanged()
 void SettingsDialog::sizeChanged()
 {
     bSizeChanged = true;
+    changed();
+}
+
+
+void SettingsDialog::showPriorityChanged()
+{
+    bShowPriorityChanged = true;
     changed();
 }
 
@@ -300,9 +321,14 @@ void SettingsDialog::saveSettings()
     settings->setNotifyMissed(ui->cb_notify->isChecked());
     settings->setNotificationClick(ui->cb_notification_click->isChecked());
     settings->setTrayUnreadEnabled(ui->cb_tray_icon_unread->isChecked());
-    settings->setPriorityColor(ui->cb_priority_colors->isChecked());
     settings->setUseLocale(ui->cb_locale->isChecked());
     settings->setSortApplications(ui->cb_sort_applications->isChecked());
+    if (bShowPriorityChanged) {
+        bool mode = ui->cb_priority_colors->isChecked();
+        settings->setPriorityColorWidth(ui->label_priority->width());
+        settings->setPriorityColor(mode);
+        emit settings->showPriorityChanged(mode);
+    }
 
     // --------------------------- Fonts ---------------------------
     if (bFontChanged) {

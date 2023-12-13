@@ -24,6 +24,7 @@ private:
     bool bChanged;
     bool bFontChanged;
     bool bSizeChanged;
+    bool bShowPriorityChanged;
 
     void readSettings();
     void loadSizes();
@@ -37,6 +38,7 @@ private slots:
     void changed();
     void fontChanged();
     void sizeChanged();
+    void showPriorityChanged();
 
     void serverInfo();
     void resetFontsSizes();
@@ -50,6 +52,7 @@ private slots:
     void mainButton();
     void statusLabel();
     void messageButton();
+    void messagePriority();
 
     void clearCache();
     void openCache();

@@ -34,6 +34,7 @@ public:
     void restoreWindowState();
     void setFonts();
     void setIcons();
+    void showPriority(bool enabled);
     QModelIndex selectedApplication();
     bool eventFilter(QObject * watched, QEvent * event);
 

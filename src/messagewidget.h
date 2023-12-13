@@ -21,6 +21,7 @@ public:
     ~MessageWidget();
     void setFonts();
     void setIcons();
+    void showPriority(bool enabled);
 
 signals:
     void deletionRequested();

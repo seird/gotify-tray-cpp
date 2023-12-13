@@ -154,12 +154,15 @@ void MessageWidget::linkHoveredCallback(const QString& link)
 }
 
 
+void MessageWidget::showPriority(bool enabled)
+{
+    ui->label_priority->setFixedWidth(settings->priorityColorWidth()*enabled);
+}
+
+
 void MessageWidget::setPriorityColor(int priority)
 {
-    if (!settings->priorityColor()) {
-        ui->label_priority->setFixedWidth(0);
-        return;
-    }
+    showPriority(settings->priorityColor());
 
     if (priority >= 4 && priority <= 7)
         ui->label_priority->setStyleSheet("background-color: #b3e67e22;");

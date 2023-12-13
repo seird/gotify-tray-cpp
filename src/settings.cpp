@@ -220,6 +220,19 @@ bool Settings::priorityColor()
 
 
 //------------------------------------------------------------------------------
+void Settings::setPriorityColorWidth(int w)
+{
+    setValue("priorityColorWidth", w);
+}
+
+
+int Settings::priorityColorWidth()
+{
+    return value("priorityColorWidth", 6).toInt();
+}
+
+
+//------------------------------------------------------------------------------
 void Settings::setNotificationPriority(int priority)
 {
     setValue("notificationPriority", priority);

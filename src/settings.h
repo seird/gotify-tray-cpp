@@ -69,6 +69,9 @@ public:
     void setPriorityColor(bool mode);
     bool priorityColor();
 
+    void setPriorityColorWidth(int w);
+    int priorityColorWidth();
+
     void setNotificationPriority(int priority);
     int notificationPriority();
 
@@ -124,6 +127,7 @@ signals:
     void serverChanged();
     void sizeChanged();
     void fontChanged();
+    void showPriorityChanged(bool mode);
     void quitRequested();
 
 };
