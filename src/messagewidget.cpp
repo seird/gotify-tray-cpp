@@ -24,7 +24,6 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     manager(nullptr)
 {
     ui->setupUi(this);
-    this->item = item;
 
     setFonts();
     setIcons();

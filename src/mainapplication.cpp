@@ -149,7 +149,7 @@ void MainApplication::initShortcuts()
 
 void MainApplication::showSettings()
 {
-    SettingsDialog dialog;
+    SettingsDialog dialog(mainWindow);
     dialog.exec();
 }
 

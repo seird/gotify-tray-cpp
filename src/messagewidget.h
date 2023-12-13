@@ -32,7 +32,6 @@ private slots:
 
 private:
     Ui::MessageWidget * ui;
-    MessageItem * item;
     QNetworkAccessManager * manager;
 
     void setImage(QString url);
