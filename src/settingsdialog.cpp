@@ -233,6 +233,7 @@ void SettingsDialog::resetFontsSizes()
         loadSizes();
         emit settings->fontChanged();
         emit settings->sizeChanged();
+        emit settings->showPriorityChanged(settings->priorityColor());
     }
 }
 

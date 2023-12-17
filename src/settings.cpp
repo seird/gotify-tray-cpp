@@ -222,13 +222,13 @@ bool Settings::priorityColor()
 //------------------------------------------------------------------------------
 void Settings::setPriorityColorWidth(int w)
 {
-    setValue("priorityColorWidth", w);
+    setValue("size/priorityColorWidth", w);
 }
 
 
 int Settings::priorityColorWidth()
 {
-    return value("priorityColorWidth", 6).toInt();
+    return value("size/priorityColorWidth", 6).toInt();
 }
 
 
