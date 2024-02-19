@@ -21,6 +21,7 @@ jobs:
           arch: 'win64_mingw'
           modules: 'qtwebsockets qtimageformats'
           dir: ${{ github.workspace }}/qt
+      - uses: seanmiddleditch/gha-setup-ninja@master
       - name: build-package
         run: powershell -File scripts/build-win.ps1
       - name: create-installer
