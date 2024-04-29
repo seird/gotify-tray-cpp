@@ -296,6 +296,7 @@ void SettingsDialog::readSettings()
     ui->cb_priority_colors->setChecked(settings->priorityColor());
     ui->cb_locale->setChecked(settings->useLocale());
     ui->cb_sort_applications->setChecked(settings->sortApplications());
+    ui->cb_image_urls->setChecked(settings->showImageUrl());
 
     // --------------------------- Fonts ---------------------------
     loadFonts();
@@ -323,6 +324,7 @@ void SettingsDialog::saveSettings()
     settings->setTrayUnreadEnabled(ui->cb_tray_icon_unread->isChecked());
     settings->setUseLocale(ui->cb_locale->isChecked());
     settings->setSortApplications(ui->cb_sort_applications->isChecked());
+    settings->setShowImageUrl(ui->cb_image_urls->isChecked());
     if (bShowPriorityChanged) {
         bool mode = ui->cb_priority_colors->isChecked();
         settings->setPriorityColorWidth(ui->label_priority->width());

@@ -160,6 +160,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="cb_image_urls">
+            <property name="text">
+             <string>Show image urls as images</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="cb_locale">
             <property name="text">
              <string>Display date in the system locale format</string>
@@ -856,6 +863,7 @@
   <tabstop>cb_notification_click</tabstop>
   <tabstop>cb_tray_icon_unread</tabstop>
   <tabstop>cb_priority_colors</tabstop>
+  <tabstop>cb_image_urls</tabstop>
   <tabstop>cb_locale</tabstop>
   <tabstop>cb_sort_applications</tabstop>
   <tabstop>pb_change_server_info</tabstop>
@@ -869,6 +877,7 @@
   <tabstop>pb_open_cache_dir</tabstop>
   <tabstop>combo_logging</tabstop>
   <tabstop>pb_open_log</tabstop>
+  <tabstop>pb_reset</tabstop>
  </tabstops>
  <resources>
   <include location="../resources.qrc"/>
@@ -978,7 +987,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>297</x>
-     <y>118</y>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
      <x>411</x>
@@ -993,8 +1002,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>144</y>
+     <x>103</x>
+     <y>128</y>
     </hint>
     <hint type="destinationlabel">
      <x>408</x>
@@ -1009,8 +1018,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>151</x>
-     <y>170</y>
+     <x>172</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -1025,8 +1034,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>168</x>
-     <y>196</y>
+     <x>189</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
      <x>409</x>
@@ -1169,7 +1178,7 @@
    <slot>titleFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
+     <x>193</x>
      <y>176</y>
     </hint>
     <hint type="destinationlabel">
@@ -1313,8 +1322,8 @@
    <slot>messageApplicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>166</y>
+     <x>165</x>
+     <y>176</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -1409,8 +1418,8 @@
    <slot>showPriorityChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>73</x>
-     <y>252</y>
+     <x>94</x>
+     <y>233</y>
     </hint>
     <hint type="destinationlabel">
      <x>407</x>
@@ -1425,12 +1434,28 @@
    <slot>messagePriority()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>137</x>
-     <y>209</y>
+     <x>126</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
      <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cb_image_urls</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>440</x>
+     <y>234</y>
     </hint>
    </hints>
   </connection>

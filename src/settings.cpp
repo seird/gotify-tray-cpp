@@ -207,6 +207,19 @@ float Settings::messageWidgetContentImageHeight()
 
 
 //------------------------------------------------------------------------------
+void Settings::setShowImageUrl(bool mode)
+{
+    setValue("showImageUrl", mode);
+}
+
+
+bool Settings::showImageUrl()
+{
+    return value("showImageUrl", true).toBool();
+}
+
+
+//------------------------------------------------------------------------------
 void Settings::setPriorityColor(bool mode)
 {
     setValue("priorityColor", mode);

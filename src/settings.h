@@ -66,6 +66,9 @@ public:
     void setMessageWidgetContentImageHeight(float height);
     float messageWidgetContentImageHeight();
 
+    void setShowImageUrl(bool mode);
+    bool showImageUrl();
+
     void setPriorityColor(bool mode);
     bool priorityColor();
 

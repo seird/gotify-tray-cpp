@@ -45,7 +45,7 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     );
 
     // Message -- if it's an image, display it in the message label
-    QString image = Utils::extractImage(item->message());
+    QString image = settings->showImageUrl() ? Utils::extractImage(item->message()) : QString();
     if (!image.isNull()) {
         setImage(image);
     } else {
