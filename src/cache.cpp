@@ -29,10 +29,13 @@ Cache::Cache(QObject * parent)
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName(directory + "cache.db.sqlite3");
     database.open();
-    database.exec("CREATE TABLE IF NOT EXISTS cache ("
+    QSqlQuery query(database);
+    query.prepare("CREATE TABLE IF NOT EXISTS cache ("
                   "id        INTEGER PRIMARY KEY AUTOINCREMENT,"
                   "key       TEXT UNIQUE,"
-                  "value     TEXT)");}
+                  "value     TEXT)");
+    query.exec();
+}
 
 
 Cache::~Cache()
@@ -59,7 +62,9 @@ qint64 Cache::size()
 
 void Cache::clear()
 {
-    database.exec("DELETE FROM cache");
+    QSqlQuery query(database);
+    query.prepare("DELETE FROM cache");
+    query.exec();
 
     QDir dir(filesDirectory);
     dir.removeRecursively();
