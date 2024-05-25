@@ -122,7 +122,7 @@ void MainApplication::connectComponents()
     connect(tray->actionReconnect, &QAction::triggered, this, &MainApplication::reconnectCallback);
     connect(tray->actionQuit, &QAction::triggered, this, &MainApplication::quit);
     connect(tray, &Tray::activated, this, &MainApplication::trayActivated);
-    connect(tray, &Tray::messageClicked, mainWindow, &MainWindow::bringToFront);
+    connect(tray, &Tray::messageClicked, mainWindow, [this]{if (settings->notificationClick()) mainWindow->bringToFront();});
 
     connect(styleHints(), &QStyleHints::colorSchemeChanged, this, &MainApplication::themeChangedCallback);
 
