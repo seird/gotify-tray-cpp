@@ -37,7 +37,7 @@ QUrl Listener::buildUrl()
 }
 
 
-void Listener::open()
+void Listener::startListening()
 {
     qDebug() << "Opening listener";
     QTimer::singleShot(1000 * secDelay, this, [this]{
@@ -48,7 +48,7 @@ void Listener::open()
 }
 
 
-bool Listener::isListening()
+bool Listener::isConnected()
 {
     return state() == QAbstractSocket::SocketState::ListeningState;
 }

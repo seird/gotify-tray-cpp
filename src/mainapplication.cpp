@@ -55,7 +55,7 @@ void MainApplication::init()
     QNetworkReply * reply = gotifyApi->applications();
     connect(reply, &QNetworkReply::finished, requestHandler, &RequestHandler::applications);
 
-    listener->open();
+    listener->startListening();
 }
 
 
@@ -167,10 +167,10 @@ void MainApplication::serverChangedCallback()
 
 void MainApplication::reconnectCallback()
 {
-    if (listener->isListening())
+    if (listener->isConnected())
         listener->close();
     else
-        listener->open();
+        listener->startListening();
 }
 
 
@@ -278,7 +278,7 @@ void MainApplication::listenerDisconnectedCallback()
     qDebug() << "Listener disconnected";
     mainWindow->setConnecting();
     tray->setError();
-    listener->open();
+    listener->startListening();
 }
 
 

@@ -17,8 +17,8 @@ public:
     Listener(QUrl serverUrl, QByteArray clientToken, QObject * parent = nullptr);
 
     void updateAuth(QUrl serverUrl, QByteArray clientToken);
-    void open();
-    bool isListening();
+    void startListening();
+    bool isConnected();
 
 signals:
     void messageReceived(GotifyModel::Message * message);
