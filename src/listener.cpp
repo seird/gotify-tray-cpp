@@ -50,7 +50,7 @@ void Listener::startListening()
 
 bool Listener::isConnected()
 {
-    return state() == QAbstractSocket::SocketState::ListeningState;
+    return state() == QAbstractSocket::SocketState::ConnectedState;
 }
 
 
