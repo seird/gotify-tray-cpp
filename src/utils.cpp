@@ -16,7 +16,16 @@ namespace Utils
 
 QString getTheme()
 {
-    return qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark ? QStringLiteral("dark") : QStringLiteral("light");
+    switch (qApp->styleHints()->colorScheme())
+    {
+    case Qt::ColorScheme::Dark:
+        return QStringLiteral("dark");
+    case Qt::ColorScheme::Light:
+        return QStringLiteral("light");
+    default:
+        // fallback to custom method
+        return (qApp->palette().color(QPalette::Active, QPalette::Base).lightness() < 127) ? QStringLiteral("dark") : QStringLiteral("light");
+    }
 }
 
 
