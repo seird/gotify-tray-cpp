@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Gotify Tray++
+Comment=A tray notification application for receiving messages from a Gotify server
+Exec=gotify-tray-cpp
+Icon=gotify-tray-cpp
+Type=Application
+Categories=Network;
+StartupWMClass=Gotify-Tray++
