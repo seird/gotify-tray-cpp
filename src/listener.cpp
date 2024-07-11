@@ -40,8 +40,11 @@ QUrl Listener::buildUrl()
 void Listener::open()
 {
     qDebug() << "Opening listener";
-    QTimer().singleShot(1000 * secDelay, this, [this]{QWebSocket::open(buildUrl());});
-    secDelay = MIN(secDelay * 2, 10);
+    QTimer::singleShot(1000 * secDelay, this, [this]{
+        if (!isConnected())
+            open(buildUrl());
+    });
+    secDelay  = qBound(0.1f, secDelay * 2, 120.0f);
 }
 
 

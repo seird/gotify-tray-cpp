@@ -76,7 +76,7 @@ void MainApplication::initComponents()
 void MainApplication::initGui()
 {
     mainWindow->show();
-    QTimer().singleShot(0, this, [this]{mainWindow->hide();});
+    QTimer::singleShot(0, this, [this]{mainWindow->hide();});
 
     tray->setError();
     tray->show();
