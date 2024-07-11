@@ -23,7 +23,6 @@ MainApplication::MainApplication(int &argc, char *argv[])
     setApplicationVersion(appVersion.toString());
     setDesktopFileName(applicationName() + ".desktop");
     setQuitOnLastWindowClosed(false);
-    setStyle("fusion");
     setWindowIcon(QIcon(":/res/icons/gotify-tray++.ico"));
     applyStyle();
 
@@ -372,6 +371,7 @@ void MainApplication::applyStyle()
 {
 // Check if this is necessary on other DEs as well
 #ifdef Q_OS_WIN
+    setStyle("fusion");
     setPalette(style()->standardPalette());
 #endif
 }
