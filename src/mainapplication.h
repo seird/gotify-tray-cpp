@@ -54,7 +54,6 @@ private slots:
     void messageReceivedCallback(GotifyModel::Message * message);
 
     void missedMessagesCallback(GotifyModel::Messages * messages);
-    void applicationsCallback(GotifyModel::Applications * applications);
 };
 
 #endif // MAINAPPLICATION_H

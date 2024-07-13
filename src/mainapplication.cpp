@@ -101,7 +101,7 @@ void MainApplication::connectComponents()
     connect(styleHints(), &QStyleHints::colorSchemeChanged, this, &MainApplication::themeChangedCallback);
 
     connect(requestHandler, &RequestHandler::finishedMissedMessages, this, &MainApplication::missedMessagesCallback);
-    connect(requestHandler, &RequestHandler::finishedApplications, this, &MainApplication::applicationsCallback);
+    connect(requestHandler, &RequestHandler::finishedApplications, &processApplicationsThread, &ProcessThread::Applications::process);
     
     connect(listener, &Listener::connected, this, &MainApplication::listenerConnectedCallback);
     connect(listener, &Listener::disconnected, this, &MainApplication::listenerDisconnectedCallback);
@@ -160,13 +160,6 @@ void MainApplication::missedMessagesCallback(GotifyModel::Messages * messages)
         message->deleteLater();
     }
     messages->deleteLater();
-}
-
-
-void MainApplication::applicationsCallback(GotifyModel::Applications * applications)
-{
-    qDebug() << "Applications callback";
-    processApplicationsThread.process(applications);
 }
 
 
