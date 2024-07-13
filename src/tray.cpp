@@ -50,12 +50,6 @@ void Tray::setError()
 }
 
 
-void Tray::setUnread()
-{
-    setIcon(QIcon(":/res/icons/tray-unread.png"));
-}
-
-
 void Tray::revertIcon()
 {
     if (iconError) {

@@ -6,7 +6,6 @@
 #include <QAction>
 #include <QIcon>
 #include <QMenu>
-#include <QDebug>
 
 
 class Tray : public QSystemTrayIcon
@@ -17,7 +16,6 @@ public:
     
     void setActive();
     void setError();
-    void setUnread();
     void revertIcon();
 
     QAction * actionSettings;

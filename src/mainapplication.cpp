@@ -200,11 +200,6 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
         return;
     }
 
-    // Change the tray icon to show there are unread notifications
-    if (settings->trayUnreadEnabled()) {
-        tray->setUnread();
-    }
-
     QString file = cache->getFile(message->appId);
     if (file.isNull())
         resfreshApplications();
