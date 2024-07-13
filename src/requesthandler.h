@@ -38,7 +38,6 @@ signals:
     void finishedMessages(GotifyModel::Messages * messagesModel);
     void finishedMissedMessages(GotifyModel::Messages * messagesModel);
     void finishedApplications(GotifyModel::Applications * applicationsModel);
-    void finishedImagePopup(const QString& fileName, const QUrl& url, QPoint pos);
     void serverOk();
     /* Finished with an error */
     void replyError(QNetworkReply::NetworkError error);

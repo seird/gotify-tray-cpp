@@ -5,19 +5,7 @@
         <file>res/icons/tray.png</file>
         <file>res/icons/tray-error.png</file>
         <file>res/icons/tray-unread.png</file>
-        <file>res/themes/dark/refresh.svg</file>
-        <file>res/themes/dark/status_active.svg</file>
-        <file>res/themes/dark/status_connecting.svg</file>
-        <file>res/themes/dark/status_error.svg</file>
-        <file>res/themes/dark/status_inactive.svg</file>
         <file>res/themes/dark/ServerInfoDialog.qss</file>
-        <file>res/themes/dark/trashcan.svg</file>
-        <file>res/themes/light/refresh.svg</file>
-        <file>res/themes/light/status_active.svg</file>
-        <file>res/themes/light/status_connecting.svg</file>
-        <file>res/themes/light/status_error.svg</file>
-        <file>res/themes/light/status_inactive.svg</file>
         <file>res/themes/light/ServerInfoDialog.qss</file>
-        <file>res/themes/light/trashcan.svg</file>
     </qresource>
 </RCC>

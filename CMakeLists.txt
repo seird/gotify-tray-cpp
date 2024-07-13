@@ -31,26 +31,20 @@ qt_add_executable(gotify-tray++
     README.md
     src/tray.h src/tray.cpp
     src/mainapplication.h src/mainapplication.cpp
-    src/statuswidget.h src/statuswidget.cpp
     src/settings.h src/settings.cpp
-    src/messageitemmodel.h src/messageitemmodel.cpp
     src/gotifyapi.h src/gotifyapi.cpp
     src/requesthandler.h src/requesthandler.cpp
     src/gotifymodels.h src/gotifymodels.cpp
-    src/messageitem.h src/messageitem.cpp
     src/listener.h src/listener.cpp
-    src/applicationitem.h src/applicationitem.cpp
+    src/processthread.h src/processthread.cpp
+
     src/utils.h src/utils.cpp
-    src/applicationitemmodel.h src/applicationitemmodel.cpp
     src/cache.h src/cache.cpp
-    src/mainwindow.h src/mainwindow.cpp src/mainwindow.ui
-    src/messagewidget.h src/messagewidget.cpp src/messagewidget.ui
+
+
     src/serverinfodialog.h src/serverinfodialog.cpp src/serverinfodialog.ui
     src/settingsdialog.h src/settingsdialog.cpp src/settingsdialog.ui
     src/appversion.h src/appversion.cpp
-    src/clickablelabel.h src/clickablelabel.cpp
-    src/processthread.h src/processthread.cpp
-    src/imagepopup.h src/imagepopup.cpp
 
 )
 

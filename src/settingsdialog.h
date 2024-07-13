@@ -22,13 +22,8 @@ private:
     QThread * cacheThread;
 
     bool bChanged;
-    bool bFontChanged;
-    bool bSizeChanged;
-    bool bShowPriorityChanged;
 
     void readSettings();
-    void loadSizes();
-    void loadFonts();
     void connectComponents();
 
 private slots:
@@ -36,23 +31,8 @@ private slots:
     void resetSettings();
 
     void changed();
-    void fontChanged();
-    void sizeChanged();
-    void showPriorityChanged();
 
     void serverInfo();
-    void resetFontsSizes();
-    void titleFont();
-    void dateFont();
-    void messageFont();
-    void applicationFont();
-    void selectedApplicationFont();
-    void applicationIcon();
-    void messageApplicationIcon();
-    void mainButton();
-    void statusLabel();
-    void messageButton();
-    void messagePriority();
 
     void clearCache();
     void openCache();

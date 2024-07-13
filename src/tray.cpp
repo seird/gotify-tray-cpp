@@ -16,17 +16,12 @@ Tray::Tray(QObject * parent) : QSystemTrayIcon(parent)
     setToolTip(qApp->applicationName());
     setIcon(QIcon(":/res/icons/gotify-tray++.ico"));
 
-    actionShowWindow = new QAction("Show Window");
     actionSettings = new QAction("Settings");
     actionReconnect = new QAction("Reconnect");
     actionQuit = new QAction("Quit");
 
-    menu.addAction(actionShowWindow);
-    menu.addSeparator();
     menu.addAction(actionSettings);
-    menu.addSeparator();
     menu.addAction(actionReconnect);
-    menu.addSeparator();
     menu.addAction(actionQuit);
 
     setContextMenu(&menu);
@@ -35,7 +30,6 @@ Tray::Tray(QObject * parent) : QSystemTrayIcon(parent)
 
 Tray::~Tray()
 {
-    delete actionShowWindow;
     delete actionSettings;
     delete actionReconnect;
     delete actionQuit;

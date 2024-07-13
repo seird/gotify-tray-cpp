@@ -5,9 +5,6 @@
 #include <QJsonDocument>
 
 
-#define MIN(x, y) ((x) < (y) ? (x) : (y))
-
-
 Listener::Listener(QUrl serverUrl, QByteArray clientToken, QObject * parent)
     : QWebSocket(QString(), QWebSocketProtocol::VersionLatest, parent),
     secDelay(0.1)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>446</height>
+    <width>456</width>
+    <height>388</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,53 +65,6 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="spin_duration">
-            <property name="minimum">
-             <number>500</number>
-            </property>
-            <property name="maximum">
-             <number>30000</number>
-            </property>
-            <property name="singleStep">
-             <number>100</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="3">
-           <widget class="QCheckBox" name="cb_notification_click">
-            <property name="text">
-             <string>Clicking the notification pop-up opens the main window</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_notification_duration_ms">
-            <property name="text">
-             <string>ms</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QCheckBox" name="cb_notify">
-            <property name="text">
-             <string>Show a notification for missed messages after reconnecting</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QSpinBox" name="spin_priority">
             <property name="minimum">
@@ -125,6 +78,33 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_notification_duration_ms">
+            <property name="text">
+             <string>ms</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QCheckBox" name="cb_tray_icon_unread">
+            <property name="text">
+             <string>Change the tray icon color when there are unread notifications</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="spin_duration">
+            <property name="minimum">
+             <number>500</number>
+            </property>
+            <property name="maximum">
+             <number>30000</number>
+            </property>
+            <property name="singleStep">
+             <number>100</number>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_notification_priority">
             <property name="text">
@@ -132,53 +112,25 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="3">
-           <widget class="QCheckBox" name="cb_tray_icon_unread">
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="cb_notify">
             <property name="text">
-             <string>Change the tray icon color when there are unread notifications</string>
+             <string>Show a notification for missed messages after reconnecting</string>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="title">
-          <string>Interface</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QCheckBox" name="cb_priority_colors">
-            <property name="toolTip">
-             <string>4..7   -&gt; medium
-8..10 -&gt; high</string>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
-            <property name="text">
-             <string>Show message priority colors</string>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cb_image_urls">
-            <property name="text">
-             <string>Show image urls as images</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cb_locale">
-            <property name="text">
-             <string>Display date in the system locale format</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cb_sort_applications">
-            <property name="text">
-             <string>Sort the application list alphabetically (requires restart)</string>
-            </property>
-           </widget>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -199,7 +151,7 @@
           <item row="0" column="1">
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -215,359 +167,7 @@
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_fonts">
-      <attribute name="title">
-       <string>Fonts</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QPushButton" name="pb_reset_fonts_sizes">
-           <property name="text">
-            <string>Reset all fonts and sizes to default values</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Click on an element to change its font or size.</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_8">
-          <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="2" rowspan="3">
-             <widget class="Line" name="line">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="8">
-             <widget class="ClickableLabel" name="label_delete_all">
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="6">
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="7">
-             <widget class="ClickableLabel" name="label_refresh">
-              <property name="maximumSize">
-               <size>
-                <width>18</width>
-                <height>18</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3" colspan="6">
-             <widget class="Line" name="line_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="4">
-             <spacer name="horizontalSpacer_8">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="5">
-             <widget class="ClickableLabel" name="label_selected_application">
-              <property name="font">
-               <font>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="toolTip">
-               <string>Selected application font</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <property name="text">
-               <string>ALL MESSAGES</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="ClickableLabel" name="label_status">
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3" colspan="6">
-             <layout class="QGridLayout" name="gridLayoutMessage">
-              <item row="0" column="5">
-               <widget class="ClickableLabel" name="label_delete">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="scaledContents">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2" colspan="4">
-               <widget class="ClickableLabel" name="label_message">
-                <property name="toolTip">
-                 <string>Message font</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus.</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="ClickableLabel" name="label_title">
-                <property name="toolTip">
-                 <string>Title font</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Title</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <spacer name="horizontalSpacer_7">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="4">
-               <widget class="ClickableLabel" name="label_date">
-                <property name="toolTip">
-                 <string>Date font</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>31/01/2021 11:11</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="ClickableLabel" name="label_icon">
-                <property name="maximumSize">
-                 <size>
-                  <width>33</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="pixmap">
-                 <pixmap resource="../resources.qrc">:/res/icons/gotify-tray++.ico</pixmap>
-                </property>
-                <property name="scaledContents">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0" rowspan="2">
-               <widget class="ClickableLabel" name="label_priority">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="1" rowspan="3">
-             <layout class="QGridLayout" name="gridLayout_7">
-              <item row="2" column="0">
-               <spacer name="verticalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <item>
-                 <widget class="ClickableLabel" name="label_application_icon2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>33</width>
-                    <height>33</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="pixmap">
-                   <pixmap resource="../resources.qrc">:/res/icons/gotify-tray++.ico</pixmap>
-                  </property>
-                  <property name="scaledContents">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="ClickableLabel" name="label_application2">
-                  <property name="toolTip">
-                   <string>Application font</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>App 2</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout">
-                <item>
-                 <widget class="ClickableLabel" name="label_application_icon1">
-                  <property name="maximumSize">
-                   <size>
-                    <width>33</width>
-                    <height>33</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="pixmap">
-                   <pixmap resource="../resources.qrc">:/res/icons/gotify-tray++.ico</pixmap>
-                  </property>
-                  <property name="scaledContents">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="ClickableLabel" name="label_application1">
-                  <property name="toolTip">
-                   <string>Application font</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>App 1</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -585,90 +185,9 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QGroupBox" name="groupbox_image_popup">
-         <property name="title">
-          <string>Image pop-up for image URLs</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="toolTip">
-               <string>Maximum pop-up width</string>
-              </property>
-              <property name="text">
-               <string>Width</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spin_popup_w">
-              <property name="toolTip">
-               <string>Maximum pop-up width</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="minimum">
-               <number>100</number>
-              </property>
-              <property name="maximum">
-               <number>10000</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="toolTip">
-               <string>Maximum pop-up height</string>
-              </property>
-              <property name="text">
-               <string>Height</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spin_popup_h">
-              <property name="toolTip">
-               <string>Maximum pop-up height</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="minimum">
-               <number>100</number>
-              </property>
-              <property name="maximum">
-               <number>10000</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QGroupBox" name="groupBox_watchdog">
          <property name="title">
-          <string>Server watchdog thread (requires restart)</string>
+          <string>Server watchdog thread (re&amp;quires restart)</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -703,7 +222,7 @@
             <item>
              <spacer name="horizontalSpacer_4">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -748,7 +267,7 @@
           <item>
            <spacer name="horizontalSpacer_6">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -773,7 +292,7 @@
           <item row="0" column="3">
            <spacer name="horizontalSpacer_5">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -819,7 +338,7 @@
        <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -836,41 +355,22 @@
    <item row="1" column="4">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Apply|QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
-   </slots>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>spin_priority</tabstop>
   <tabstop>spin_duration</tabstop>
   <tabstop>cb_notify</tabstop>
-  <tabstop>cb_notification_click</tabstop>
   <tabstop>cb_tray_icon_unread</tabstop>
-  <tabstop>cb_priority_colors</tabstop>
-  <tabstop>cb_image_urls</tabstop>
-  <tabstop>cb_locale</tabstop>
-  <tabstop>cb_sort_applications</tabstop>
   <tabstop>pb_change_server_info</tabstop>
-  <tabstop>pb_reset_fonts_sizes</tabstop>
-  <tabstop>groupbox_image_popup</tabstop>
-  <tabstop>spin_popup_w</tabstop>
-  <tabstop>spin_popup_h</tabstop>
   <tabstop>groupBox_watchdog</tabstop>
   <tabstop>spin_watchdog_interval</tabstop>
   <tabstop>pb_clear_cache</tabstop>
@@ -879,9 +379,7 @@
   <tabstop>pb_open_log</tabstop>
   <tabstop>pb_reset</tabstop>
  </tabstops>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
@@ -1012,22 +510,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>cb_notification_click</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>172</x>
-     <y>150</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>410</x>
-     <y>174</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>cb_tray_icon_unread</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
@@ -1040,86 +522,6 @@
     <hint type="destinationlabel">
      <x>409</x>
      <y>212</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cb_locale</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>102</x>
-     <y>284</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>410</x>
-     <y>289</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cb_sort_applications</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>125</x>
-     <y>310</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>413</x>
-     <y>330</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>groupbox_image_popup</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>68</x>
-     <y>102</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>128</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spin_popup_w</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>119</x>
-     <y>91</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>162</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spin_popup_h</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>218</x>
-     <y>91</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>191</y>
     </hint>
    </hints>
   </connection>
@@ -1172,54 +574,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>label_title</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>titleFont()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>193</x>
-     <y>176</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>112</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_date</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>dateFont()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>368</x>
-     <y>176</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>206</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_message</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>messageFont()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>380</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>265</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pb_reset</sender>
    <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
@@ -1232,230 +586,6 @@
     <hint type="destinationlabel">
      <x>414</x>
      <y>179</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_application2</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>applicationFont()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>102</x>
-     <y>183</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>346</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_application1</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>applicationFont()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>86</x>
-     <y>140</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>380</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_selected_application</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>selectedApplicationFont()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>286</x>
-     <y>127</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>146</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_application_icon1</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>applicationIcon()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>45</x>
-     <y>129</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>6</x>
-     <y>107</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_application_icon2</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>applicationIcon()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>49</x>
-     <y>171</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>159</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_icon</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>messageApplicationIcon()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>165</x>
-     <y>176</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>243</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_refresh</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>mainButton()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>369</x>
-     <y>126</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>82</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_delete_all</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>mainButton()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>381</x>
-     <y>127</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>124</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_status</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>statusLabel()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>123</x>
-     <y>119</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>145</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_delete</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>messageButton()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>380</x>
-     <y>164</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>287</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pb_reset_fonts_sizes</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>resetFontsSizes()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>136</x>
-     <y>53</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>408</x>
-     <y>42</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cb_priority_colors</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showPriorityChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>94</x>
-     <y>233</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>407</x>
-     <y>245</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>label_priority</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>messagePriority()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>126</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>4</x>
-     <y>335</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cb_image_urls</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>54</x>
-     <y>246</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>440</x>
-     <y>234</y>
     </hint>
    </hints>
   </connection>

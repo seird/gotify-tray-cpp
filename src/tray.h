@@ -20,7 +20,6 @@ public:
     void setUnread();
     void revertIcon();
 
-    QAction * actionShowWindow;
     QAction * actionSettings;
     QAction * actionReconnect;
     QAction * actionQuit;

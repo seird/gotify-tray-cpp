@@ -12,14 +12,10 @@
 #include <QShortcut>
 #include <QPoint>
 
-#include "mainwindow.h"
 #include "tray.h"
 #include "gotifyapi.h"
-#include "messageitemmodel.h"
-#include "applicationitemmodel.h"
 #include "listener.h"
 #include "processthread.h"
-#include "imagepopup.h"
 
 
 class MainApplication : public QApplication
@@ -33,16 +29,11 @@ public:
     void quit();
 
 private:
-    MainWindow * mainWindow;
     Tray * tray;
-    MessageItemModel messageItemModel;
-    ApplicationItemModel applicationItemModel;
-    ApplicationProxyModel * applicationProxyModel;
     QLockFile * lockfile;
     QShortcut * shortcut_quit;
     GotifyApi * gotifyApi;
     Listener * listener;
-    ImagePopup * imagePopup;
     bool firstConnect;
     ProcessThread::Applications processApplicationsThread;
 
@@ -50,19 +41,11 @@ private:
     void initComponents();
     void connectComponents();
     void applyStyle();
-    void initShortcuts();
-    void addMessageToModel(GotifyModel::Message * message);
 
 private slots:
     void showSettings();
     void reconnectCallback();
-    void trayActivated(QSystemTrayIcon::ActivationReason reason);
-    void mainWindowHidden();
-    void refreshCallback();
-    void deleteAllCallback(ApplicationItem * applicationItem);
-    void deleteMessageCallback(MessageItem * item);
-    void applicationChangedCallback(ApplicationItem * item);
-    void showImagePopup(const QString& fileName, const QUrl& url, QPoint pos);
+    void resfreshApplications();
     void themeChangedCallback(Qt::ColorScheme colorScheme);
     void serverChangedCallback();
 
@@ -70,11 +53,8 @@ private slots:
     void listenerDisconnectedCallback();
     void messageReceivedCallback(GotifyModel::Message * message);
 
-    void messagesCallback(GotifyModel::Messages * messages);
     void missedMessagesCallback(GotifyModel::Messages * messages);
     void applicationsCallback(GotifyModel::Applications * applications);
-
-    void insertApplications(GotifyModel::Applications * applications);
 };
 
 #endif // MAINAPPLICATION_H

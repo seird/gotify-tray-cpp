@@ -1,6 +1,4 @@
 #include "requesthandler.h"
-#include "utils.h"
-#include "cache.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -114,33 +112,6 @@ void RequestHandler::testServer()
     }
 
     emit serverOk();
-    emit finished();
-    reply->deleteLater();
-}
-
-
-void RequestHandler::imagePopup(QPoint pos)
-{
-    QNetworkReply * reply = qobject_cast<QNetworkReply *>(sender());
-    if(!reply) {
-        emit finished();
-        return;
-    }
-
-    if (reply->error() != QNetworkReply::NetworkError::NoError) {
-        emit replyError(reply->error());
-        emit finished();
-        reply->deleteLater();
-        return;
-    }
-
-    QString fileName = Utils::getUuid();
-    QString filePath = cache->getFilesDir() + fileName;
-    Utils::writeFile(filePath, reply->readAll());
-    QUrl url = reply->request().url();
-    cache->store(url.toString(), fileName);
-
-    emit finishedImagePopup(filePath, url,  pos);
     emit finished();
     reply->deleteLater();
 }
