@@ -50,19 +50,6 @@ int Settings::lastId()
 
 
 //------------------------------------------------------------------------------
-void Settings::setNotifyMissed(bool mode)
-{
-    setValue("notifyMissed", mode);
-}
-
-
-bool Settings::notifyMissed()
-{
-    return value("notifyMissed", true).toBool();
-}
-
-
-//------------------------------------------------------------------------------
 void Settings::setNotifyMissedStart(bool mode)
 {
     setValue("notifyMissedStart", mode);

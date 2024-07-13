@@ -157,7 +157,7 @@ void MainApplication::missedMessagesCallback(GotifyModel::Messages * messages)
     while (it.hasNext()) {
         GotifyModel::Message * message = it.next();
 
-        if (lastId && message->id > lastId && settings->notifyMissed() && ctr++ < settings->notifyMissedLimit())
+        if (lastId && message->id > lastId && ctr++ < settings->notifyMissedLimit())
             messageReceivedCallback(message);
 
         if (message->id > highest) {
