@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
-    <height>328</height>
+    <width>440</width>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,37 +58,10 @@
           <string>Notifications</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="2" column="0" colspan="3">
-           <widget class="QCheckBox" name="cb_notify">
+          <item row="3" column="0" colspan="3">
+           <widget class="QCheckBox" name="cb_notify_start">
             <property name="text">
-             <string>Show a notification for missed messages after reconnecting</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="spin_priority">
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>10</number>
-            </property>
-            <property name="value">
-             <number>5</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_notification_priority">
-            <property name="text">
-             <string>Minimum priority to show notifications:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_notification_duration">
-            <property name="text">
-             <string>Notification duration:</string>
+             <string>Show a notification for missed messages at application start</string>
             </property>
            </widget>
           </item>
@@ -105,6 +78,20 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_notification_duration_ms">
+            <property name="text">
+             <string>ms</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_notification_duration">
+            <property name="text">
+             <string>Notification duration:</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="2">
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
@@ -118,10 +105,30 @@
             </property>
            </spacer>
           </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_notification_duration_ms">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_notification_priority">
             <property name="text">
-             <string>ms</string>
+             <string>Minimum priority to show notifications:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="spin_priority">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>5</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="3">
+           <widget class="QCheckBox" name="cb_notify">
+            <property name="text">
+             <string>Show a notification for missed messages after reconnecting</string>
             </property>
            </widget>
           </item>
@@ -260,7 +267,7 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>spin_priority</tabstop>
   <tabstop>spin_duration</tabstop>
-  <tabstop>cb_notify</tabstop>
+  <tabstop>cb_notify_start</tabstop>
   <tabstop>pb_change_server_info</tabstop>
   <tabstop>pb_clear_cache</tabstop>
   <tabstop>pb_open_cache_dir</tabstop>
@@ -381,7 +388,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>cb_notify</sender>
+   <sender>cb_notify_start</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>changed()</slot>

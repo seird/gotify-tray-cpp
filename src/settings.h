@@ -30,6 +30,12 @@ public:
     void setNotifyMissed(bool mode);
     bool notifyMissed();
 
+    void setNotifyMissedStart(bool mode);
+    bool notifyMissedStart();
+
+    void setNotifyMissedLimit(int value);
+    int notifyMissedLimit();
+
     void setNotificationPriority(int priority);
     int notificationPriority();
 

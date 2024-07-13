@@ -147,16 +147,24 @@ void MainApplication::resfreshApplications()
 
 void MainApplication::missedMessagesCallback(GotifyModel::Messages * messages)
 {
+    // From most recent to oldest
+
     int lastId = settings->lastId();
+    int highest = lastId;
+    int ctr = 0; // Limit the number of missed messages that will be displayed
+
     QListIterator it(messages->messages);
-    it.toBack();
-    while (it.hasPrevious()) {
-        GotifyModel::Message * message = it.previous();
-        if (message->id > lastId) {
-            if (settings->notifyMissed()) {
-                messageReceivedCallback(message);
-            }
+    while (it.hasNext()) {
+        GotifyModel::Message * message = it.next();
+
+        if (lastId && message->id > lastId && settings->notifyMissed() && ctr++ < settings->notifyMissedLimit())
+            messageReceivedCallback(message);
+
+        if (message->id > highest) {
+            highest = message->id;
+            settings->setLastId(message->id);
         }
+
         message->deleteLater();
     }
     messages->deleteLater();
@@ -170,7 +178,8 @@ void MainApplication::listenerConnectedCallback()
 
     if (firstConnect) {
         firstConnect = false;
-        return;
+        if (!settings->notifyMissedStart())
+            return;
     }
 
     QNetworkReply * reply = gotifyApi->messages();
@@ -188,6 +197,9 @@ void MainApplication::listenerDisconnectedCallback()
 
 void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
 {
+    if (message->id > settings->lastId())
+        settings->setLastId(message->id);
+
     // Don't show a notification if it's low priority
     if (message->priority < settings->notificationPriority()) {
         return;

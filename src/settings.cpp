@@ -63,6 +63,32 @@ bool Settings::notifyMissed()
 
 
 //------------------------------------------------------------------------------
+void Settings::setNotifyMissedStart(bool mode)
+{
+    setValue("notifyMissedStart", mode);
+}
+
+
+bool Settings::notifyMissedStart()
+{
+    return value("notifyMissedStart", true).toBool();
+}
+
+
+//------------------------------------------------------------------------------
+void Settings::setNotifyMissedLimit(int value)
+{
+    setValue("notifyMissedLimit", value);
+}
+
+
+int Settings::notifyMissedLimit()
+{
+    return value("notifyMissedLimit", 20).toInt();
+}
+
+
+//------------------------------------------------------------------------------
 void Settings::setNotificationPriority(int priority)
 {
     setValue("notificationPriority", priority);
