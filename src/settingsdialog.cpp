@@ -34,9 +34,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->spin_duration->hide();
 #endif
 
-    ui->groupBox_watchdog->hide();
-    ui->groupBox_logging->hide();
-
     readSettings();
     connectComponents();
     
@@ -94,10 +91,6 @@ void SettingsDialog::readSettings()
     ui->spin_duration->setValue(settings->notificationDurationMs());
     ui->cb_notify->setChecked(settings->notifyMissed());
     ui->cb_tray_icon_unread->setChecked(settings->trayUnreadEnabled());
-
-    // -------------------------- Advanced -------------------------
-    ui->groupBox_watchdog->setChecked(settings->watchdogEnabled());
-    ui->spin_watchdog_interval->setValue(settings->watchdogInterval());
 }
 
 
@@ -110,11 +103,6 @@ void SettingsDialog::saveSettings()
     settings->setNotificationDurationMs(ui->spin_duration->value());
     settings->setNotifyMissed(ui->cb_notify->isChecked());
     settings->setTrayUnreadEnabled(ui->cb_tray_icon_unread->isChecked());
-
-
-    // -------------------------- Advanced -------------------------
-    settings->setWatchdogEnabled(ui->groupBox_watchdog->isChecked());
-    settings->setWatchdogInterval(ui->spin_watchdog_interval->value());
 }
 
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>456</width>
-    <height>388</height>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -185,59 +185,6 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QGroupBox" name="groupBox_watchdog">
-         <property name="title">
-          <string>Server watchdog thread (re&amp;quires restart)</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_watchdog_interval">
-              <property name="text">
-               <string>Interval:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spin_watchdog_interval">
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>100000</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_watchdog_interval_s">
-              <property name="text">
-               <string>s</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QGroupBox" name="groupBox_cache">
          <property name="title">
           <string>Cache</string>
@@ -276,54 +223,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_logging">
-         <property name="title">
-          <string>Logging</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="1">
-           <widget class="QComboBox" name="combo_logging"/>
-          </item>
-          <item row="0" column="3">
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>190</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="pb_open_log">
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Open logfile</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_logging">
-            <property name="text">
-             <string>Level</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
@@ -371,12 +270,8 @@
   <tabstop>cb_notify</tabstop>
   <tabstop>cb_tray_icon_unread</tabstop>
   <tabstop>pb_change_server_info</tabstop>
-  <tabstop>groupBox_watchdog</tabstop>
-  <tabstop>spin_watchdog_interval</tabstop>
   <tabstop>pb_clear_cache</tabstop>
   <tabstop>pb_open_cache_dir</tabstop>
-  <tabstop>combo_logging</tabstop>
-  <tabstop>pb_open_log</tabstop>
   <tabstop>pb_reset</tabstop>
  </tabstops>
  <resources/>
@@ -522,38 +417,6 @@
     <hint type="destinationlabel">
      <x>409</x>
      <y>212</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>groupBox_watchdog</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>68</x>
-     <y>168</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>183</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spin_watchdog_interval</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>135</x>
-     <y>157</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>286</y>
     </hint>
    </hints>
   </connection>
