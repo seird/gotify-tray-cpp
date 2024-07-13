@@ -21,7 +21,7 @@ MainApplication::MainApplication(int &argc, char *argv[])
 {
     setApplicationName("Gotify Tray++");
     setApplicationVersion(appVersion.toString());
-    setDesktopFileName(applicationName() + ".desktop");
+    setDesktopFileName(applicationName());
     setQuitOnLastWindowClosed(false);
     setWindowIcon(QIcon(":/res/icons/gotify-tray++.ico"));
     applyStyle();
