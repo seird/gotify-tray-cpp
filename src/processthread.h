@@ -17,9 +17,6 @@ class Applications : public QThread
 public:
     void process(GotifyModel::Applications * applications);
 
-signals:
-    void processed(GotifyModel::Applications * applications);
-
 protected:
     virtual void run();
 

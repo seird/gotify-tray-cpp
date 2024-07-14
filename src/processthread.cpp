@@ -47,9 +47,10 @@ void Applications::run()
         Utils::writeFile(filePath, reply->readAll());
         cache->store(application->id, fi.fileName());
 
+        application->deleteLater();
         reply->deleteLater();
     }
-    emit processed(applications);
+    applications->deleteLater();
 }
 
 }
