@@ -76,6 +76,19 @@ int Settings::notifyMissedLimit()
 
 
 //------------------------------------------------------------------------------
+void Settings::setDeleteMessage(bool mode)
+{
+    setValue("deleteMessage", mode);
+}
+
+
+bool Settings::deleteMessage()
+{
+    return value("deleteMessage", false).toBool();
+}
+
+
+//------------------------------------------------------------------------------
 void Settings::setNotificationPriority(int priority)
 {
     setValue("notificationPriority", priority);

@@ -216,6 +216,9 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
         settings->notificationDurationMs()
     );
 
+    if (settings->deleteMessage())
+        gotifyApi->deleteMessage(message->id);
+
     message->deleteLater();
 }
 

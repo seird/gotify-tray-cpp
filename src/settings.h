@@ -36,6 +36,9 @@ public:
     void setNotifyMissedLimit(int value);
     int notifyMissedLimit();
 
+    void setDeleteMessage(bool mode);
+    bool deleteMessage();
+
     void setNotificationPriority(int priority);
     int notificationPriority();
 

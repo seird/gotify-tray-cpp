@@ -90,6 +90,7 @@ void SettingsDialog::readSettings()
     ui->spin_priority->setValue(settings->notificationPriority());
     ui->spin_duration->setValue(settings->notificationDurationMs());
     ui->cb_notify_start->setChecked(settings->notifyMissedStart());
+    ui->cb_delete->setChecked(settings->deleteMessage());
 }
 
 
@@ -101,6 +102,7 @@ void SettingsDialog::saveSettings()
     settings->setNotificationPriority(ui->spin_priority->value());
     settings->setNotificationDurationMs(ui->spin_duration->value());
     settings->setNotifyMissedStart(ui->cb_notify_start->isChecked());
+    settings->setDeleteMessage(ui->cb_delete->isChecked());
 }
 
 
