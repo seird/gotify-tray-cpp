@@ -14,6 +14,10 @@
 #include <QStyle>
 #include <QSystemTrayIcon>
 
+#ifdef USE_KDE
+#include <KNotification>
+#endif
+
 
 MainApplication::MainApplication(int &argc, char *argv[])
     : QApplication(argc, argv),
@@ -315,12 +319,27 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
         tray->setUnread();
     }
 
+#ifdef USE_KDE
+    // KDE KNotification
+    KNotification * notification = new KNotification(QStringLiteral("notification"));
+    notification->setComponentName(QStringLiteral("plasma_workspace"));
+    notification->setText(message->message);
+    notification->setTitle(message->title);
+    notification->setIconName(cache->getFile(message->appId));
+    if (settings->notificationClick()) {
+        KNotificationAction * action = notification->addAction(QStringLiteral("Open"));
+        QObject::connect(action, &KNotificationAction::activated, this, [this] {mainWindow->bringToFront();});
+    }
+    notification->sendEvent();
+#else
+    // QSystemTrayIcon Notification
     tray->showMessage(
         message->title,
         message->message,
         QIcon(cache->getFile(message->appId)),
         settings->notificationDurationMs()
     );
+#endif
 
     message->deleteLater();
 }
