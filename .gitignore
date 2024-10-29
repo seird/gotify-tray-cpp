@@ -75,3 +75,5 @@ dist
 build
 package
 .vscode
+compile_commands.json
+.cache
