@@ -64,16 +64,20 @@ void writeFile(QString fileName, QByteArray data)
 
 QString extractImage(QString text)
 {
-    static QRegularExpression reMD("(\\[.*?\\]\\((.+?://.+?)\\))");
-    QRegularExpressionMatch match = reMD.match(text);
-    if (match.hasMatch()) {
-        text = match.captured(2);
+    text = text.trimmed();
+
+    // Check for markdown image format: ![alt text](image_url)
+    static QRegularExpression reMD(R"(^\!\[.*?\]\((https?://[^\s]+\.(jpg|jpeg|png|gif|svg|webp|ico|tiff|bmp))\)$)");
+    QRegularExpressionMatch matchMD = reMD.match(text);
+    if (matchMD.hasMatch()) {
+        return matchMD.captured(1); // Return the image URL
     }
 
-    static QRegularExpression re("(https?)(://\\S+).(jpg|jpeg|png|gif|svg|webp|ico|tiff|bmp)(\\s|$)");
-    match = re.match(text);
-    if (match.hasMatch() && match.captured() == text) { // how to regex..
-        return match.captured();
+    // Check for plain image URL format
+    static QRegularExpression rePlain(R"(^https?://[^\s]+\.(jpg|jpeg|png|gif|svg|webp|ico|tiff|bmp)$)");
+    QRegularExpressionMatch matchPlain = rePlain.match(text);
+    if (matchPlain.hasMatch()) {
+        return matchPlain.captured(0); // Return the image URL
     }
 
     return QString();
