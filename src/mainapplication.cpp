@@ -326,9 +326,10 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     notification->setText(message->message);
     notification->setTitle(message->title);
     notification->setIconName(cache->getFile(message->appId));
+    notification->setUrgency(Utils::priorityToUrgency(message->priority));
     if (settings->notificationClick()) {
-        KNotificationAction * action = notification->addAction(QStringLiteral("Open"));
-        QObject::connect(action, &KNotificationAction::activated, this, [this] {mainWindow->bringToFront();});
+        KNotificationAction* action = notification->addDefaultAction(QStringLiteral("Open")); // default action -> triggered when clicking the popup
+        QObject::connect(action, &KNotificationAction::activated, this, [this] { mainWindow->bringToFront(); });
     }
     notification->sendEvent();
 #else

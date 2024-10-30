@@ -4,9 +4,9 @@
 
 #include <QWidget>
 
-
-namespace Utils
-{
+#ifdef USE_KDE
+#include <KNotification>
+#endif
 
 QString getTheme();
 void updateWidgetProperty(QWidget * widget, const char *name, const QVariant &value);
@@ -17,7 +17,11 @@ QString getUuid();
 bool isImage(const QString& fileName);
 qint64 dirSize(const QString& dirName);
 
-}
+#ifdef USE_KDE
+KNotification::Urgency
+priorityToUrgency(int priority);
+#endif
 
+}
 
 #endif // UTILS_H

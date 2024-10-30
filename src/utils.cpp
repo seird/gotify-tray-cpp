@@ -7,8 +7,10 @@
 #include <QFileInfo>
 #include <QRegularExpression>
 #include <QUuid>
-#include <QDirIterator>
 
+#ifdef USE_KDE
+#include <KNotification>
+#endif
 
 namespace Utils
 {
@@ -110,5 +112,23 @@ qint64 dirSize(const QString& dirName)
     return size;
 }
 
+#ifdef USE_KDE
+KNotification::Urgency
+priorityToUrgency(int priority)
+{
+    switch (priority) {
+        case 0 ... 3:
+            return KNotification::Urgency::LowUrgency;
+        case 4 ... 6:
+            return KNotification::Urgency::NormalUrgency;
+        case 7 ... 9:
+            return KNotification::Urgency::HighUrgency;
+        case 10:
+            return KNotification::Urgency::CriticalUrgency;
+        default:
+            return KNotification::Urgency::NormalUrgency;
+    }
+}
+#endif // USE_KDE
 
 }
