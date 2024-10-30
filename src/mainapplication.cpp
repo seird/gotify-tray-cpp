@@ -7,6 +7,7 @@
 #include "appversion.h"
 #include "processthread.h"
 #include "requesthandler.h"
+#include "utils.h"
 
 #include <QShortcut>
 #include <QKeySequence>
