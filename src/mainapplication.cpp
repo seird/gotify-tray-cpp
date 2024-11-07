@@ -321,8 +321,8 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     }
 
 #ifdef USE_KDE
-    // KDE KNotification
-    KNotification * notification = new KNotification(QStringLiteral("notification"));
+    // KDE KNotification -- https://api.kde.org/frameworks/knotifications/html/classKNotification.html
+    KNotification* notification = new KNotification(QStringLiteral("notification"));
     notification->setComponentName(QStringLiteral("plasma_workspace"));
     notification->setText(message->message);
     notification->setTitle(message->title);
@@ -336,11 +336,10 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
 #else
     // QSystemTrayIcon Notification
     tray->showMessage(
-        message->title,
-        message->message,
-        QIcon(cache->getFile(message->appId)),
-        settings->notificationDurationMs()
-    );
+      message->title,
+      message->message,
+      QIcon(cache->getFile(message->appId)),
+      settings->notificationDurationMs());
 #endif
 
     message->deleteLater();
