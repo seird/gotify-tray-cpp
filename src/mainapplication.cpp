@@ -1,18 +1,22 @@
 #include "mainapplication.h"
-#include "serverinfodialog.h"
-#include "settingsdialog.h"
-#include "settings.h"
-#include "cache.h"
 #include "appversion.h"
+#include "cache.h"
 #include "requesthandler.h"
+#include "serverinfodialog.h"
+#include "settings.h"
+#include "settingsdialog.h"
+#include "utils.h"
 
-#include <QStyleHints>
 #include <QStyle>
+#include <QStyleHints>
 
+#ifdef USE_KDE
+#include <KNotification>
+#endif
 
-MainApplication::MainApplication(int &argc, char *argv[])
-    : QApplication(argc, argv),
-      firstConnect(true)
+MainApplication::MainApplication(int& argc, char* argv[])
+  : QApplication(argc, argv)
+  , firstConnect(true)
 {
     setApplicationName("Gotify Tray++");
     setApplicationVersion(appVersion.toString());
@@ -28,17 +32,19 @@ MainApplication::MainApplication(int &argc, char *argv[])
     lockfile = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + applicationName() + ".lock");
 }
 
-
 MainApplication::~MainApplication()
 {
     delete lockfile;
-    if (gotifyApi) delete gotifyApi;
-    if (listener) delete listener;
-    if (tray) delete tray;
+    if (gotifyApi)
+        delete gotifyApi;
+    if (listener)
+        delete listener;
+    if (tray)
+        delete tray;
 }
 
-
-void MainApplication::init()
+void
+MainApplication::init()
 {
     initComponents();
     initGui();
@@ -49,8 +55,8 @@ void MainApplication::init()
     listener->startListening();
 }
 
-
-void MainApplication::initComponents()
+void
+MainApplication::initComponents()
 {
     QUrl serverUrl = settings->serverUrl();
     QByteArray clientToken = settings->clientToken();
@@ -59,15 +65,15 @@ void MainApplication::initComponents()
     tray = new Tray();
 }
 
-
-void MainApplication::initGui()
+void
+MainApplication::initGui()
 {
     tray->setError();
     tray->show();
 }
 
-
-bool MainApplication::acquireLock()
+bool
+MainApplication::acquireLock()
 {
 #ifdef QT_DEBUG
     return true;
@@ -77,8 +83,8 @@ bool MainApplication::acquireLock()
 #endif
 }
 
-
-bool MainApplication::verifyServer(bool forceNew, bool import)
+bool
+MainApplication::verifyServer(bool forceNew, bool import)
 {
     QUrl url = settings->serverUrl();
     QByteArray clientToken = settings->clientToken();
@@ -91,8 +97,8 @@ bool MainApplication::verifyServer(bool forceNew, bool import)
     }
 }
 
-
-void MainApplication::connectComponents()
+void
+MainApplication::connectComponents()
 {
     connect(tray->actionSettings, &QAction::triggered, this, &MainApplication::showSettings);
     connect(tray->actionReconnect, &QAction::triggered, this, &MainApplication::reconnectCallback);
@@ -102,7 +108,7 @@ void MainApplication::connectComponents()
 
     connect(requestHandler, &RequestHandler::finishedMissedMessages, this, &MainApplication::missedMessagesCallback);
     connect(requestHandler, &RequestHandler::finishedApplications, &processApplicationsThread, &ProcessThread::Applications::process);
-    
+
     connect(listener, &Listener::connected, this, &MainApplication::listenerConnectedCallback);
     connect(listener, &Listener::disconnected, this, &MainApplication::listenerDisconnectedCallback);
     connect(listener, &Listener::messageReceived, this, &MainApplication::messageReceivedCallback);
@@ -111,15 +117,15 @@ void MainApplication::connectComponents()
     connect(settings, &Settings::quitRequested, this, &MainApplication::quit);
 }
 
-
-void MainApplication::showSettings()
+void
+MainApplication::showSettings()
 {
     SettingsDialog dialog;
     dialog.exec();
 }
 
-
-void MainApplication::serverChangedCallback()
+void
+MainApplication::serverChangedCallback()
 {
     QUrl url = settings->serverUrl();
     QByteArray token = settings->clientToken();
@@ -128,8 +134,8 @@ void MainApplication::serverChangedCallback()
     reconnectCallback();
 }
 
-
-void MainApplication::reconnectCallback()
+void
+MainApplication::reconnectCallback()
 {
     if (listener->isConnected())
         listener->close();
@@ -137,15 +143,15 @@ void MainApplication::reconnectCallback()
         listener->startListening();
 }
 
-
-void MainApplication::resfreshApplications()
+void
+MainApplication::resfreshApplications()
 {
-    QNetworkReply * reply = gotifyApi->applications();
+    QNetworkReply* reply = gotifyApi->applications();
     connect(reply, &QNetworkReply::finished, requestHandler, &RequestHandler::applications);
 }
 
-
-void MainApplication::missedMessagesCallback(GotifyModel::Messages * messages)
+void
+MainApplication::missedMessagesCallback(GotifyModel::Messages* messages)
 {
     // From most recent to oldest
 
@@ -155,7 +161,7 @@ void MainApplication::missedMessagesCallback(GotifyModel::Messages * messages)
 
     QListIterator it(messages->messages);
     while (it.hasNext()) {
-        GotifyModel::Message * message = it.next();
+        GotifyModel::Message* message = it.next();
 
         if (lastId && message->id > lastId && ctr++ < settings->notifyMissedLimit())
             messageReceivedCallback(message);
@@ -170,8 +176,8 @@ void MainApplication::missedMessagesCallback(GotifyModel::Messages * messages)
     messages->deleteLater();
 }
 
-
-void MainApplication::listenerConnectedCallback()
+void
+MainApplication::listenerConnectedCallback()
 {
     qDebug() << "Listener connected";
     tray->setActive();
@@ -182,20 +188,20 @@ void MainApplication::listenerConnectedCallback()
             return;
     }
 
-    QNetworkReply * reply = gotifyApi->messages();
-    connect(reply, &QNetworkReply::finished, requestHandler, [this]{requestHandler->messages(true);});
+    QNetworkReply* reply = gotifyApi->messages();
+    connect(reply, &QNetworkReply::finished, requestHandler, [this] { requestHandler->messages(true); });
 }
 
-
-void MainApplication::listenerDisconnectedCallback()
+void
+MainApplication::listenerDisconnectedCallback()
 {
     qDebug() << "Listener disconnected";
     tray->setError();
     listener->startListening();
 }
 
-
-void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
+void
+MainApplication::messageReceivedCallback(GotifyModel::Message* message)
 {
     if (message->id > settings->lastId())
         settings->setLastId(message->id);
@@ -209,12 +215,24 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     if (file.isNull())
         resfreshApplications();
 
+#ifdef USE_KDE
+    // KDE KNotification -- https://api.kde.org/frameworks/knotifications/html/classKNotification.html
+    KNotification* notification = new KNotification(QStringLiteral("notification"));
+    notification->setComponentName(QStringLiteral("plasma_workspace"));
+    notification->setText(message->message);
+    notification->setTitle(message->title);
+    notification->setIconName(cache->getFile(message->appId));
+    notification->setUrgency(Utils::priorityToUrgency(message->priority));
+    notification->sendEvent();
+#else
+    // QSystemTrayIcon Notification
     tray->showMessage(
-        message->title,
-        message->message,
-        QIcon(file),
-        settings->notificationDurationMs()
+      message->title,
+      message->message,
+      QIcon(cache->getFile(message->appId)),
+      settings->notificationDurationMs());
     );
+#endif
 
     if (settings->deleteMessage())
         gotifyApi->deleteMessage(message->id);
@@ -222,14 +240,14 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     message->deleteLater();
 }
 
-
-void MainApplication::themeChangedCallback(Qt::ColorScheme colorScheme)
+void
+MainApplication::themeChangedCallback(Qt::ColorScheme colorScheme)
 {
     applyStyle();
 }
 
-
-void MainApplication::applyStyle()
+void
+MainApplication::applyStyle()
 {
 // Check if this is necessary on other DEs as well
 #ifdef Q_OS_WIN
@@ -238,8 +256,9 @@ void MainApplication::applyStyle()
 #endif
 }
 
-
-void MainApplication::quit(){
+void
+MainApplication::quit()
+{
     qDebug() << "Quit requested";
 
     tray->hide();
