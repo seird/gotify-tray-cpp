@@ -25,6 +25,12 @@ QString
 extractImage(QString text);
 
 QString
+replaceLinks(QString text);
+
+bool
+containsHtml(QString text);
+
+QString
 getUuid();
 
 bool
