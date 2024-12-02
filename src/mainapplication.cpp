@@ -7,12 +7,17 @@
 #include "appversion.h"
 #include "processthread.h"
 #include "requesthandler.h"
+#include "utils.h"
 
 #include <QShortcut>
 #include <QKeySequence>
 #include <QStyleHints>
 #include <QStyle>
 #include <QSystemTrayIcon>
+
+#ifdef USE_KDE
+#include <KNotification>
+#endif
 
 
 MainApplication::MainApplication(int &argc, char *argv[])
@@ -315,12 +320,27 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
         tray->setUnread();
     }
 
+#ifdef USE_KDE
+    // KDE KNotification -- https://api.kde.org/frameworks/knotifications/html/classKNotification.html
+    KNotification* notification = new KNotification(QStringLiteral("notification"));
+    notification->setComponentName(QStringLiteral("plasma_workspace"));
+    notification->setText(message->message);
+    notification->setTitle(message->title);
+    notification->setIconName(cache->getFile(message->appId));
+    notification->setUrgency(Utils::priorityToUrgency(message->priority));
+    if (settings->notificationClick()) {
+        KNotificationAction* action = notification->addDefaultAction(QStringLiteral("Open")); // default action -> triggered when clicking the popup
+        QObject::connect(action, &KNotificationAction::activated, this, [this] { mainWindow->bringToFront(); });
+    }
+    notification->sendEvent();
+#else
+    // QSystemTrayIcon Notification
     tray->showMessage(
-        message->title,
-        message->message,
-        QIcon(cache->getFile(message->appId)),
-        settings->notificationDurationMs()
-    );
+      message->title,
+      message->message,
+      QIcon(cache->getFile(message->appId)),
+      settings->notificationDurationMs());
+#endif
 
     message->deleteLater();
 }

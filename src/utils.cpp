@@ -1,45 +1,46 @@
 #include "utils.h"
 
 #include <QApplication>
-#include <QStyleHints>
-#include <QStyle>
+#include <QDirIterator>
 #include <QFile>
 #include <QFileInfo>
 #include <QRegularExpression>
+#include <QStyle>
+#include <QStyleHints>
 #include <QUuid>
-#include <QDirIterator>
 
+#ifdef USE_KDE
+#include <KNotification>
+#endif
 
-namespace Utils
+namespace Utils {
+
+QString
+getTheme()
 {
-
-
-QString getTheme()
-{
-    switch (qApp->styleHints()->colorScheme())
-    {
-    case Qt::ColorScheme::Dark:
-        return QStringLiteral("dark");
-    case Qt::ColorScheme::Light:
-        return QStringLiteral("light");
-    default:
-        // fallback to custom method
-        return (qApp->palette().color(QPalette::Active, QPalette::Base).lightness() < 127) ? QStringLiteral("dark") : QStringLiteral("light");
+    switch (qApp->styleHints()->colorScheme()) {
+        case Qt::ColorScheme::Dark:
+            return QStringLiteral("dark");
+        case Qt::ColorScheme::Light:
+            return QStringLiteral("light");
+        default:
+            // fallback to custom method
+            return (qApp->palette().color(QPalette::Active, QPalette::Base).lightness() < 127) ? QStringLiteral("dark") : QStringLiteral("light");
     }
 }
 
-
-void updateWidgetProperty(QWidget * widget, const char *name, const QVariant &value)
+void
+updateWidgetProperty(QWidget* widget, const char* name, const QVariant& value)
 {
     widget->setProperty(name, value);
-    QStyle * style = widget->style();
+    QStyle* style = widget->style();
     style->unpolish(widget);
     style->polish(widget);
     widget->update();
 }
 
-
-QString readFile(QString fileName)
+QString
+readFile(QString fileName)
 {
     QFile file;
     file.setFileName(fileName);
@@ -52,8 +53,8 @@ QString readFile(QString fileName)
     return text;
 }
 
-
-void writeFile(QString fileName, QByteArray data)
+void
+writeFile(QString fileName, QByteArray data)
 {
     QFile file(fileName);
     file.open(QFile::WriteOnly);
@@ -61,8 +62,8 @@ void writeFile(QString fileName, QByteArray data)
     file.close();
 }
 
-
-QString extractImage(QString text)
+QString
+extractImage(QString text)
 {
     text = text.trimmed();
 
@@ -83,23 +84,23 @@ QString extractImage(QString text)
     return QString();
 }
 
-
-QString getUuid()
+QString
+getUuid()
 {
     return QUuid::createUuid().toString(QUuid::Id128);
 }
 
-
-bool isImage(const QString& fileName)
+bool
+isImage(const QString& fileName)
 {
     QFileInfo fi(fileName);
     QString ext = fi.suffix();
-    static QStringList imageExts = {"jpg", "jpeg", "png", "gif", "svg", "webp", "ico", "tiff", "bmp"};
+    static QStringList imageExts = { "jpg", "jpeg", "png", "gif", "svg", "webp", "ico", "tiff", "bmp" };
     return imageExts.contains(ext);
 }
 
-
-qint64 dirSize(const QString& dirName)
+qint64
+dirSize(const QString& dirName)
 {
     QDirIterator it(dirName, QDirIterator::Subdirectories);
     qint64 size = 0;
@@ -110,5 +111,23 @@ qint64 dirSize(const QString& dirName)
     return size;
 }
 
+#ifdef USE_KDE
+KNotification::Urgency
+priorityToUrgency(int priority)
+{
+    switch (priority) {
+        case 0 ... 3:
+            return KNotification::Urgency::LowUrgency;
+        case 4 ... 6:
+            return KNotification::Urgency::NormalUrgency;
+        case 7 ... 9:
+            return KNotification::Urgency::HighUrgency;
+        case 10:
+            return KNotification::Urgency::CriticalUrgency;
+        default:
+            return KNotification::Urgency::NormalUrgency;
+    }
+}
+#endif // USE_KDE
 
 }

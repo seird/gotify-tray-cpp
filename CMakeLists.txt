@@ -9,6 +9,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(KF6Notifications QUIET)
+if(KF6Notifications_FOUND)
+    add_definitions(-DUSE_KDE)
+endif()
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network WebSockets Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network WebSockets Sql)
 
@@ -53,6 +58,12 @@ qt_add_executable(gotify-tray++
     src/imagepopup.h src/imagepopup.cpp
 
 )
+
+if(KF6Notifications_FOUND)
+target_link_libraries(gotify-tray++ PRIVATE
+    KF6::Notifications
+)
+endif()
 
 target_link_libraries(gotify-tray++ PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::Sql)
 
