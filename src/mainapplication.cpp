@@ -324,7 +324,11 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     // KDE KNotification -- https://api.kde.org/frameworks/knotifications/html/classKNotification.html
     KNotification* notification = new KNotification(QStringLiteral("notification"));
     notification->setComponentName(QStringLiteral("plasma_workspace"));
-    notification->setText(message->message);
+
+    QString text = message->message;
+    if (!Utils::containsHtml(message->message) && !message->markdown)
+        text = Utils::replaceLinks(message->message);
+    notification->setText(text);
     notification->setTitle(message->title);
     notification->setIconName(cache->getFile(message->appId));
     notification->setUrgency(Utils::priorityToUrgency(message->priority));
