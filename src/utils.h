@@ -21,6 +21,12 @@ readFile(QString fileName);
 void
 writeFile(QString fileName, QByteArray data);
 
+QString
+replaceLinks(QString text);
+
+bool
+containsHtml(QString text);
+
 qint64
 dirSize(const QString& dirName);
 

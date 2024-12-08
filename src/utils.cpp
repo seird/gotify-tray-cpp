@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QDirIterator>
 #include <QFile>
+#include <QRegularExpression>
 #include <QStyle>
 #include <QStyleHints>
 
@@ -58,6 +59,22 @@ writeFile(QString fileName, QByteArray data)
     file.write(data);
     file.close();
 }
+
+
+QString replaceLinks(QString text)
+{
+    static QRegularExpression re("(https?)(://\\S+)");
+    return text.replace(re, "<a href='\\1\\2'>\\1\\2</a>");
+}
+
+
+bool containsHtml(QString text)
+{
+    static QRegularExpression regex(R"(<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*>.*<\/\1>)");
+    QRegularExpressionMatch matchHTML = regex.match(text);
+    return matchHTML.hasMatch();
+}
+
 
 qint64
 dirSize(const QString& dirName)
