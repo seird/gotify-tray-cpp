@@ -84,8 +84,23 @@ extractImage(QString text)
     return QString();
 }
 
-QString
-getUuid()
+
+QString replaceLinks(QString text)
+{
+    static QRegularExpression re("(https?)(://\\S+)");
+    return text.replace(re, "<a href='\\1\\2'>\\1\\2</a>");
+}
+
+
+bool containsHtml(QString text)
+{
+    static QRegularExpression regex(R"(<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*>.*<\/\1>)");
+    QRegularExpressionMatch matchHTML = regex.match(text);
+    return matchHTML.hasMatch();
+}
+
+
+QString getUuid()
 {
     return QUuid::createUuid().toString(QUuid::Id128);
 }

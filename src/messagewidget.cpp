@@ -5,7 +5,6 @@
 #include "cache.h"
 #include "requesthandler.h"
 
-#include <QRegularExpression>
 #include <QLocale>
 #include <QSize>
 #include <QEventLoop>
@@ -49,7 +48,11 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     if (!image.isNull()) {
         setImage(image);
     } else {
-        ui->label_message->setText(replaceLinks(item->message()));
+        QString text = item->message();
+        if (!Utils::containsHtml(item->message()) && !item->markdown())
+            text = Utils::replaceLinks(item->message());
+
+        ui->label_message->setText(text);
         if (item->markdown())
             ui->label_message->setTextFormat(Qt::MarkdownText);
     }
@@ -167,11 +170,4 @@ void MessageWidget::setPriorityColor(int priority)
         ui->label_priority->setStyleSheet("background-color: #b3e67e22;");
     else if (priority > 7)
         ui->label_priority->setStyleSheet("background-color: #e74c3c;");
-}
-
-
-QString MessageWidget::replaceLinks(QString text)
-{
-    static QRegularExpression re("(https?)(://\\S+)");
-    return text.replace(re, "<a href=\"\\1\\2\">\\1\\2</a>");
 }

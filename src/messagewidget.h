@@ -35,7 +35,6 @@ private:
     QNetworkAccessManager * manager;
 
     void setImage(QString url);
-    QString replaceLinks(QString text);
     void setPriorityColor(int priority);
 };
 
