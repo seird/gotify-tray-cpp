@@ -1,7 +1,7 @@
 #include "processthread.h"
-#include "utils.h"
 #include "cache.h"
 #include "settings.h"
+#include "utils.h"
 
 #include <QFileInfo>
 #include <QNetworkAccessManager>
@@ -50,6 +50,41 @@ void Applications::run()
         reply->deleteLater();
     }
     emit processed(applications);
+}
+
+void
+Message::process(GotifyModel::Message* message)
+{
+    this->message = message;
+    start();
+}
+
+void
+Message::run()
+{
+    QNetworkAccessManager manager;
+    QNetworkRequest request;
+    QEventLoop eventLoop;
+    QUrl url = settings->serverUrl();
+
+    // Check for image and download if not in cache
+    // TODO: extract all urls and check if each one is an image url or not
+    QString imageUrl = Utils::extractImage(message->message);
+    if (!imageUrl.isNull() && cache->getFile(url).isNull()) {
+        request.setUrl(QUrl(url));
+        QNetworkReply* reply = manager.get(request);
+        connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+        eventLoop.exec();
+
+        // Write the file and store in cache
+        QString fileName = Utils::getUuid();
+        QString filePath = cache->getFilesDir() + fileName;
+        Utils::writeFile(filePath, reply->readAll());
+        cache->store(url, fileName);
+        reply->deleteLater();
+    }
+
+    emit processed(message);
 }
 
 }

@@ -136,6 +136,7 @@ void MainApplication::connectComponents()
     connect(requestHandler, &RequestHandler::finishedImagePopup, this, &MainApplication::showImagePopup);
 
     connect(&processApplicationsThread, &ProcessThread::Applications::processed, this, &MainApplication::insertApplications);
+    connect(&processMessageThread, &ProcessThread::Message::processed, this, &MainApplication::showKNotification);
 
     connect(listener, &Listener::connected, this, &MainApplication::listenerConnectedCallback);
     connect(listener, &Listener::disconnected, this, &MainApplication::listenerDisconnectedCallback);
@@ -321,6 +322,22 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     }
 
 #ifdef USE_KDE
+    // First process the message in case it's an image, which can be displayed in the notification itself
+    processMessageThread.process(message); // TODO: what about messagewidget images
+#else
+    // QSystemTrayIcon Notification
+    tray->showMessage(
+      message->title,
+      message->message,
+      QIcon(cache->getFile(message->appId)),
+      settings->notificationDurationMs());
+    message->deleteLater();
+#endif
+}
+
+void
+MainApplication::showKNotification(GotifyModel::Message* message)
+{
     // KDE KNotification -- https://api.kde.org/frameworks/knotifications/html/classKNotification.html
     KNotification* notification = new KNotification(QStringLiteral("notification"));
     notification->setComponentName(QStringLiteral("plasma_workspace"));
@@ -336,15 +353,15 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
         KNotificationAction* action = notification->addDefaultAction(QStringLiteral("Open")); // default action -> triggered when clicking the popup
         QObject::connect(action, &KNotificationAction::activated, this, [this] { mainWindow->bringToFront(); });
     }
+
+    // TODO: extract all urls and check if each one is an image url or not
+    QString imageUrl = Utils::extractImage(message->message);
+    if (!imageUrl.isNull()) {
+        QList<QUrl> urls;
+        urls.append(QUrl("file://" + cache->getFile(imageUrl)));
+        notification->setUrls(urls);
+    }
     notification->sendEvent();
-#else
-    // QSystemTrayIcon Notification
-    tray->showMessage(
-      message->title,
-      message->message,
-      QIcon(cache->getFile(message->appId)),
-      settings->notificationDurationMs());
-#endif
 
     message->deleteLater();
 }

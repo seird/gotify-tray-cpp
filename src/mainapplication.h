@@ -45,6 +45,7 @@ private:
     ImagePopup * imagePopup;
     bool firstConnect;
     ProcessThread::Applications processApplicationsThread;
+    ProcessThread::Message processMessageThread;
 
     void initGui();
     void initComponents();
@@ -68,7 +69,8 @@ private slots:
 
     void listenerConnectedCallback();
     void listenerDisconnectedCallback();
-    void messageReceivedCallback(GotifyModel::Message * message);
+    void messageReceivedCallback(GotifyModel::Message* message);
+    void showKNotification(GotifyModel::Message* message);
 
     void messagesCallback(GotifyModel::Messages * messages);
     void missedMessagesCallback(GotifyModel::Messages * messages);
