@@ -65,25 +65,24 @@ Message::run()
     QNetworkAccessManager manager;
     QNetworkRequest request;
     QEventLoop eventLoop;
-    QUrl url = settings->serverUrl();
 
     // Check for image and download if not in cache
-    // TODO: extract all urls and check if each one is an image url or not
-    QString imageUrl = Utils::extractImage(message->message);
-    if (!imageUrl.isNull() && cache->getFile(url).isNull()) {
-        request.setUrl(QUrl(url));
-        QNetworkReply* reply = manager.get(request);
-        connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
-        eventLoop.exec();
+    QList<QString> urls = Utils::extractURLs(message->message);
+    for (auto url : urls) {
+        if (!url.isNull() && cache->getFile(url).isNull()) {
+            request.setUrl(QUrl(url));
+            QNetworkReply* reply = manager.get(request);
+            connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+            eventLoop.exec();
 
-        // Write the file and store in cache
-        QString fileName = Utils::getUuid();
-        QString filePath = cache->getFilesDir() + fileName;
-        Utils::writeFile(filePath, reply->readAll());
-        cache->store(url, fileName);
-        reply->deleteLater();
+            // Write the file and store in cache
+            QString fileName = Utils::getUuid();
+            QString filePath = cache->getFilesDir() + fileName;
+            Utils::writeFile(filePath, reply->readAll());
+            cache->store(url, fileName);
+            reply->deleteLater();
+        }
     }
-
     emit processed(message);
 }
 

@@ -84,6 +84,21 @@ extractImage(QString text)
     return QString();
 }
 
+QList<QString>
+extractURLs(QString text)
+{
+    QList<QString> urls;
+
+    // QRegularExpression re(R"((https?://[^\s]+|www\.[^\s]+))");
+    QRegularExpression re(R"((https?://[^\s)]+|www\.[^\s)]+))");
+    QRegularExpressionMatchIterator i = re.globalMatch(text);
+    while (i.hasNext()) {
+        QRegularExpressionMatch match = i.next();
+        urls.append(match.captured(0));
+    }
+
+    return urls;
+}
 
 QString replaceLinks(QString text)
 {

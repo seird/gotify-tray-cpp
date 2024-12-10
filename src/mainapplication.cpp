@@ -354,15 +354,18 @@ MainApplication::showKNotification(GotifyModel::Message* message)
         QObject::connect(action, &KNotificationAction::activated, this, [this] { mainWindow->bringToFront(); });
     }
 
-    // TODO: extract all urls and check if each one is an image url or not
-    QString imageUrl = Utils::extractImage(message->message);
-    if (!imageUrl.isNull()) {
-        QList<QUrl> urls;
-        urls.append(QUrl("file://" + cache->getFile(imageUrl)));
-        notification->setUrls(urls);
-    }
-    notification->sendEvent();
+    QList<QUrl> urls;
+    for (auto url : Utils::extractURLs(message->message)) {
+        QString imageUrl = Utils::extractImage(url);
 
+        if (!imageUrl.isNull()) {
+            urls.append(QUrl("file://" + cache->getFile(imageUrl)));
+            break; // Only add 1 image url
+        }
+    }
+
+    notification->setUrls(urls);
+    notification->sendEvent();
     message->deleteLater();
 }
 

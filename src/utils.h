@@ -24,6 +24,9 @@ writeFile(QString fileName, QByteArray data);
 QString
 extractImage(QString text);
 
+QList<QString>
+extractURLs(QString text);
+
 QString
 replaceLinks(QString text);
 
