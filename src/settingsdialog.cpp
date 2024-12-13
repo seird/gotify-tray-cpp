@@ -74,7 +74,7 @@ void SettingsDialog::clearCache()
 
 void SettingsDialog::openCache()
 {
-    QDesktopServices::openUrl(QUrl("file:///" + cache->getDir(), QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(cache->getDir()));
 }
 
 
