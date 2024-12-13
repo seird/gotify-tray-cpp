@@ -70,7 +70,10 @@ private slots:
     void listenerConnectedCallback();
     void listenerDisconnectedCallback();
     void messageReceivedCallback(GotifyModel::Message* message);
+    
+#ifdef USE_KDE
     void showKNotification(GotifyModel::Message* message);
+#endif
 
     void messagesCallback(GotifyModel::Messages * messages);
     void missedMessagesCallback(GotifyModel::Messages * messages);

@@ -69,6 +69,9 @@ public:
     void setShowImageUrl(bool mode);
     bool showImageUrl();
 
+    void setShowNotificationImage(bool mode);
+    bool showNotificationImage();
+
     void setPriorityColor(bool mode);
     bool priorityColor();
 

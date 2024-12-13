@@ -323,7 +323,10 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
 
 #ifdef USE_KDE
     // First process the message in case it's an image, which can be displayed in the notification itself
-    processMessageThread.process(message); // TODO: what about messagewidget images
+    if (settings->showNotificationImage())
+        processMessageThread.process(message);
+    else
+        showKNotification(message);
 #else
     // QSystemTrayIcon Notification
     tray->showMessage(
@@ -335,6 +338,7 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
 #endif
 }
 
+#ifdef USE_KDE
 void
 MainApplication::showKNotification(GotifyModel::Message* message)
 {
@@ -354,20 +358,25 @@ MainApplication::showKNotification(GotifyModel::Message* message)
         QObject::connect(action, &KNotificationAction::activated, this, [this] { mainWindow->bringToFront(); });
     }
 
-    QList<QUrl> urls;
-    for (auto url : Utils::extractURLs(message->message)) {
-        QString imageUrl = Utils::extractImage(url);
+    // Set image url on the notification
+    if (settings->showNotificationImage()) {
+        QList<QUrl> urls;
+        for (auto url : Utils::extractURLs(message->message)) {
+            QString imageUrl = Utils::extractImage(url);
 
-        if (!imageUrl.isNull()) {
-            urls.append(QUrl("file://" + cache->getFile(imageUrl)));
-            break; // Only add 1 image url
+            QString filePath;
+            if (!imageUrl.isNull() && !(filePath = cache->getFile(imageUrl)).isNull()) {
+                urls.append(QUrl::fromLocalFile(filePath));
+                break; // Only add 1 image url
+            }
         }
+        notification->setUrls(urls);
     }
-
-    notification->setUrls(urls);
+    
     notification->sendEvent();
     message->deleteLater();
 }
+#endif // USE_KDE
 
 
 void MainApplication::deleteAllCallback(ApplicationItem * applicationItem)

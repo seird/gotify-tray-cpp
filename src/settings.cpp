@@ -220,6 +220,19 @@ bool Settings::showImageUrl()
 
 
 //------------------------------------------------------------------------------
+void Settings::setShowNotificationImage(bool mode)
+{
+    setValue("showNotificationImage", mode);
+}
+
+
+bool Settings::showNotificationImage()
+{
+    return value("showNotificationImage", true).toBool();
+}
+
+
+//------------------------------------------------------------------------------
 void Settings::setPriorityColor(bool mode)
 {
     setValue("priorityColor", mode);
