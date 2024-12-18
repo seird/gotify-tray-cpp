@@ -53,13 +53,16 @@ readFile(QString fileName)
     return text;
 }
 
-void
+bool
 writeFile(QString fileName, QByteArray data)
 {
     QFile file(fileName);
-    file.open(QFile::WriteOnly);
-    file.write(data);
-    file.close();
+    if (file.open(QFile::WriteOnly)) {
+        file.write(data);
+        file.close();
+        return true;
+    }
+    return false;
 }
 
 QString

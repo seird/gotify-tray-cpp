@@ -18,7 +18,7 @@ updateWidgetProperty(QWidget* widget, const char* name, const QVariant& value);
 QString
 readFile(QString fileName);
 
-void
+bool
 writeFile(QString fileName, QByteArray data);
 
 QString
