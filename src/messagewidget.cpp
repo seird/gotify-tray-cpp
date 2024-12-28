@@ -49,7 +49,7 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
         setImage(image);
     } else {
         QString text = item->message();
-        if (!Utils::containsHtml(item->message()) && !item->markdown())
+        if (!Utils::containsHtml(item->message()))
             text = Utils::replaceLinks(item->message());
 
         ui->label_message->setText(text);

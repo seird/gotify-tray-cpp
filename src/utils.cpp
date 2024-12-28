@@ -90,7 +90,7 @@ extractImage(QString text)
 
 QString replaceLinks(QString text)
 {
-    static QRegularExpression re("(https?)(://\\S+)");
+    static QRegularExpression re("(https?)(://[^\\s)]+)(?=\\)?)");
     return text.replace(re, "<a href='\\1\\2'>\\1\\2</a>");
 }
 
