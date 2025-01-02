@@ -195,6 +195,8 @@ void MainApplication::mainWindowHidden()
 
 void MainApplication::refreshCallback()
 {
+    themeChangedCallback(Qt::ColorScheme::Unknown);
+
     mainWindow->disableApplications();
     mainWindow->disableButtons();
     messageItemModel.clear();
