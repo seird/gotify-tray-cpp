@@ -19,10 +19,10 @@
 #include <KNotification>
 #endif
 
-
-MainApplication::MainApplication(int &argc, char *argv[])
-    : QApplication(argc, argv),
-      firstConnect(true)
+MainApplication::MainApplication(int& argc, char* argv[])
+  : QApplication(argc, argv)
+  , firstConnect(true)
+  , lastHeartbeat(QDateTime::currentMSecsSinceEpoch())
 {
     setApplicationName("Gotify Tray++");
     setApplicationVersion(appVersion.toString());
@@ -61,6 +61,8 @@ void MainApplication::init()
     connect(reply, &QNetworkReply::finished, requestHandler, &RequestHandler::applications);
 
     listener->startListening();
+
+    heartbeatTimer->start(settings->heartbeatInterval());
 }
 
 
@@ -74,6 +76,7 @@ void MainApplication::initComponents()
     mainWindow = new MainWindow(&messageItemModel, &applicationItemModel, applicationProxyModel);
     tray = new Tray();
     imagePopup = new ImagePopup(mainWindow);
+    heartbeatTimer = new QTimer(this);
 }
 
 
@@ -143,6 +146,8 @@ void MainApplication::connectComponents()
 
     connect(settings, &Settings::serverChanged, this, &MainApplication::serverChangedCallback);
     connect(settings, &Settings::quitRequested, this, &MainApplication::quit);
+
+    connect(heartbeatTimer, &QTimer::timeout, this, &MainApplication::heartbeat);
 }
 
 
@@ -402,6 +407,14 @@ void MainApplication::applyStyle()
 #endif
 }
 
+void
+MainApplication::heartbeat()
+{
+    if (QDateTime::currentMSecsSinceEpoch() > (lastHeartbeat + 2 * settings->heartbeatInterval()))
+        reconnectCallback();
+
+    lastHeartbeat = QDateTime::currentMSecsSinceEpoch();
+}
 
 void MainApplication::quit(){
     qDebug() << "Quit requested";

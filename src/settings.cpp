@@ -486,3 +486,10 @@ bool Settings::sortApplications()
 {
     return value("sortApplications", true).toBool();
 }
+
+//------------------------------------------------------------------------------
+int
+Settings::heartbeatInterval()
+{
+    return value("heartbeatInterval", 60000).toInt();
+}

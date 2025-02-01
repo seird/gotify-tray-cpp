@@ -45,6 +45,8 @@ private:
     ImagePopup * imagePopup;
     bool firstConnect;
     ProcessThread::Applications processApplicationsThread;
+    QTimer* heartbeatTimer;
+    qint64 lastHeartbeat;
 
     void initGui();
     void initComponents();
@@ -74,7 +76,9 @@ private slots:
     void missedMessagesCallback(GotifyModel::Messages * messages);
     void applicationsCallback(GotifyModel::Applications * applications);
 
-    void insertApplications(GotifyModel::Applications * applications);
+    void insertApplications(GotifyModel::Applications* applications);
+
+    void heartbeat();
 };
 
 #endif // MAINAPPLICATION_H

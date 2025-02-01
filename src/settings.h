@@ -126,7 +126,9 @@ public:
     void setSortApplications(bool mode);
     bool sortApplications();
 
-signals:
+    int heartbeatInterval();
+
+  signals:
     void serverChanged();
     void sizeChanged();
     void fontChanged();
