@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: 
           fetch-depth: 0
       - name: Install Qt
@@ -27,7 +27,7 @@ jobs:
       - name: create-installer
         run: iscc scripts/gotify-tray++.iss
         shell: cmd
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: gotify-tray++-setup.exe
           path: dist/gotify-tray++-setup.exe
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with: 
           name: gotify-tray++-setup.exe
       - name: Rename installer
