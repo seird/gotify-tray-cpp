@@ -71,17 +71,17 @@ extractImage(QString text)
     text = text.trimmed();
 
     // Check for markdown image format: ![alt text](image_url)
-    static QRegularExpression reMD(R"(^\!\[.*?\]\((https?://[^\s]+\.(jpg|jpeg|png|gif|svg|webp|ico|tiff|bmp))\)$)");
+    QRegularExpression reMD(R"(!\[\]\((https?://[^\s\)]+)\))");
     QRegularExpressionMatch matchMD = reMD.match(text);
     if (matchMD.hasMatch()) {
-        return matchMD.captured(1); // Return the image URL
+        return matchMD.captured(1).trimmed(); // Return the image URL
     }
 
     // Check for plain image URL format
-    static QRegularExpression rePlain(R"(^https?://[^\s]+\.(jpg|jpeg|png|gif|svg|webp|ico|tiff|bmp)$)");
+    static QRegularExpression rePlain(R"(\s*(https?://[^\s]+\.(jpg|jpeg|png|gif|svg|webp|ico|tiff|bmp))\s*)");
     QRegularExpressionMatch matchPlain = rePlain.match(text);
     if (matchPlain.hasMatch()) {
-        return matchPlain.captured(0); // Return the image URL
+        return matchPlain.captured(0).trimmed(); // Return the image URL
     }
 
     return QString();

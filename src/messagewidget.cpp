@@ -1,18 +1,18 @@
 #include "messagewidget.h"
-#include "ui_messagewidget.h"
-#include "settings.h"
-#include "utils.h"
 #include "cache.h"
 #include "requesthandler.h"
+#include "settings.h"
+#include "ui_messagewidget.h"
+#include "utils.h"
 
-#include <QLocale>
-#include <QSize>
+#include <QClipboard>
 #include <QEventLoop>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QFileInfo>
 #include <QListView>
-
+#include <QLocale>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QSize>
 
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
@@ -36,26 +36,27 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     ui->label_title->setText(item->title());
 
     // Date
-    ui->label_date->setText(
-        (settings->useLocale() ?
-            QLocale::system().toString(item->date(), QLocale::FormatType::ShortFormat) :
-            item->date().toString("yyyy-MM-dd, hh:mm"))
-        + " "
-    );
+    ui->label_date->setText((settings->useLocale() ? QLocale::system().toString(item->date(), QLocale::FormatType::ShortFormat) : item->date().toString("yyyy-MM-dd, hh:mm")) + " ");
 
-    // Message -- if it's an image, display it in the message label
-    QString image = settings->showImageUrl() ? Utils::extractImage(item->message()) : QString();
-    if (!image.isNull()) {
-        setImage(image);
+    // Message image: if the text contains an image url, display it in the content_image label
+    imageUrl = Utils::extractImage(item->message());
+    if (settings->showImageUrl() && !imageUrl.isNull())
+        setImage(imageUrl);
+    else
+        ui->label_content_image->hide();
+
+    // Message text
+    QString text = item->message();
+    if (settings->showImageUrl() && imageUrl == text) {
+        ui->label_message->hide();
     } else {
-        QString text = item->message();
         if (!Utils::containsHtml(item->message()))
             text = Utils::replaceLinks(item->message());
-
         ui->label_message->setText(text);
-        if (item->markdown())
-            ui->label_message->setTextFormat(Qt::MarkdownText);
     }
+
+    if (item->markdown())
+        ui->label_message->setTextFormat(Qt::MarkdownText);
 
     // Size
     adjustSize();
@@ -114,16 +115,14 @@ void MessageWidget::setImage(QString url)
     QPixmap pixmap(filePath);
     float W = settings->messageWidgetContentImageWidth();
     float H = settings->messageWidgetContentImageHeight();
-    QListView * lv = static_cast<QListView *>(parent());
-    W *= lv->width() - ui->label_image->width();
+    QListView* lv = static_cast<QListView*>(parent());
+    W *= lv->width() - ui->label_content_image->width();
     H *= lv->height();
 
     if (pixmap.width() > W || pixmap.height() > H)
-        ui->label_message->setPixmap(pixmap.scaled(W, H, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        ui->label_content_image->setPixmap(pixmap.scaled(W, H, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     else
-        ui->label_message->setPixmap(pixmap);
-
-    adjustSize();
+        ui->label_content_image->setPixmap(pixmap);
 }
 
 
@@ -132,6 +131,11 @@ void MessageWidget::deleteCallback()
     emit deletionRequested();
 }
 
+void
+MessageWidget::clickedContentImage()
+{
+    QGuiApplication::clipboard()->setText(imageUrl);
+}
 
 void MessageWidget::linkHoveredCallback(const QString& link)
 {
