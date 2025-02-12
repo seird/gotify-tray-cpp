@@ -202,7 +202,7 @@ void Settings::setMessageWidgetContentImageHeight(float height)
 
 float Settings::messageWidgetContentImageHeight()
 {
-    return value("messageWidgetContentImageHeight", 0.4f).toFloat();
+    return value("messageWidgetContentImageHeight", 0.3f).toFloat();
 }
 
 
