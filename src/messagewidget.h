@@ -35,7 +35,7 @@ private:
     Ui::MessageWidget * ui;
     QNetworkAccessManager * manager;
 
-    void setImage(QString url);
+    bool setImage(QString url);
     void setPriorityColor(int priority);
     QString imageUrl;
 };

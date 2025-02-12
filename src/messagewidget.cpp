@@ -39,10 +39,13 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     ui->label_date->setText((settings->useLocale() ? QLocale::system().toString(item->date(), QLocale::FormatType::ShortFormat) : item->date().toString("yyyy-MM-dd, hh:mm")) + " ");
 
     // Message image: if the text contains an image url, display it in the content_image label
-    imageUrl = Utils::extractImage(item->message());
-    if (settings->showImageUrl() && !imageUrl.isNull())
-        setImage(imageUrl);
-    else
+    QString image = Utils::extractImage(item->message());
+    if (settings->showImageUrl() && !image.isNull()) {
+        if (setImage(image))
+            imageUrl = image;
+        else
+            ui->label_content_image->hide();
+    } else
         ui->label_content_image->hide();
 
     // Message text
@@ -89,8 +92,8 @@ void MessageWidget::setIcons()
     ui->pb_delete->setFixedSize(settings->messageButtonSize());
 }
 
-
-void MessageWidget::setImage(QString url)
+bool
+MessageWidget::setImage(QString url)
 {
     QString filePath = cache->getFile(url);
     if (filePath.isNull()) {
@@ -101,7 +104,13 @@ void MessageWidget::setImage(QString url)
         request.setUrl(QUrl(url));
         QNetworkReply * reply = manager->get(request);
         connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
-        eventLoop.exec();
+        eventLoop.exec(); // TODO: this should run in a non-blocking way. Note that adjustSize() must be called AFTER setting the content_image label
+
+        if (reply->error() != QNetworkReply::NetworkError::NoError) {
+            qDebug() << reply->errorString();
+            reply->deleteLater();
+            return false;
+        }
 
         // Write the file and store in cache
         QString fileName = Utils::getUuid();
@@ -123,6 +132,8 @@ void MessageWidget::setImage(QString url)
         ui->label_content_image->setPixmap(pixmap.scaled(W, H, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     else
         ui->label_content_image->setPixmap(pixmap);
+
+    return true;
 }
 
 
