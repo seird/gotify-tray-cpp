@@ -28,14 +28,16 @@ signals:
 
 private slots:
     void deleteCallback();
+    void clickedContentImage();
     void linkHoveredCallback(const QString& link);
 
 private:
     Ui::MessageWidget * ui;
     QNetworkAccessManager * manager;
 
-    void setImage(QString url);
+    bool setImage(QString url);
     void setPriorityColor(int priority);
+    QString imageUrl;
 };
 
 #endif // MESSAGEWIDGET_H
