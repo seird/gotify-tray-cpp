@@ -339,6 +339,15 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     notification->setTitle(message->title);
     notification->setIconName(cache->getFile(message->appId));
     notification->setUrgency(Utils::priorityToUrgency(message->priority));
+
+    // Set image url on the notification
+    QList<QUrl> urls;
+    QString imageUrl = Utils::extractImage(message->message);
+    QString filePath = cache->getFile(imageUrl);
+    if (!filePath.isNull())
+        urls.append(QUrl::fromLocalFile(filePath));
+    notification->setUrls(urls);
+
     if (settings->notificationClick()) {
         KNotificationAction* action = notification->addDefaultAction(QStringLiteral("Open")); // default action -> triggered when clicking the popup
         QObject::connect(action, &KNotificationAction::activated, this, [this] { mainWindow->bringToFront(); });
