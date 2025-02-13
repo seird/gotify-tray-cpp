@@ -67,8 +67,9 @@ void SettingsDialog::serverInfo()
 {
     QUrl url = settings->serverUrl();
     QByteArray clientToken = settings->clientToken();
+    QString certPath = settings->selfSignedCertificatePath();
 
-    ServerInfoDialog dialog(this, url, clientToken, false);
+    ServerInfoDialog dialog(this, url, clientToken, certPath);
     dialog.exec();
 }
 

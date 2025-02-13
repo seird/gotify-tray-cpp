@@ -128,6 +128,9 @@ public:
 
     int heartbeatInterval();
 
+    void setSelfSignedCertificatePath(QString path);
+    QString selfSignedCertificatePath();
+
   signals:
     void serverChanged();
     void sizeChanged();

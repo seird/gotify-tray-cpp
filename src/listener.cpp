@@ -1,27 +1,31 @@
 #include "listener.h"
+#include "settings.h"
+#include "utils.h"
 
-#include <QUrlQuery>
-#include <QTimer>
 #include <QJsonDocument>
-
+#include <QTimer>
+#include <QUrlQuery>
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
-
-Listener::Listener(QUrl serverUrl, QByteArray clientToken, QObject * parent)
-    : QWebSocket(QString(), QWebSocketProtocol::VersionLatest, parent),
-    secDelay(0.1)
+Listener::Listener(QUrl serverUrl, QByteArray clientToken, QString certPath, QObject* parent)
+  : QWebSocket(QString(), QWebSocketProtocol::VersionLatest, parent)
+  , secDelay(0.1)
 {
-    updateAuth(serverUrl, clientToken);
+    updateAuth(serverUrl, clientToken, certPath);
     connect(this, &QWebSocket::connected, this, [this]{secDelay = 0.1;});
     connect(this, &QWebSocket::textMessageReceived, this, &Listener::textMessageReceivedHandler);
 }
 
-
-void Listener::updateAuth(QUrl serverUrl, QByteArray clientToken)
+void
+Listener::updateAuth(QUrl serverUrl, QByteArray clientToken, QString certPath)
 {
     this->serverUrl = serverUrl;
     this->clientToken = clientToken;
+    this->certPath = certPath;
+
+    if (serverUrl.scheme() == "https" && !certPath.isNull())
+        ignoreSslErrors(Utils::getSelfSignedExpectedErrors(certPath));
 }
 
 

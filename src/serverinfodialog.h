@@ -16,13 +16,14 @@ class ServerInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ServerInfoDialog(QWidget * parent = nullptr, QUrl url = QUrl(), QByteArray clientToken = nullptr, bool import = true);
+    explicit ServerInfoDialog(QWidget* parent = nullptr, QUrl url = QUrl(), QByteArray clientToken = nullptr, QString certPath = "");
     ~ServerInfoDialog();
 
 private slots:
     void acceptedCallback();
     void inputChangedCallback();
-    void importCallback();
+    void urlChangedCallback(QString text);
+    void certificateCallback();
     void testCallback();
     void testSuccessCallback();
     void testErrorCallback(QNetworkReply::NetworkError error, QString errorString);
@@ -30,6 +31,7 @@ private slots:
 private:
     GotifyApi * gotifyApi;
     Ui::ServerInfoDialog *ui;
+    QString certPath;
 
     void enableInputs();
     void disableInputs();

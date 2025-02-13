@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <QSslError>
 #include <QWidget>
 
 #ifdef USE_KDE
@@ -38,6 +39,9 @@ isImage(const QString& fileName);
 
 qint64
 dirSize(const QString& dirName);
+
+QList<QSslError>
+getSelfSignedExpectedErrors(QString certPath);
 
 #ifdef USE_KDE
 KNotification::Urgency

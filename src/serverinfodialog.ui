@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>310</width>
+    <width>351</width>
     <height>169</height>
    </rect>
   </property>
@@ -15,18 +15,12 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="4">
-    <widget class="QPushButton" name="pb_import">
-     <property name="maximumSize">
-      <size>
-       <width>30</width>
-       <height>16777215</height>
-      </size>
-     </property>
+    <widget class="QPushButton" name="pb_certificate">
      <property name="toolTip">
-      <string>Import settings</string>
+      <string>Import self-signed server certificate</string>
      </property>
      <property name="text">
-      <string>...</string>
+      <string>Certificate</string>
      </property>
     </widget>
    </item>
@@ -127,7 +121,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
-     <y>274</y>
+     <y>168</y>
     </hint>
    </hints>
   </connection>
@@ -143,7 +137,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
-     <y>274</y>
+     <y>168</y>
     </hint>
    </hints>
   </connection>
@@ -196,13 +190,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>pb_import</sender>
+   <sender>pb_certificate</sender>
    <signal>clicked()</signal>
    <receiver>ServerInfoDialog</receiver>
-   <slot>importCallback()</slot>
+   <slot>certificateCallback()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>112</x>
+     <x>117</x>
      <y>85</y>
     </hint>
     <hint type="destinationlabel">
@@ -211,10 +205,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>line_url</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ServerInfoDialog</receiver>
+   <slot>urlChangedCallback(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>219</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>168</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>inputChangedCallback()</slot>
   <slot>testCallback()</slot>
-  <slot>importCallback()</slot>
+  <slot>certificateCallback()</slot>
+  <slot>urlChangedCallback(QString)</slot>
  </slots>
 </ui>

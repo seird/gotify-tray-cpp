@@ -129,6 +129,21 @@ dirSize(const QString& dirName)
     return size;
 }
 
+QList<QSslError>
+getSelfSignedExpectedErrors(QString certPath)
+{
+    QList<QSslCertificate> cert = QSslCertificate::fromPath(certPath);
+    if (!cert.size()) {
+        qDebug() << "Self-signed server certificate not found:" << certPath;
+        return QList<QSslError>{};
+    }
+
+    QSslError error(QSslError::SelfSignedCertificate, cert.at(0));
+    QList<QSslError> expectedSslErrors;
+    expectedSslErrors.append(error);
+    return expectedSslErrors;
+}
+
 #ifdef USE_KDE
 KNotification::Urgency
 priorityToUrgency(int priority)

@@ -1,19 +1,21 @@
 #include "gotifyapi.h"
+#include "utils.h"
 
-
-GotifyApi::GotifyApi(QUrl severUrl, QByteArray clientToken, QObject * parent) : QNetworkAccessManager(parent)
+GotifyApi::GotifyApi(QUrl severUrl, QByteArray clientToken, QString certPath, QObject* parent)
+  : QNetworkAccessManager(parent)
 {
-    updateAuth(severUrl, clientToken);
+    updateAuth(severUrl, clientToken, certPath);
 
     request.setRawHeader("Content-Type", "application/json");
     request.setRawHeader("Accept", "application/json");
 }
 
 
-void GotifyApi::updateAuth(QUrl severUrl, QByteArray clientToken)
+void GotifyApi::updateAuth(QUrl severUrl, QByteArray clientToken, QString certPath)
 {
     this->serverUrl = severUrl;
     this->clientToken = clientToken;
+    this->certPath = certPath;
     request.setRawHeader("X-Gotify-Key", clientToken);
 }
 
@@ -24,20 +26,31 @@ QNetworkReply * GotifyApi::get(QString endpoint, QUrlQuery query)
     url.setPath(endpoint);
     url.setQuery(query);
     request.setUrl(url);
-    return QNetworkAccessManager::get(request);
+
+    QNetworkReply* reply = QNetworkAccessManager::get(request);
+
+    if (serverUrl.scheme() == "https" && !certPath.isNull())
+        reply->ignoreSslErrors(Utils::getSelfSignedExpectedErrors(certPath));
+
+    return reply;
 }
 
-
-QNetworkReply * GotifyApi::deleteResource(QString endpoint)
+QNetworkReply*
+GotifyApi::deleteResource(QString endpoint)
 {
     QUrl url(serverUrl);
     url.setPath(endpoint);
     request.setUrl(url);
-    return QNetworkAccessManager::deleteResource(request);
+    QNetworkReply* reply = QNetworkAccessManager::deleteResource(request);
+
+    if (serverUrl.scheme() == "https" && !certPath.isNull())
+        reply->ignoreSslErrors(Utils::getSelfSignedExpectedErrors(certPath));
+
+    return reply;
 }
 
-
-QNetworkReply * GotifyApi::applications()
+QNetworkReply*
+GotifyApi::applications()
 {
     return get("/application");
 }

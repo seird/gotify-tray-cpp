@@ -29,7 +29,7 @@ public:
     ~MainApplication();
     void init();
     bool acquireLock();
-    bool verifyServer(bool forceNew = false, bool import = false);
+    bool verifyServer(bool forceNew = false);
     void quit();
 
 private:

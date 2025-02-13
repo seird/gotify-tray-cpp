@@ -70,8 +70,9 @@ void MainApplication::initComponents()
 {
     QUrl serverUrl = settings->serverUrl();
     QByteArray clientToken = settings->clientToken();
-    gotifyApi = new GotifyApi(serverUrl, clientToken);
-    listener = new Listener(serverUrl, clientToken);
+    QString certPath = settings->selfSignedCertificatePath();
+    gotifyApi = new GotifyApi(serverUrl, clientToken, certPath);
+    listener = new Listener(serverUrl, clientToken, certPath);
     applicationProxyModel = new ApplicationProxyModel(&applicationItemModel);
     mainWindow = new MainWindow(&messageItemModel, &applicationItemModel, applicationProxyModel);
     tray = new Tray();
@@ -100,14 +101,13 @@ bool MainApplication::acquireLock()
 #endif
 }
 
-
-bool MainApplication::verifyServer(bool forceNew, bool import)
+bool MainApplication::verifyServer(bool forceNew)
 {
     QUrl url = settings->serverUrl();
     QByteArray clientToken = settings->clientToken();
 
     if (forceNew || url.isEmpty() || clientToken.isEmpty()) {
-        ServerInfoDialog dialog(NULL, url, clientToken, import);
+        ServerInfoDialog dialog(NULL, url, clientToken, settings->selfSignedCertificatePath());
         return dialog.exec();
     } else {
         return true;
@@ -169,8 +169,9 @@ void MainApplication::serverChangedCallback()
 {
     QUrl url = settings->serverUrl();
     QByteArray token = settings->clientToken();
-    gotifyApi->updateAuth(url, token);
-    listener->updateAuth(url, token);
+    QString certPath = settings->selfSignedCertificatePath();
+    gotifyApi->updateAuth(url, token, certPath);
+    listener->updateAuth(url, token, certPath);
     reconnectCallback();
 }
 

@@ -14,9 +14,9 @@ class Listener : public QWebSocket
 {
     Q_OBJECT
 public:
-    Listener(QUrl serverUrl, QByteArray clientToken, QObject * parent = nullptr);
+    Listener(QUrl serverUrl, QByteArray clientToken, QString certPath = "", QObject* parent = nullptr);
 
-    void updateAuth(QUrl serverUrl, QByteArray clientToken);
+    void updateAuth(QUrl serverUrl, QByteArray clientToken, QString certPath = "");
     void startListening();
     bool isConnected();
 
@@ -29,6 +29,7 @@ private slots:
 private:
     QUrl serverUrl;
     QByteArray clientToken;
+    QString certPath;
 
     QTimer * timer;
     float secDelay;

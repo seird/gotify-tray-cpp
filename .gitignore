@@ -77,3 +77,4 @@ package
 .vscode
 compile_commands.json
 .cache
+*.pem

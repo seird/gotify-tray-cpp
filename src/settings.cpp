@@ -493,3 +493,16 @@ Settings::heartbeatInterval()
 {
     return value("heartbeatInterval", 60000).toInt();
 }
+
+//------------------------------------------------------------------------------
+void
+Settings::setSelfSignedCertificatePath(QString path)
+{
+    setValue("selfSignedCertificatePath", path);
+}
+
+QString
+Settings::selfSignedCertificatePath()
+{
+    return value("selfSignedCertificatePath", "").toString();
+}
