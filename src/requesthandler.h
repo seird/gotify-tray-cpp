@@ -14,7 +14,7 @@
  * Each handler:
  *      - corresponds to a GotifyApi method.
  *      - emits a GotifyModel upon successful handling
- *      - emits a QNetworkReply::NetworkError when a handler error occurs
+ *      - emits a QNetworkReply::NetworkError and QString when a handler error occurs
  *
  * Connect the corresponding handler to the GotifyApi::<> finished signal.
  * Connect to the finished<> signals to receive the GotifyModel.
@@ -41,7 +41,7 @@ signals:
     void finishedImagePopup(const QString& fileName, const QUrl& url, QPoint pos);
     void serverOk();
     /* Finished with an error */
-    void replyError(QNetworkReply::NetworkError error);
+    void replyError(QNetworkReply::NetworkError error, QString errorString);
     void parseError();
 };
 

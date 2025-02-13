@@ -25,7 +25,7 @@ private slots:
     void importCallback();
     void testCallback();
     void testSuccessCallback();
-    void testErrorCallback(QNetworkReply::NetworkError error);
+    void testErrorCallback(QNetworkReply::NetworkError error, QString errorString);
 
 private:
     GotifyApi * gotifyApi;

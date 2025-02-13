@@ -28,7 +28,7 @@ void RequestHandler::applications()
     }
 
     if (reply->error() != QNetworkReply::NetworkError::NoError) {
-        emit replyError(reply->error());
+        emit replyError(reply->error(), reply->errorString());
         emit finished();
         reply->deleteLater();
         return;
@@ -59,7 +59,7 @@ void RequestHandler::messages(bool missed)
     }
 
     if (reply->error() != QNetworkReply::NetworkError::NoError) {
-        emit replyError(reply->error());
+        emit replyError(reply->error(), reply->errorString());
         emit finished();
         reply->deleteLater();
         return;
@@ -98,7 +98,7 @@ void RequestHandler::testServer()
     }
 
     if (reply->error() != QNetworkReply::NetworkError::NoError) {
-        emit replyError(reply->error());
+        emit replyError(reply->error(), reply->errorString());
         emit finished();
         reply->deleteLater();
         return;
@@ -128,7 +128,7 @@ void RequestHandler::imagePopup(QPoint pos)
     }
 
     if (reply->error() != QNetworkReply::NetworkError::NoError) {
-        emit replyError(reply->error());
+        emit replyError(reply->error(), reply->errorString());
         emit finished();
         reply->deleteLater();
         return;

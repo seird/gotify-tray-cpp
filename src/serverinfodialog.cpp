@@ -98,34 +98,46 @@ void ServerInfoDialog::testCallback()
     connect(reply, &QNetworkReply::finished, requestHandler, &RequestHandler::testServer);
 }
 
-
-void ServerInfoDialog::testSuccessCallback()
+void
+ServerInfoDialog::testSuccessCallback()
 {
     Utils::updateWidgetProperty(ui->pb_test, "state", "success");
     Utils::updateWidgetProperty(ui->line_token, "state", "success");
     Utils::updateWidgetProperty(ui->line_url, "state", "success");
+
+    ui->label_status->setText("Server information verified");
+
+    setMinimumWidth(width());
+    adjustSize();
 
     enableInputs();
     ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok)->setEnabled(true);
     ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok)->setFocus();
 }
 
-
-void ServerInfoDialog::testErrorCallback(QNetworkReply::NetworkError error)
+void
+ServerInfoDialog::testErrorCallback(QNetworkReply::NetworkError error, QString errorString)
 {
     switch (error) {
-    case QNetworkReply::AuthenticationRequiredError:
-        Utils::updateWidgetProperty(ui->pb_test, "state", "failed");
-        Utils::updateWidgetProperty(ui->line_token, "state", "failed");
-        Utils::updateWidgetProperty(ui->line_url, "state", "success");
-        ui->line_token->setFocus();
-        break;
-    default:
-        Utils::updateWidgetProperty(ui->pb_test, "state", "failed");
-        Utils::updateWidgetProperty(ui->line_token, "state", "");
-        Utils::updateWidgetProperty(ui->line_url, "state", "failed");
-        ui->line_url->setFocus();
-        break;
+        case QNetworkReply::AuthenticationRequiredError:
+            Utils::updateWidgetProperty(ui->pb_test, "state", "failed");
+            Utils::updateWidgetProperty(ui->line_token, "state", "failed");
+            Utils::updateWidgetProperty(ui->line_url, "state", "success");
+            ui->line_token->setFocus();
+            ui->label_status->setText(errorString);
+            break;
+        default:
+            Utils::updateWidgetProperty(ui->pb_test, "state", "failed");
+            Utils::updateWidgetProperty(ui->line_token, "state", "");
+            Utils::updateWidgetProperty(ui->line_url, "state", "failed");
+            ui->line_url->setFocus();
+            ui->label_status->setText(errorString);
+            break;
     }
+
+    // Resize the widget to fit the error string
+    setMinimumWidth(width());
+    adjustSize();
+
     enableInputs();
 }
