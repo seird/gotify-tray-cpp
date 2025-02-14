@@ -17,7 +17,7 @@ ServerInfoDialog::ServerInfoDialog(QWidget* parent, QUrl url, QByteArray clientT
     ui->pb_certificate->hide();
     ui->line_url->setText(url.toString());
     ui->line_token->setText(clientToken);
-    if (url.scheme() == "https" && !certPath.isNull())
+    if (url.scheme() == "https" && !certPath.isEmpty())
         ui->label_status->setText("Certificate: " + certPath);
     ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok)->setDisabled(true);
     setStyleSheet(Utils::readFile(":/res/themes/" + Utils::getTheme() + "/ServerInfoDialog.qss"));
@@ -79,7 +79,7 @@ void
 ServerInfoDialog::certificateCallback()
 {
     QString path = QFileDialog::getOpenFileName(this, "Import self-signed server certificate", QDir::homePath(), "Certificates (*.pem *.crt);;*");
-    if (path.isNull())
+    if (path.isEmpty())
         return;
 
     QList<QSslError> expectedErrors = Utils::getSelfSignedExpectedErrors(path);

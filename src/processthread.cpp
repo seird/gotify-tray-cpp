@@ -38,7 +38,7 @@ void Applications::run()
         url.setPath("/" + application->image);
         request.setUrl(url);
         QNetworkReply * reply = manager.get(request);
-        if (url.scheme() == "https" && !settings->selfSignedCertificatePath().isNull())
+        if (url.scheme() == "https" && !settings->selfSignedCertificatePath().isEmpty())
             reply->ignoreSslErrors(Utils::getSelfSignedExpectedErrors(settings->selfSignedCertificatePath()));
         connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
         eventLoop.exec();

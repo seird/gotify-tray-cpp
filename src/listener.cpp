@@ -24,7 +24,7 @@ Listener::updateAuth(QUrl serverUrl, QByteArray clientToken, QString certPath)
     this->clientToken = clientToken;
     this->certPath = certPath;
 
-    if (serverUrl.scheme() == "https" && !certPath.isNull())
+    if (serverUrl.scheme() == "https" && !certPath.isEmpty())
         ignoreSslErrors(Utils::getSelfSignedExpectedErrors(certPath));
 }
 

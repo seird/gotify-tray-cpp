@@ -29,7 +29,7 @@ QNetworkReply * GotifyApi::get(QString endpoint, QUrlQuery query)
 
     QNetworkReply* reply = QNetworkAccessManager::get(request);
 
-    if (serverUrl.scheme() == "https" && !certPath.isNull())
+    if (serverUrl.scheme() == "https" && !certPath.isEmpty())
         reply->ignoreSslErrors(Utils::getSelfSignedExpectedErrors(certPath));
 
     return reply;
@@ -43,7 +43,7 @@ GotifyApi::deleteResource(QString endpoint)
     request.setUrl(url);
     QNetworkReply* reply = QNetworkAccessManager::deleteResource(request);
 
-    if (serverUrl.scheme() == "https" && !certPath.isNull())
+    if (serverUrl.scheme() == "https" && !certPath.isEmpty())
         reply->ignoreSslErrors(Utils::getSelfSignedExpectedErrors(certPath));
 
     return reply;
