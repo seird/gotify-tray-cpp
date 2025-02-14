@@ -102,7 +102,9 @@ MessageWidget::setImage(QString url)
         QNetworkRequest request;
         QEventLoop eventLoop;
         request.setUrl(QUrl(url));
-        QNetworkReply * reply = manager->get(request);
+        QNetworkReply* reply = manager->get(request);
+        if (QUrl(url).scheme() == "https" && !settings->selfSignedCertificatePath().isEmpty())
+            reply->ignoreSslErrors(Utils::getSelfSignedExpectedErrors(settings->selfSignedCertificatePath()));
         connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
         eventLoop.exec(); // TODO: this should run in a non-blocking way. Note that adjustSize() must be called AFTER setting the content_image label
 
@@ -164,8 +166,10 @@ void MessageWidget::linkHoveredCallback(const QString& link)
             if (!manager) manager = new QNetworkAccessManager();
             QNetworkRequest request;
             request.setUrl(url);
-            QNetworkReply * reply = manager->get(request);
-            connect(reply, &QNetworkReply::finished, requestHandler, [this, pos]{requestHandler->imagePopup(pos);});
+            QNetworkReply* reply = manager->get(request);
+            if (url.scheme() == "https" && !settings->selfSignedCertificatePath().isEmpty())
+                reply->ignoreSslErrors(Utils::getSelfSignedExpectedErrors(settings->selfSignedCertificatePath()));
+            connect(reply, &QNetworkReply::finished, requestHandler, [this, pos] { requestHandler->imagePopup(pos); });
         }
     }
 }
