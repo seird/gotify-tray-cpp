@@ -6,6 +6,7 @@
 
 #include <QDialogButtonBox>
 #include <QFileDialog>
+#include <QStandardPaths>
 
 ServerInfoDialog::ServerInfoDialog(QWidget* parent, QUrl url, QByteArray clientToken, QString certPath)
   : QDialog(parent)
@@ -43,6 +44,31 @@ void ServerInfoDialog::acceptedCallback()
     settings->setServerUrl(serverUrl);
     settings->setClientToken(ui->line_token->text().toUtf8());
     settings->setSelfSignedCertificatePath(serverUrl.scheme() == "https" ? certPath : "");
+
+    // Copy the self-signed certificate to application data directory
+    if (serverUrl.scheme() == "https" && !certPath.isEmpty()) {
+        QString directory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
+        if (!QDir().mkpath(directory))
+            qFatal() << "AppDataLocation directory could not be created:" << directory;
+
+        QString destination = directory + "certificate";
+
+        if (certPath != destination) {
+            QFile sFile(certPath);
+            QFile dFile(destination);
+
+            if (dFile.exists())
+                dFile.remove();
+
+            if (sFile.copy(destination))
+                settings->setSelfSignedCertificatePath(destination);
+            else
+                qFatal() << "Failed to copy certificate to AppDataLocation:" << destination;
+        }
+    } else {
+        settings->setSelfSignedCertificatePath("");
+    }
+
     emit settings->serverChanged();
 }
 
