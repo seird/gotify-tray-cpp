@@ -4,12 +4,6 @@
 A tray notification application for receiving messages from a [Gotify server](https://github.com/gotify/server).
 
 
-## Download
-
-
-- [Download the latest release.](https://github.com/seird/gotify-tray-cpp/releases/latest)
-
-
 ## Features
 
 - Receive gotify messages in the native notification area.
@@ -18,6 +12,21 @@ A tray notification application for receiving messages from a [Gotify server](ht
 - Manually delete received messages.
 - Go through a history of all previously received messages.
 - Receive missed messages after losing network connection.
+
+
+## Installation
+
+### Windows
+
+[Download the latest release here.](https://github.com/seird/gotify-tray-cpp/releases/latest)
+
+### Arch Linux
+
+Install from AUR package:
+
+```
+gotify-tray-cpp
+```
 
 
 ## Images
