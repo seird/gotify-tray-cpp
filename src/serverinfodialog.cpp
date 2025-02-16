@@ -22,6 +22,7 @@ ServerInfoDialog::ServerInfoDialog(QWidget* parent, QUrl url, QByteArray clientT
         ui->label_status->setText("Certificate: " + certPath);
     ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok)->setDisabled(true);
     setStyleSheet(Utils::readFile(":/res/themes/" + Utils::getTheme() + "/ServerInfoDialog.qss"));
+    adjustSize();
 
     gotifyApi = new GotifyApi(QUrl(), "", "");
 
