@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>446</height>
+    <width>452</width>
+    <height>556</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,7 +95,7 @@
           <item row="0" column="2">
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -199,7 +199,7 @@
           <item row="0" column="1">
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -215,7 +215,7 @@
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -261,10 +261,10 @@
           <string notr="true"/>
          </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::Shape::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_8">
           <item row="0" column="0">
@@ -272,7 +272,7 @@
             <item row="0" column="2" rowspan="3">
              <widget class="Line" name="line">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
              </widget>
             </item>
@@ -295,7 +295,7 @@
             <item row="0" column="6">
              <spacer name="horizontalSpacer_9">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -324,14 +324,14 @@
             <item row="1" column="3" colspan="6">
              <widget class="Line" name="line_2">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
             <item row="0" column="4">
              <spacer name="horizontalSpacer_8">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -419,7 +419,7 @@
               <item row="0" column="3">
                <spacer name="horizontalSpacer_7">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -475,7 +475,7 @@
               <item row="2" column="0">
                <spacer name="verticalSpacer_4">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -567,7 +567,7 @@
        <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -611,7 +611,7 @@
                <string>Maximum pop-up width</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
               <property name="minimum">
                <number>100</number>
@@ -637,7 +637,7 @@
                <string>Maximum pop-up height</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
               <property name="minimum">
                <number>100</number>
@@ -650,7 +650,85 @@
             <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupbox_image_popup_2">
+         <property name="title">
+          <string>Content image size</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLabel" name="label_content_width">
+              <property name="toolTip">
+               <string>Maximum image width as a percentage of the window width</string>
+              </property>
+              <property name="text">
+               <string>Width %</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spin_content_w">
+              <property name="toolTip">
+               <string>Maximum image width as a percentage of the window width</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_content_height">
+              <property name="toolTip">
+               <string>Maximum image height as a percentage of the window height</string>
+              </property>
+              <property name="text">
+               <string>Height %</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spin_content_h">
+              <property name="toolTip">
+               <string>Maximum image height as a percentage of the window height</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_10">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -668,7 +746,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_watchdog">
          <property name="title">
-          <string>Server watchdog thread (requires restart)</string>
+          <string>Server watchdog thread (re&amp;quires restart)</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -703,7 +781,7 @@
             <item>
              <spacer name="horizontalSpacer_4">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -748,7 +826,7 @@
           <item>
            <spacer name="horizontalSpacer_6">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -773,7 +851,7 @@
           <item row="0" column="3">
            <spacer name="horizontalSpacer_5">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -819,7 +897,7 @@
        <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -836,10 +914,10 @@
    <item row="1" column="4">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Apply|QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
@@ -871,6 +949,8 @@
   <tabstop>groupbox_image_popup</tabstop>
   <tabstop>spin_popup_w</tabstop>
   <tabstop>spin_popup_h</tabstop>
+  <tabstop>spin_content_w</tabstop>
+  <tabstop>spin_content_h</tabstop>
   <tabstop>groupBox_watchdog</tabstop>
   <tabstop>spin_watchdog_interval</tabstop>
   <tabstop>pb_clear_cache</tabstop>
@@ -890,8 +970,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>405</x>
-     <y>436</y>
+     <x>445</x>
+     <y>549</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -906,8 +986,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>405</x>
-     <y>436</y>
+     <x>445</x>
+     <y>549</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -922,8 +1002,8 @@
    <slot>clearCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>224</y>
+     <x>106</x>
+     <y>361</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -938,8 +1018,8 @@
    <slot>openCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>185</x>
-     <y>224</y>
+     <x>196</x>
+     <y>361</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -954,8 +1034,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>405</x>
-     <y>436</y>
+     <x>445</x>
+     <y>549</y>
     </hint>
     <hint type="destinationlabel">
      <x>23</x>
@@ -970,8 +1050,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>256</x>
-     <y>77</y>
+     <x>343</x>
+     <y>109</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
@@ -986,8 +1066,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>297</x>
-     <y>106</y>
+     <x>343</x>
+     <y>147</y>
     </hint>
     <hint type="destinationlabel">
      <x>411</x>
@@ -1002,8 +1082,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>128</y>
+     <x>120</x>
+     <y>175</y>
     </hint>
     <hint type="destinationlabel">
      <x>408</x>
@@ -1018,8 +1098,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>172</x>
-     <y>150</y>
+     <x>189</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -1034,8 +1114,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>189</x>
-     <y>171</y>
+     <x>206</x>
+     <y>231</y>
     </hint>
     <hint type="destinationlabel">
      <x>409</x>
@@ -1050,8 +1130,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>284</y>
+     <x>119</x>
+     <y>357</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
@@ -1066,8 +1146,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>310</y>
+     <x>142</x>
+     <y>385</y>
     </hint>
     <hint type="destinationlabel">
      <x>413</x>
@@ -1130,8 +1210,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>168</y>
+     <x>77</x>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1146,8 +1226,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>135</x>
-     <y>157</y>
+     <x>162</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1162,8 +1242,8 @@
    <slot>serverInfo()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>136</x>
-     <y>376</y>
+     <x>153</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1226,8 +1306,8 @@
    <slot>resetSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>101</x>
-     <y>330</y>
+     <x>110</x>
+     <y>491</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1242,8 +1322,8 @@
    <slot>applicationFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>183</y>
+     <x>98</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1322,8 +1402,8 @@
    <slot>messageApplicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>165</x>
-     <y>176</y>
+     <x>163</x>
+     <y>185</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -1338,8 +1418,8 @@
    <slot>mainButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>369</x>
-     <y>126</y>
+     <x>415</x>
+     <y>135</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1354,8 +1434,8 @@
    <slot>mainButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>381</x>
-     <y>127</y>
+     <x>429</x>
+     <y>136</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1386,8 +1466,8 @@
    <slot>messageButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>380</x>
-     <y>164</y>
+     <x>428</x>
+     <y>185</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1418,8 +1498,8 @@
    <slot>showPriorityChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>233</y>
+     <x>111</x>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
      <x>407</x>
@@ -1434,8 +1514,8 @@
    <slot>messagePriority()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>126</x>
-     <y>230</y>
+     <x>124</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -1450,12 +1530,44 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>246</y>
+     <x>71</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
      <x>440</x>
      <y>234</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spin_content_h</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>555</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spin_content_w</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>550</x>
+     <y>276</y>
     </hint>
    </hints>
   </connection>
