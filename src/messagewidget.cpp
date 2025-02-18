@@ -44,9 +44,9 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
         if (setImage(image))
             imageUrl = image;
         else
-            ui->label_content_image->hide();
+            ui->frame_content_image->hide();
     } else
-        ui->label_content_image->hide();
+        ui->frame_content_image->hide();
 
     // Message text
     QString text = item->message();
