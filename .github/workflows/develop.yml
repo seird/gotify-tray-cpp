@@ -1,0 +1,33 @@
+name: develop
+
+on:
+  push:
+    tags-ignore:
+      - '*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw'
+          modules: 'qtwebsockets qtimageformats'
+          dir: ${{ github.workspace }}/qt
+      - uses: seanmiddleditch/gha-setup-ninja@master
+      - name: build-package
+        run: powershell -File scripts/build-win.ps1
+      - name: create-installer
+        run: iscc scripts/gotify-tray++.iss
+        shell: cmd
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gotify-tray++-setup.exe
+          path: dist/gotify-tray++-setup.exe
