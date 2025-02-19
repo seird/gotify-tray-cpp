@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>454</width>
-    <height>106</height>
+    <height>109</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -128,6 +128,9 @@
         </property>
         <property name="text">
          <string>TextLabel</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::TextFormat::RichText</enum>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
