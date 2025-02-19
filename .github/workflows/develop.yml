@@ -1,9 +1,6 @@
 name: develop
 
-on:
-  push:
-    tags-ignore:
-      - '*'
+on: push
 
 jobs:
   build:
