@@ -55,7 +55,7 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     } else {
         if (!Utils::containsHtml(item->message()))
             text = Utils::replaceLinks(item->message());
-        ui->label_message->setText(text);
+        ui->label_message->setText(text.replace("\n", "<br>"));
     }
 
     if (item->markdown())
