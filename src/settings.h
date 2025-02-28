@@ -131,6 +131,24 @@ public:
     void setSelfSignedCertificatePath(QString path);
     QString selfSignedCertificatePath();
 
+    void setCustomTray(bool mode);
+    bool customTray();
+
+    void setCustomTrayUnread(bool mode);
+    bool customTrayUnread();
+
+    void setCustomTrayError(bool mode);
+    bool customTrayError();
+
+    void setCustomTrayPath(QString path);
+    QString customTrayPath();
+
+    void setCustomTrayUnreadPath(QString path);
+    QString customTrayUnreadPath();
+
+    void setCustomTrayErrorPath(QString path);
+    QString customTrayErrorPath();
+
   signals:
     void serverChanged();
     void sizeChanged();

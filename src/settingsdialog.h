@@ -56,7 +56,14 @@ private slots:
 
     void clearCache();
     void openCache();
-};
 
+    void openCustomTray();
+    void openCustomTrayUnread();
+    void openCustomTrayError();
+
+    void trayPathChanged(QString path);
+    void trayPathUnreadChanged(QString path);
+    void trayPathErrorChanged(QString path);
+};
 
 #endif // SETTINGSDIALOG_H

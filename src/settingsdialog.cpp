@@ -1,18 +1,18 @@
 #include "settingsdialog.h"
-#include "ui_settingsdialog.h"
-#include "settings.h"
 #include "cache.h"
-#include "utils.h"
 #include "serverinfodialog.h"
+#include "settings.h"
+#include "ui_settingsdialog.h"
+#include "utils.h"
 
 #include <QApplication>
-#include <QUrl>
 #include <QDesktopServices>
+#include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QThread>
-
+#include <QUrl>
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
@@ -279,8 +279,65 @@ void SettingsDialog::openCache()
     QDesktopServices::openUrl(QUrl::fromLocalFile(cache->getDir()));
 }
 
+void
+SettingsDialog::openCustomTray()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Select a custom tray icon", QDir::homePath(), "Images (*.png *.jpg);;*");
+    if (path.isEmpty())
+        return;
+    ui->line_custom_tray_normal->setText(path);
+}
 
-void SettingsDialog::connectComponents()
+void
+SettingsDialog::openCustomTrayUnread()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Select a custom tray icon (unread)", QDir::homePath(), "Images (*.png *.jpg);;*");
+    if (path.isEmpty())
+        return;
+    ui->line_custom_tray_unread->setText(path);
+}
+
+void
+SettingsDialog::openCustomTrayError()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Select a custom tray icon (error)", QDir::homePath(), "Images (*.png *.jpg);;*");
+    if (path.isEmpty())
+        return;
+    ui->line_custom_tray_error->setText(path);
+}
+
+void
+SettingsDialog::trayPathChanged(QString path)
+{
+    QImage image(path);
+    if (image.isNull())
+        return;
+    ui->label_tray_preview_normal->setPixmap(QPixmap::fromImage(image).scaled(25, 25, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    changed();
+}
+
+void
+SettingsDialog::trayPathUnreadChanged(QString path)
+{
+    QImage image(path);
+    if (image.isNull())
+        return;
+    ui->label_tray_preview_unread->setPixmap(QPixmap::fromImage(image).scaled(25, 25, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    changed();
+}
+
+void
+SettingsDialog::trayPathErrorChanged(QString path)
+{
+    QImage image(path);
+    if (image.isNull())
+        return;
+    ui->label_tray_preview_error->setPixmap(QPixmap::fromImage(image).scaled(25, 25, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    changed();
+}
+
+void
+SettingsDialog::connectComponents()
 {
     connect(ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &SettingsDialog::saveSettings);
 }
@@ -302,6 +359,20 @@ void SettingsDialog::readSettings()
     // --------------------------- Fonts ---------------------------
     loadFonts();
     loadSizes();
+
+    // --------------------------- Custom Tray Icon ---------------------------
+    ui->cb_custom_tray_normal->setChecked(settings->customTray());
+    ui->cb_custom_tray_unread->setChecked(settings->customTrayUnread());
+    ui->cb_custom_tray_error->setChecked(settings->customTrayError());
+    ui->line_custom_tray_normal->setText(settings->customTrayPath());
+    ui->line_custom_tray_unread->setText(settings->customTrayUnreadPath());
+    ui->line_custom_tray_error->setText(settings->customTrayErrorPath());
+    ui->line_custom_tray_normal->setEnabled(settings->customTray());
+    ui->line_custom_tray_unread->setEnabled(settings->customTrayUnread());
+    ui->line_custom_tray_error->setEnabled(settings->customTrayError());
+    ui->pb_custom_tray_normal->setEnabled(settings->customTray());
+    ui->pb_custom_tray_unread->setEnabled(settings->customTrayUnread());
+    ui->pb_custom_tray_error->setEnabled(settings->customTrayError());
 
     // -------------------------- Advanced -------------------------
     ui->groupbox_image_popup->setChecked(settings->popupEnabled());
@@ -344,6 +415,14 @@ void SettingsDialog::saveSettings()
         settings->setSelectedApplicationFont(ui->label_selected_application->font());
         emit settings->fontChanged();
     }
+
+    // --------------------------- Custom Tray Icon ---------------------------
+    settings->setCustomTray(ui->cb_custom_tray_normal->isChecked());
+    settings->setCustomTrayUnread(ui->cb_custom_tray_unread->isChecked());
+    settings->setCustomTrayError(ui->cb_custom_tray_error->isChecked());
+    settings->setCustomTrayPath(ui->line_custom_tray_normal->text());
+    settings->setCustomTrayUnreadPath(ui->line_custom_tray_unread->text());
+    settings->setCustomTrayErrorPath(ui->line_custom_tray_error->text());
 
     // --------------------------- Sizes ---------------------------
     if (bSizeChanged) {

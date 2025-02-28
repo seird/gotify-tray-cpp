@@ -506,3 +506,78 @@ Settings::selfSignedCertificatePath()
 {
     return value("selfSignedCertificatePath", "").toString();
 }
+
+//------------------------------------------------------------------------------
+void
+Settings::setCustomTray(bool mode)
+{
+    setValue("customTray", mode);
+}
+
+bool
+Settings::customTray()
+{
+    return value("customTray", false).toBool();
+}
+
+//------------------------------------------------------------------------------
+void
+Settings::setCustomTrayUnread(bool mode)
+{
+    setValue("customTrayUnread", mode);
+}
+
+bool
+Settings::customTrayUnread()
+{
+    return value("customTrayUnread", false).toBool();
+}
+
+//------------------------------------------------------------------------------
+void
+Settings::setCustomTrayError(bool mode)
+{
+    setValue("customTrayError", mode);
+}
+
+bool
+Settings::customTrayError()
+{
+    return value("customTrayError", true).toBool();
+}
+
+//------------------------------------------------------------------------------
+void
+Settings::setCustomTrayPath(QString path)
+{
+    setValue("customTrayPath", path);
+}
+QString
+Settings::customTrayPath()
+{
+    return value("customTrayPath", ":/res/icons/tray.png").toString();
+}
+
+//------------------------------------------------------------------------------
+void
+Settings::setCustomTrayUnreadPath(QString path)
+{
+    setValue("customTrayUnreadPath", path);
+}
+QString
+Settings::customTrayUnreadPath()
+{
+    return value("customTrayUnreadPath", ":/res/icons/tray-unread.png").toString();
+}
+
+//------------------------------------------------------------------------------
+void
+Settings::setCustomTrayErrorPath(QString path)
+{
+    setValue("customTrayErrorPath", path);
+}
+QString
+Settings::customTrayErrorPath()
+{
+    return value("customTrayErrorPath", ":/res/icons/tray-error.png").toString();
+}

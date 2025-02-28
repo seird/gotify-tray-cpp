@@ -1,6 +1,8 @@
 #include "tray.h"
+#include "settings.h"
 
 #include <QApplication>
+#include <QFile>
 
 
 Tray::Tray(QObject * parent) : QSystemTrayIcon(parent)
@@ -14,7 +16,7 @@ Tray::Tray(QObject * parent) : QSystemTrayIcon(parent)
     }
 
     setToolTip(qApp->applicationName());
-    setIcon(QIcon(":/res/icons/gotify-tray++.ico"));
+    setIcon(QIcon(":/res/icons/tray.png"));
 
     actionShowWindow = new QAction("Show Window");
     actionSettings = new QAction("Settings");
@@ -41,28 +43,39 @@ Tray::~Tray()
     delete actionQuit;
 }
 
-
-void Tray::setActive()
+void
+Tray::setActive()
 {
     iconError = false;
-    setIcon(QIcon(":/res/icons/tray.png"));
+
+    QString path = ":/res/icons/tray.png";
+    if (settings->customTray() && QFile(settings->customTrayPath()).exists())
+        path = settings->customTrayPath();
+    setIcon(QIcon(path));
 }
 
-
-void Tray::setError()
+void
+Tray::setError()
 {
     iconError = true;
-    setIcon(QIcon(":/res/icons/tray-error.png"));
+
+    QString path = ":/res/icons/tray-error.png";
+    if (settings->customTrayError() && QFile(settings->customTrayErrorPath()).exists())
+        path = settings->customTrayErrorPath();
+    setIcon(QIcon(path));
 }
 
-
-void Tray::setUnread()
+void
+Tray::setUnread()
 {
-    setIcon(QIcon(":/res/icons/tray-unread.png"));
+    QString path = ":/res/icons/tray-unread.png";
+    if (settings->customTrayUnread() && QFile(settings->customTrayUnreadPath()).exists())
+        path = settings->customTrayUnreadPath();
+    setIcon(QIcon(path));
 }
 
-
-void Tray::revertIcon()
+void
+Tray::revertIcon()
 {
     if (iconError) {
         setError();
