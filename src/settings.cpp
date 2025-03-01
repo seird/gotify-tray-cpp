@@ -218,6 +218,18 @@ bool Settings::showImageUrl()
     return value("showImageUrl", true).toBool();
 }
 
+//------------------------------------------------------------------------------
+void
+Settings::setForcePlainText(bool mode)
+{
+    setValue("forcePlainText", mode);
+}
+
+bool
+Settings::forcePlainText()
+{
+    return value("forcePlainText", false).toBool();
+}
 
 //------------------------------------------------------------------------------
 void Settings::setPriorityColor(bool mode)

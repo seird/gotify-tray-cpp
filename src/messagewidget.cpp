@@ -38,28 +38,35 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     // Date
     ui->label_date->setText((settings->useLocale() ? QLocale::system().toString(item->date(), QLocale::FormatType::ShortFormat) : item->date().toString("yyyy-MM-dd, hh:mm")) + " ");
 
-    // Message image: if the text contains an image url, display it in the content_image label
-    QString image = Utils::extractImage(item->message());
-    if (settings->showImageUrl() && !image.isNull()) {
-        if (setImage(image))
-            imageUrl = image;
-        else
-            ui->frame_content_image->hide();
-    } else
+    // Message contents
+    if (settings->forcePlainText()) {
+        ui->label_message->setText(item->message());
+        ui->label_message->setTextFormat(Qt::PlainText);
         ui->frame_content_image->hide();
-
-    // Message text
-    QString text = item->message();
-    if (settings->showImageUrl() && imageUrl == text) {
-        ui->label_message->hide();
     } else {
-        if (!Utils::containsHtml(item->message()))
-            text = Utils::replaceLinks(item->message());
-        ui->label_message->setText(text.replace("\n", "<br>"));
-    }
+        // Message image: if the text contains an image url, display it in the content_image label
+        QString image = Utils::extractImage(item->message());
+        if (settings->showImageUrl() && !image.isNull()) {
+            if (setImage(image))
+                imageUrl = image;
+            else
+                ui->frame_content_image->hide();
+        } else
+            ui->frame_content_image->hide();
 
-    if (item->markdown())
-        ui->label_message->setTextFormat(Qt::MarkdownText);
+        // Message text
+        QString text = item->message();
+        if (settings->showImageUrl() && imageUrl == text) {
+            ui->label_message->hide();
+        } else {
+            if (!Utils::containsHtml(item->message()))
+                text = Utils::replaceLinks(item->message());
+            ui->label_message->setText(text.replace("\n", "<br>"));
+        }
+
+        if (item->markdown())
+            ui->label_message->setTextFormat(Qt::MarkdownText);
+    }
 
     // Size
     adjustSize();

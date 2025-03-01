@@ -383,6 +383,8 @@ void SettingsDialog::readSettings()
     ui->spin_watchdog_interval->setValue(settings->watchdogInterval());
     ui->spin_content_h->setValue(settings->messageWidgetContentImageHeight() * 100.0f);
     ui->spin_content_w->setValue(settings->messageWidgetContentImageWidth() * 100.0f);
+
+    ui->cb_force_plaintext->setChecked(settings->forcePlainText());
 }
 
 
@@ -444,6 +446,8 @@ void SettingsDialog::saveSettings()
 
     settings->setWatchdogEnabled(ui->groupBox_watchdog->isChecked());
     settings->setWatchdogInterval(ui->spin_watchdog_interval->value());
+
+    settings->setForcePlainText(ui->cb_force_plaintext->isChecked());
 }
 
 

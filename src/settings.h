@@ -69,6 +69,9 @@ public:
     void setShowImageUrl(bool mode);
     bool showImageUrl();
 
+    void setForcePlainText(bool mode);
+    bool forcePlainText();
+
     void setPriorityColor(bool mode);
     bool priorityColor();
 
