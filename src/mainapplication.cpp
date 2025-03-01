@@ -162,6 +162,7 @@ void MainApplication::showSettings()
 {
     SettingsDialog dialog(mainWindow);
     dialog.exec();
+    tray->revertIcon();
 }
 
 
