@@ -39,20 +39,15 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
     ui->label_date->setText((settings->useLocale() ? QLocale::system().toString(item->date(), QLocale::FormatType::ShortFormat) : item->date().toString("yyyy-MM-dd, hh:mm")) + " ");
 
     // Message contents
+    ui->frame_content_image->hide();
     if (settings->forcePlainText()) {
         ui->label_message->setText(item->message());
         ui->label_message->setTextFormat(Qt::PlainText);
-        ui->frame_content_image->hide();
     } else {
         // Message image: if the text contains an image url, display it in the content_image label
         QString image = Utils::extractImage(item->message());
-        if (settings->showImageUrl() && !image.isNull()) {
-            if (setImage(image))
-                imageUrl = image;
-            else
-                ui->frame_content_image->hide();
-        } else
-            ui->frame_content_image->hide();
+        if (settings->showImageUrl() && !image.isNull())
+            setImage(image);
 
         // Message text
         QString text = item->message();
@@ -141,6 +136,9 @@ MessageWidget::setImage(QString url)
         ui->label_content_image->setPixmap(pixmap.scaled(W, H, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     else
         ui->label_content_image->setPixmap(pixmap);
+
+    ui->frame_content_image->show();
+    imageUrl = url;
 
     return true;
 }
