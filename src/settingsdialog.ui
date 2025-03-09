@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>471</width>
-    <height>558</height>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -757,6 +757,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="cb_message_fallback">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling this will display wide messages in a different widget which handles wordwrapping better. This can be useful when the delete button and text are cut off and no longer visible. The downside is that the horizontal size of this widget is not adjusted to the length of the message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>MessageWidget: fallback to QTextBrowser if message is too wide</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupbox_image_popup">
          <property name="title">
           <string>Image pop-up for image URLs</string>
@@ -916,59 +926,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_watchdog">
-         <property name="title">
-          <string>Server watchdog thread (re&amp;quires restart)</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_watchdog_interval">
-              <property name="text">
-               <string>Interval:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spin_watchdog_interval">
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>100000</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_watchdog_interval_s">
-              <property name="text">
-               <string>s</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QGroupBox" name="groupBox_cache">
          <property name="title">
           <string>Cache</string>
@@ -1007,54 +964,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_logging">
-         <property name="title">
-          <string>Logging</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="1">
-           <widget class="QComboBox" name="combo_logging"/>
-          </item>
-          <item row="0" column="3">
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>190</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="pb_open_log">
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Open logfile</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_logging">
-            <property name="text">
-             <string>Level</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
@@ -1128,17 +1037,14 @@
   <tabstop>line_custom_tray_error</tabstop>
   <tabstop>pb_custom_tray_error</tabstop>
   <tabstop>cb_force_plaintext</tabstop>
+  <tabstop>cb_message_fallback</tabstop>
   <tabstop>groupbox_image_popup</tabstop>
   <tabstop>spin_popup_w</tabstop>
   <tabstop>spin_popup_h</tabstop>
   <tabstop>spin_content_w</tabstop>
   <tabstop>spin_content_h</tabstop>
-  <tabstop>groupBox_watchdog</tabstop>
-  <tabstop>spin_watchdog_interval</tabstop>
   <tabstop>pb_clear_cache</tabstop>
   <tabstop>pb_open_cache_dir</tabstop>
-  <tabstop>combo_logging</tabstop>
-  <tabstop>pb_open_log</tabstop>
   <tabstop>pb_reset</tabstop>
  </tabstops>
  <resources>
@@ -1184,8 +1090,8 @@
    <slot>clearCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>376</y>
+     <x>106</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1200,8 +1106,8 @@
    <slot>openCache()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
-     <y>376</y>
+     <x>196</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1386,38 +1292,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>groupBox_watchdog</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>88</x>
-     <y>281</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>183</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spin_watchdog_interval</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>163</x>
-     <y>298</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>414</x>
-     <y>286</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pb_change_server_info</sender>
    <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
@@ -1488,8 +1362,8 @@
    <slot>resetSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>491</y>
+     <x>119</x>
+     <y>463</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1552,8 +1426,8 @@
    <slot>applicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>169</y>
+     <x>64</x>
+     <y>185</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1568,8 +1442,8 @@
    <slot>applicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>195</y>
+     <x>64</x>
+     <y>226</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1600,8 +1474,8 @@
    <slot>mainButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>413</x>
-     <y>168</y>
+     <x>426</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1616,8 +1490,8 @@
    <slot>mainButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>427</x>
-     <y>169</y>
+     <x>440</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1632,8 +1506,8 @@
    <slot>statusLabel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>169</y>
+     <x>131</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1648,8 +1522,8 @@
    <slot>messageButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>426</x>
-     <y>215</y>
+     <x>439</x>
+     <y>219</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1696,8 +1570,8 @@
    <slot>messagePriority()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>145</x>
-     <y>260</y>
+     <x>132</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -1728,11 +1602,11 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>257</x>
-     <y>218</y>
+     <x>268</x>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
-     <x>555</x>
+     <x>470</x>
      <y>172</y>
     </hint>
    </hints>
@@ -1744,11 +1618,11 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>218</y>
+     <x>140</x>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
-     <x>550</x>
+     <x>470</x>
      <y>276</y>
     </hint>
    </hints>
@@ -1792,8 +1666,8 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>62</x>
-     <y>348</y>
+     <x>79</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
      <x>438</x>
@@ -1808,8 +1682,8 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>348</y>
+     <x>85</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
      <x>222</x>
@@ -1856,11 +1730,11 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>348</y>
+     <x>92</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
-     <x>645</x>
+     <x>470</x>
      <y>346</y>
     </hint>
    </hints>
@@ -1876,7 +1750,7 @@
      <y>380</y>
     </hint>
     <hint type="destinationlabel">
-     <x>585</x>
+     <x>470</x>
      <y>482</y>
     </hint>
    </hints>
@@ -1892,8 +1766,8 @@
      <y>412</y>
     </hint>
     <hint type="destinationlabel">
-     <x>582</x>
-     <y>584</y>
+     <x>470</x>
+     <y>581</y>
     </hint>
    </hints>
   </connection>
@@ -1908,7 +1782,7 @@
      <y>349</y>
     </hint>
     <hint type="destinationlabel">
-     <x>554</x>
+     <x>470</x>
      <y>373</y>
     </hint>
    </hints>
@@ -1924,7 +1798,7 @@
      <y>381</y>
     </hint>
     <hint type="destinationlabel">
-     <x>573</x>
+     <x>470</x>
      <y>461</y>
     </hint>
    </hints>
@@ -1940,7 +1814,7 @@
      <y>413</y>
     </hint>
     <hint type="destinationlabel">
-     <x>591</x>
+     <x>470</x>
      <y>509</y>
     </hint>
    </hints>
@@ -1956,7 +1830,7 @@
      <y>349</y>
     </hint>
     <hint type="destinationlabel">
-     <x>498</x>
+     <x>470</x>
      <y>317</y>
     </hint>
    </hints>
@@ -1972,7 +1846,7 @@
      <y>381</y>
     </hint>
     <hint type="destinationlabel">
-     <x>550</x>
+     <x>470</x>
      <y>398</y>
     </hint>
    </hints>
@@ -1988,7 +1862,7 @@
      <y>413</y>
     </hint>
     <hint type="destinationlabel">
-     <x>537</x>
+     <x>470</x>
      <y>425</y>
     </hint>
    </hints>
@@ -2000,12 +1874,28 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>72</x>
-     <y>71</y>
+     <x>81</x>
+     <y>65</y>
     </hint>
     <hint type="destinationlabel">
-     <x>617</x>
+     <x>470</x>
      <y>443</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cb_message_fallback</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>67</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>634</x>
+     <y>75</y>
     </hint>
    </hints>
   </connection>

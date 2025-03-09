@@ -40,6 +40,7 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
 
     // Message contents
     ui->frame_content_image->hide();
+    ui->label_message_fallback->hide();
     if (settings->forcePlainText()) {
         ui->label_message->setText(item->message());
         ui->label_message->setTextFormat(Qt::PlainText);
@@ -50,11 +51,16 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
             setImage(image);
 
         // Message text
+        int allowedWidth = parentWidget()->width() - ui->label_image->width() - ui->label_priority->width() - 40;
         QString text = item->message();
-        if (settings->showImageUrl() && imageUrl == text) {
+        if (settings->showImageUrl() && imageUrl == text)
+            ui->label_message->hide();
+        else if (settings->messageFallback() && Utils::violatesWidth(text, ui->label_message->font(), allowedWidth)) {
+            ui->label_message_fallback->setText(text);
+            ui->label_message_fallback->show();
             ui->label_message->hide();
         } else {
-            if (!Utils::containsHtml(item->message()))
+            if (Utils::containsHtml(item->message()))
                 text = Utils::replaceLinks(item->message());
             ui->label_message->setText(text.replace("\n", "<br>"));
         }

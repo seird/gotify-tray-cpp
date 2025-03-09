@@ -205,6 +205,18 @@ float Settings::messageWidgetContentImageHeight()
     return value("messageWidgetContentImageHeight", 0.3f).toFloat();
 }
 
+//------------------------------------------------------------------------------
+void
+Settings::setMessageFallback(bool mode)
+{
+    setValue("messageFallback", mode);
+}
+
+bool
+Settings::messageFallback()
+{
+    return value("messageFallback", false).toBool();
+}
 
 //------------------------------------------------------------------------------
 void Settings::setShowImageUrl(bool mode)
@@ -354,31 +366,8 @@ int Settings::popupWidth()
 
 
 //------------------------------------------------------------------------------
-void Settings::setWatchdogEnabled(bool mode)
-{
-    setValue("watchdogEnabled", mode);
-}
-
-bool Settings::watchdogEnabled()
-{
-    return value("watchdogEnabled", false).toBool();
-}
-
-
-//------------------------------------------------------------------------------
-void Settings::setWatchdogInterval(int s)
-{
-    setValue("watchdogInterval", s);
-}
-
-int Settings::watchdogInterval()
-{
-    return value("watchdogInterval", 60).toInt();
-}
-
-
-//------------------------------------------------------------------------------
-void Settings::setSelectedApplicationFont(QFont font)
+void
+Settings::setSelectedApplicationFont(QFont font)
 {
     setValue("font/selectedApplication", font.toString());
 }

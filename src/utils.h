@@ -31,6 +31,9 @@ replaceLinks(QString text);
 bool
 containsHtml(QString text);
 
+bool
+violatesWidth(const QString& text, const QFont& font, int allowedWidth);
+
 QString
 getUuid();
 

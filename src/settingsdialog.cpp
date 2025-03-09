@@ -46,9 +46,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->spin_duration->hide();
 #endif
 
-    ui->groupBox_watchdog->hide();
-    ui->groupBox_logging->hide();
-
     readSettings();
     connectComponents();
     
@@ -379,12 +376,11 @@ void SettingsDialog::readSettings()
     ui->spin_popup_w->setValue(settings->popupWidth());
     ui->spin_popup_h->setValue(settings->popupHeight());
 
-    ui->groupBox_watchdog->setChecked(settings->watchdogEnabled());
-    ui->spin_watchdog_interval->setValue(settings->watchdogInterval());
     ui->spin_content_h->setValue(settings->messageWidgetContentImageHeight() * 100.0f);
     ui->spin_content_w->setValue(settings->messageWidgetContentImageWidth() * 100.0f);
 
     ui->cb_force_plaintext->setChecked(settings->forcePlainText());
+    ui->cb_message_fallback->setChecked(settings->messageFallback());
 }
 
 
@@ -444,10 +440,8 @@ void SettingsDialog::saveSettings()
     settings->setMessageWidgetContentImageHeight(ui->spin_content_h->value() / 100.0f);
     settings->setMessageWidgetContentImageWidth(ui->spin_content_w->value() / 100.0f);
 
-    settings->setWatchdogEnabled(ui->groupBox_watchdog->isChecked());
-    settings->setWatchdogInterval(ui->spin_watchdog_interval->value());
-
     settings->setForcePlainText(ui->cb_force_plaintext->isChecked());
+    settings->setMessageFallback(ui->cb_message_fallback->isChecked());
 }
 
 

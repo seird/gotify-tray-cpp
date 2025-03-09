@@ -4,7 +4,10 @@
 #include <QDirIterator>
 #include <QFile>
 #include <QFileInfo>
+#include <QFont>
+#include <QFontMetrics>
 #include <QRegularExpression>
+#include <QStringList>
 #include <QStyle>
 #include <QStyleHints>
 #include <QUuid>
@@ -102,8 +105,27 @@ bool containsHtml(QString text)
     return matchHTML.hasMatch();
 }
 
+bool
+violatesWidth(const QString& text, const QFont& font, int allowedWidth)
+{
+    QFontMetrics metrics(font);
+    // Characters which will allow wrapping in QLabel
+    QRegularExpression pattern("[ \\n,/]");
 
-QString getUuid()
+    // Split the text using the pattern
+    QStringList words = text.split(pattern, Qt::SkipEmptyParts);
+
+    // Return true if any word is found which doesn't autowrap
+    // https://doc.qt.io/qt-6/qfontmetrics.html#horizontalAdvance-1
+    for (const QString& word : words)
+        if (metrics.horizontalAdvance(word) > allowedWidth)
+            return true;
+
+    return false;
+}
+
+QString
+getUuid()
 {
     return QUuid::createUuid().toString(QUuid::Id128);
 }

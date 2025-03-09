@@ -66,6 +66,9 @@ public:
     void setMessageWidgetContentImageHeight(float height);
     float messageWidgetContentImageHeight();
 
+    void setMessageFallback(bool mode);
+    bool messageFallback();
+
     void setShowImageUrl(bool mode);
     bool showImageUrl();
 
@@ -101,12 +104,6 @@ public:
 
     void setPopupWidth(int width);
     int popupWidth();
-
-    void setWatchdogEnabled(bool mode);
-    bool watchdogEnabled();
-
-    void setWatchdogInterval(int s);
-    int watchdogInterval();
 
     void setSelectedApplicationFont(QFont font);
     QFont selectedApplicationFont();
