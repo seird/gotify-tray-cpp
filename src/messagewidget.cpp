@@ -60,7 +60,7 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
             ui->label_message_fallback->show();
             ui->label_message->hide();
         } else {
-            if (Utils::containsHtml(item->message()))
+            if (!Utils::containsHtml(item->message()))
                 text = Utils::replaceLinks(item->message());
             ui->label_message->setText(text.replace("\n", "<br>"));
         }
