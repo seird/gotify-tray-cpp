@@ -69,6 +69,9 @@ public:
     void setMessageFallback(bool mode);
     bool messageFallback();
 
+    void setRenderMarkdown(bool mode);
+    bool renderMarkdown();
+
     void setShowImageUrl(bool mode);
     bool showImageUrl();
 

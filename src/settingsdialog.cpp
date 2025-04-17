@@ -380,6 +380,7 @@ void SettingsDialog::readSettings()
     ui->spin_content_w->setValue(settings->messageWidgetContentImageWidth() * 100.0f);
 
     ui->cb_force_plaintext->setChecked(settings->forcePlainText());
+    ui->cb_markdown->setChecked(settings->renderMarkdown());
     ui->cb_message_fallback->setChecked(settings->messageFallback());
 }
 
@@ -441,6 +442,7 @@ void SettingsDialog::saveSettings()
     settings->setMessageWidgetContentImageWidth(ui->spin_content_w->value() / 100.0f);
 
     settings->setForcePlainText(ui->cb_force_plaintext->isChecked());
+    settings->setRenderMarkdown(ui->cb_markdown->isChecked());
     settings->setMessageFallback(ui->cb_message_fallback->isChecked());
 }
 

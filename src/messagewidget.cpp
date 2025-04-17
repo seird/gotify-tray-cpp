@@ -65,7 +65,7 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
             ui->label_message->setText(text.replace("\n", "<br>"));
         }
 
-        if (item->markdown())
+        if (settings->renderMarkdown() && item->markdown())
             ui->label_message->setTextFormat(Qt::MarkdownText);
     }
 

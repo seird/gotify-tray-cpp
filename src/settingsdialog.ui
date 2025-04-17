@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>471</width>
-    <height>545</height>
+    <height>538</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -757,6 +757,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="cb_markdown">
+         <property name="text">
+          <string>Render markdown messages</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="cb_message_fallback">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling this will display wide messages in a different widget which handles wordwrapping better. This can be useful when the delete button and text are cut off and no longer visible. The downside is that the vertical size of this widget is not adjusted to the length of the message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1037,6 +1044,7 @@
   <tabstop>line_custom_tray_error</tabstop>
   <tabstop>pb_custom_tray_error</tabstop>
   <tabstop>cb_force_plaintext</tabstop>
+  <tabstop>cb_markdown</tabstop>
   <tabstop>cb_message_fallback</tabstop>
   <tabstop>groupbox_image_popup</tabstop>
   <tabstop>spin_popup_w</tabstop>

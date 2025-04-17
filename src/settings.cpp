@@ -219,6 +219,19 @@ Settings::messageFallback()
 }
 
 //------------------------------------------------------------------------------
+void
+Settings::setRenderMarkdown(bool mode)
+{
+    setValue("renderMarkdown", mode);
+}
+
+bool
+Settings::renderMarkdown()
+{
+    return value("renderMarkdown", false).toBool();
+}
+
+//------------------------------------------------------------------------------
 void Settings::setShowImageUrl(bool mode)
 {
     setValue("showImageUrl", mode);
