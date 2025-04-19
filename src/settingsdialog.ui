@@ -1066,8 +1066,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>461</x>
-     <y>548</y>
+     <x>464</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -1082,8 +1082,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>461</x>
-     <y>548</y>
+     <x>464</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -1130,8 +1130,8 @@
    <slot>saveSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>461</x>
-     <y>548</y>
+     <x>464</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
      <x>23</x>
@@ -1258,8 +1258,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>102</y>
+     <x>77</x>
+     <y>205</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1274,8 +1274,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>138</y>
+     <x>140</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1290,8 +1290,8 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>256</x>
-     <y>138</y>
+     <x>267</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1322,8 +1322,8 @@
    <slot>titleFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>191</x>
-     <y>215</y>
+     <x>178</x>
+     <y>219</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1370,8 +1370,8 @@
    <slot>resetSettings()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>463</y>
+     <x>128</x>
+     <y>409</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1386,8 +1386,8 @@
    <slot>applicationFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>195</y>
+     <x>81</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1402,8 +1402,8 @@
    <slot>applicationFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>169</y>
+     <x>81</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -1434,8 +1434,8 @@
    <slot>applicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>64</x>
-     <y>185</y>
+     <x>53</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1450,8 +1450,8 @@
    <slot>applicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>64</x>
-     <y>226</y>
+     <x>53</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1466,8 +1466,8 @@
    <slot>messageApplicationIcon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>159</x>
-     <y>215</y>
+     <x>146</x>
+     <y>219</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -1898,12 +1898,28 @@
    <slot>changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>67</x>
-     <y>78</y>
+     <x>76</x>
+     <y>121</y>
     </hint>
     <hint type="destinationlabel">
      <x>634</x>
      <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cb_markdown</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>527</x>
+     <y>103</y>
     </hint>
    </hints>
   </connection>
