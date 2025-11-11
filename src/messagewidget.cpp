@@ -61,7 +61,6 @@ MessageWidget::MessageWidget(MessageItem * item, QIcon icon, QWidget *parent) :
             ui->label_message->hide();
         } else {
             if (settings->renderMarkdown() && item->markdown()) {
-                qDebug() << "rendering markdown";
                 ui->label_message->setTextFormat(Qt::MarkdownText);
                 ui->label_message->setText(text);
             } else {

@@ -1,12 +1,9 @@
 #include "listener.h"
-#include "settings.h"
 #include "utils.h"
 
 #include <QJsonDocument>
 #include <QTimer>
 #include <QUrlQuery>
-
-#define MIN(x, y) ((x) < (y) ? (x) : (y))
 
 Listener::Listener(QUrl serverUrl, QByteArray clientToken, QString certPath, QObject* parent)
   : QWebSocket(QString(), QWebSocketProtocol::VersionLatest, parent)
