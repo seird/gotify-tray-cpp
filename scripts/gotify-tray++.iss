@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Gotify Tray++"
-#define MyAppVersion "0.1.0"
+#define MyAppVersion "0.1.1"
 #define MyAppURL "https://github.com/seird/gotify-tray-cpp"
 #define MyAppExeName "gotify-tray++.exe"
 
