@@ -28,12 +28,6 @@ void Applications::run()
     QUrl url = settings->serverUrl();
 
     for (auto application : applications->applications) {
-        // Check the cache
-        QString file = cache->getFile(application->id);
-        if (!file.isNull()) {
-            continue;
-        }
-
         // Make a get request
         url.setPath("/" + application->image);
         request.setUrl(url);
