@@ -191,6 +191,9 @@ void MainApplication::trayActivated(QSystemTrayIcon::ActivationReason reason)
     if (reason == QSystemTrayIcon::ActivationReason::Trigger) {
         mainWindow->bringToFront();
     }
+    if (reason == QSystemTrayIcon::ActivationReason::MiddleClick) {
+        tray->revertIcon();
+    }
 }
 
 
