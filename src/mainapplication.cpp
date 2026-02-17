@@ -324,6 +324,7 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
 
     // If the window is active, don't show a notification and don't change the tray icon
     if (mainWindow->isActiveWindow()) {
+        message->deleteLater();
         return;
     }
 
@@ -332,6 +333,7 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
         if (settings->traySmallPriority()) {
             tray->setUnread();
         }
+        message->deleteLater();
         return;
     }
 
