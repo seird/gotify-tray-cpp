@@ -23,7 +23,8 @@ void GotifyApi::updateAuth(QUrl severUrl, QByteArray clientToken, QString certPa
 QNetworkReply * GotifyApi::get(QString endpoint, QUrlQuery query)
 {
     QUrl url(serverUrl);
-    url.setPath(endpoint);
+    QString path = url.path();
+    url.setPath(path + endpoint);
     url.setQuery(query);
     request.setUrl(url);
 
@@ -39,7 +40,8 @@ QNetworkReply*
 GotifyApi::deleteResource(QString endpoint)
 {
     QUrl url(serverUrl);
-    url.setPath(endpoint);
+    QString path = url.path();
+    url.setPath(path + endpoint);
     request.setUrl(url);
     QNetworkReply* reply = QNetworkAccessManager::deleteResource(request);
 
