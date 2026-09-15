@@ -52,6 +52,7 @@ Tray::setActive()
     if (settings->customTray() && QFile(settings->customTrayPath()).exists())
         path = settings->customTrayPath();
     setIcon(QIcon(path));
+    setToolTip(qApp->applicationName());
 }
 
 void
