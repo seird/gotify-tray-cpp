@@ -330,25 +330,32 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     }
 
     // If the message is low priority, only change the tray icon (if enabled) and don't show a notification
-    if (message->priority < settings->notificationPriority()) {
-        if (settings->traySmallPriority()) {
+    if (message->priority < settings->notificationPriority())
+    {
+        if (settings->traySmallPriority())
+        {
+            qsizetype messageCutLength = message->message.length() > 20 ? 20 : message->message.length();
             tray->setUnread();
             if (tray->toolTip() == qApp->applicationName())
-                tray->setToolTip(message->title + ": " + message->message.first(20) + "...");
+                tray->setToolTip(message->title + ": " + message->message.first(messageCutLength) + "...");
             else
-                tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " + message->message.first(20) + "...");
+                tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " +
+                                 message->message.first(messageCutLength) + "...");
         }
         message->deleteLater();
         return;
     }
 
     // If the message is high priority, change the tray icon (if enabled) and show a notification
-    if (settings->trayUnreadEnabled()) {
+    if (settings->trayUnreadEnabled())
+    {
+        qsizetype messageCutLength = message->message.length() > 20 ? 20 : message->message.length();
         tray->setUnread();
         if (tray->toolTip() == qApp->applicationName())
-            tray->setToolTip(message->title + ": " + message->message.first(20) + "...");
+            tray->setToolTip(message->title + ": " + message->message.first(messageCutLength) + "...");
         else
-            tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " + message->message.first(20) + "...");
+            tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " + message->message.first(messageCutLength) +
+                             "...");
     }
 
 #ifdef USE_KDE
