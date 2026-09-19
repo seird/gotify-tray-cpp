@@ -333,7 +333,10 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     if (message->priority < settings->notificationPriority()) {
         if (settings->traySmallPriority()) {
             tray->setUnread();
-            tray->setToolTip(message->title + "\n" + message->message.first(20) + "...");
+            if (tray->toolTip() == qApp->applicationName())
+                tray->setToolTip(message->title + ": " + message->message.first(20) + "...");
+            else
+                tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " + message->message.first(20) + "...");
         }
         message->deleteLater();
         return;
@@ -342,7 +345,10 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     // If the message is high priority, change the tray icon (if enabled) and show a notification
     if (settings->trayUnreadEnabled()) {
         tray->setUnread();
-        tray->setToolTip(message->title + "\n" + message->message.first(20) + "...");
+        if (tray->toolTip() == qApp->applicationName())
+            tray->setToolTip(message->title + ": " + message->message.first(20) + "...");
+        else
+            tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " + message->message.first(20) + "...");
     }
 
 #ifdef USE_KDE
