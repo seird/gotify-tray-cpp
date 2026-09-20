@@ -324,9 +324,12 @@ MainApplication::updateToolTip(GotifyModel::Message* message)
     qsizetype messageCutLength = qMin(20, message->message.length());
     QString toolTip;
     if (tray->toolTip() == qApp->applicationName())
-        toolTip = message->title + ": " + message->message.first(messageCutLength) + "...";
+        toolTip = message->title + ": " + message->message.first(messageCutLength);
     else
-        toolTip = tray->toolTip() + "\n" + message->title + ": " + message->message.first(messageCutLength) + "...";
+        toolTip = tray->toolTip() + "\n" + message->title + ": " + message->message.first(messageCutLength);
+
+    if (message->message.length() != messageCutLength)
+        toolTip += "...";
 
     tray->setToolTip(toolTip);
 }
