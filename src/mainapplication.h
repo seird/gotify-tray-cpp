@@ -32,7 +32,7 @@ public:
     bool verifyServer(bool forceNew = false);
     void quit();
 
-private:
+  private:
     MainWindow * mainWindow;
     Tray * tray;
     MessageItemModel messageItemModel;
@@ -54,8 +54,9 @@ private:
     void applyStyle();
     void initShortcuts();
     void addMessageToModel(GotifyModel::Message * message);
+    void updateToolTip(GotifyModel::Message* message);
 
-private slots:
+  private slots:
     void showSettings();
     void reconnectCallback();
     void trayActivated(QSystemTrayIcon::ActivationReason reason);

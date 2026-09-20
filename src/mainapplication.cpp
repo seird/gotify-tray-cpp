@@ -318,6 +318,18 @@ void MainApplication::addMessageToModel(GotifyModel::Message * message)
     }
 }
 
+void
+MainApplication::updateToolTip(GotifyModel::Message* message)
+{
+    qsizetype messageCutLength = qMin(20, message->message.length());
+    QString toolTip;
+    if (tray->toolTip() == qApp->applicationName())
+        toolTip = message->title + ": " + message->message.first(messageCutLength) + "...";
+    else
+        toolTip = tray->toolTip() + "\n" + message->title + ": " + message->message.first(messageCutLength) + "...";
+
+    tray->setToolTip(toolTip);
+}
 
 void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
 {
@@ -334,13 +346,8 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     {
         if (settings->traySmallPriority())
         {
-            qsizetype messageCutLength = message->message.length() > 20 ? 20 : message->message.length();
             tray->setUnread();
-            if (tray->toolTip() == qApp->applicationName())
-                tray->setToolTip(message->title + ": " + message->message.first(messageCutLength) + "...");
-            else
-                tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " +
-                                 message->message.first(messageCutLength) + "...");
+            updateToolTip(message);
         }
         message->deleteLater();
         return;
@@ -349,13 +356,8 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
     // If the message is high priority, change the tray icon (if enabled) and show a notification
     if (settings->trayUnreadEnabled())
     {
-        qsizetype messageCutLength = message->message.length() > 20 ? 20 : message->message.length();
         tray->setUnread();
-        if (tray->toolTip() == qApp->applicationName())
-            tray->setToolTip(message->title + ": " + message->message.first(messageCutLength) + "...");
-        else
-            tray->setToolTip(tray->toolTip() + "\n" + message->title + ": " + message->message.first(messageCutLength) +
-                             "...");
+        updateToolTip(message);
     }
 
 #ifdef USE_KDE
