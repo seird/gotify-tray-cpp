@@ -1,3 +1,3 @@
 #include "appversion.h"
 
-QVersionNumber appVersion(0, 1, 3);
+QVersionNumber appVersion(0, 1, 4);
