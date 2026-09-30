@@ -567,7 +567,7 @@ Settings::setCustomTrayError(bool mode)
 bool
 Settings::customTrayError()
 {
-    return value("customTrayError", true).toBool();
+    return value("customTrayError", false).toBool();
 }
 
 //------------------------------------------------------------------------------
