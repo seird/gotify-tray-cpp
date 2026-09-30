@@ -1,7 +1,6 @@
 #ifndef MAINAPPLICATION_H
 #define MAINAPPLICATION_H
 
-
 #include <QApplication>
 #include <QDebug>
 #include <QIcon>
@@ -9,7 +8,6 @@
 #include <QLockFile>
 #include <QStandardPaths>
 #include <QString>
-#include <QShortcut>
 #include <QPoint>
 
 #include "mainwindow.h"
@@ -20,7 +18,6 @@
 #include "listener.h"
 #include "processthread.h"
 #include "imagepopup.h"
-
 
 class MainApplication : public QApplication
 {
@@ -39,7 +36,6 @@ public:
     ApplicationItemModel applicationItemModel;
     ApplicationProxyModel * applicationProxyModel;
     QLockFile * lockfile;
-    QShortcut * shortcut_quit;
     GotifyApi * gotifyApi;
     Listener * listener;
     ImagePopup * imagePopup;
