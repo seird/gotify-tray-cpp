@@ -153,8 +153,8 @@ void MainApplication::connectComponents()
 
 void MainApplication::initShortcuts()
 {
-    new QShortcut(Qt::CTRL | Qt::Key_Q, mainWindow, this, &MainApplication::quit);
-    new QShortcut(Qt::Key_F5, mainWindow, this, &MainApplication::refreshCallback);
+    new QShortcut(QKeySequence::StandardKey::Quit, mainWindow, this, &MainApplication::quit);
+    new QShortcut(QKeySequence::StandardKey::Refresh, mainWindow, this, &MainApplication::refreshCallback);
 }
 
 
