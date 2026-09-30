@@ -94,6 +94,9 @@
            </spacer>
           </item>
           <item>
+           <widget class="QLineEdit" name="lineSearch"/>
+          </item>
+          <item>
            <widget class="QPushButton" name="pb_refresh">
             <property name="toolTip">
              <string>Refresh</string>

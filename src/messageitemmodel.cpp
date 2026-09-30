@@ -31,9 +31,32 @@ void MessageItemModel::appendMessage(GotifyModel::Message * message)
     appendRow(item);
 }
 
-
-MessageItem * MessageItemModel::itemFromIndex(const QModelIndex &index)
+MessageItem*
+MessageItemModel::itemFromIndex(const QModelIndex& index)
 {
 
-    return static_cast<MessageItem *>(QStandardItemModel::itemFromIndex(index));
+    return static_cast<MessageItem*>(QStandardItemModel::itemFromIndex(index));
+}
+
+MessageProxyModel::MessageProxyModel(MessageItemModel* messageItemModel)
+  : QSortFilterProxyModel()
+{
+    setSourceModel(messageItemModel);
+    setFilterCaseSensitivity(Qt::CaseInsensitive);
+}
+
+bool
+MessageProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
+{
+    MessageItemModel* source = static_cast<MessageItemModel*>(sourceModel());
+    MessageItem* item = static_cast<MessageItem*>(source->item(sourceRow));
+    if (!item)
+        return false;
+
+    const QRegularExpression& filter = filterRegularExpression();
+
+    if (filter.pattern().isEmpty())
+        return true;
+
+    return item->message().contains(filter) || item->title().contains(filter);
 }
