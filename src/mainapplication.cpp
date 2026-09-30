@@ -1,30 +1,28 @@
 #include "mainapplication.h"
 #include "applicationitem.h"
-#include "serverinfodialog.h"
-#include "settingsdialog.h"
-#include "settings.h"
-#include "cache.h"
 #include "appversion.h"
+#include "cache.h"
 #include "processthread.h"
 #include "requesthandler.h"
+#include "serverinfodialog.h"
+#include "settings.h"
+#include "settingsdialog.h"
 #include "utils.h"
 
-#include <QShortcut>
 #include <QKeySequence>
-#include <QStyleHints>
+#include <QShortcut>
 #include <QStyle>
+#include <QStyleHints>
 #include <QSystemTrayIcon>
 
 #include <rapidfuzz/fuzz.hpp>
 
 #ifdef USE_KDE
-#include <KNotification>
+  #include <KNotification>
 #endif
 
-MainApplication::MainApplication(int& argc, char* argv[])
-  : QApplication(argc, argv)
-  , firstConnect(true)
-  , lastHeartbeat(QDateTime::currentMSecsSinceEpoch())
+MainApplication::MainApplication(int &argc, char *argv[])
+    : QApplication(argc, argv), firstConnect(true), lastHeartbeat(QDateTime::currentMSecsSinceEpoch())
 {
     setApplicationName("Gotify Tray++");
     setApplicationVersion(appVersion.toString());
@@ -37,20 +35,26 @@ MainApplication::MainApplication(int& argc, char* argv[])
     cache = Cache::getInstance();
     requestHandler = RequestHandler::getInstance();
 
-    lockfile = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + applicationName() + ".lock");
+    lockfile = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + applicationName() +
+                             ".lock");
 }
-
 
 MainApplication::~MainApplication()
 {
     delete lockfile;
-    if (gotifyApi) delete gotifyApi;
-    if (listener) delete listener;
-    if (applicationProxyModel) delete applicationProxyModel;
-    if (mainWindow) delete mainWindow;
-    if (tray) delete tray;
+    if (gotifyApi)
+        delete gotifyApi;
+    if (listener)
+        delete listener;
+    if (messageProxyModel)
+        delete messageProxyModel;
+    if (applicationProxyModel)
+        delete applicationProxyModel;
+    if (mainWindow)
+        delete mainWindow;
+    if (tray)
+        delete tray;
 }
-
 
 void MainApplication::init()
 {
@@ -59,14 +63,13 @@ void MainApplication::init()
     connectComponents();
     initShortcuts();
 
-    QNetworkReply * reply = gotifyApi->applications();
+    QNetworkReply *reply = gotifyApi->applications();
     connect(reply, &QNetworkReply::finished, requestHandler, &RequestHandler::applications);
 
     listener->startListening();
 
     heartbeatTimer->start(settings->heartbeatInterval());
 }
-
 
 void MainApplication::initComponents()
 {
@@ -75,23 +78,22 @@ void MainApplication::initComponents()
     QString certPath = settings->selfSignedCertificatePath();
     gotifyApi = new GotifyApi(serverUrl, clientToken, certPath);
     listener = new Listener(serverUrl, clientToken, certPath);
+    messageProxyModel = new MessageProxyModel(&messageItemModel);
     applicationProxyModel = new ApplicationProxyModel(&applicationItemModel);
-    mainWindow = new MainWindow(&messageItemModel, &applicationItemModel, applicationProxyModel);
+    mainWindow = new MainWindow(&messageItemModel, messageProxyModel, &applicationItemModel, applicationProxyModel);
     tray = new Tray();
     imagePopup = new ImagePopup(mainWindow);
     heartbeatTimer = new QTimer(this);
 }
 
-
 void MainApplication::initGui()
 {
     mainWindow->show();
-    QTimer::singleShot(0, this, [this]{mainWindow->hide();});
+    QTimer::singleShot(0, this, [this] { mainWindow->hide(); });
 
     tray->setError();
     tray->show();
 }
-
 
 bool MainApplication::acquireLock()
 {
@@ -108,14 +110,16 @@ bool MainApplication::verifyServer(bool forceNew)
     QUrl url = settings->serverUrl();
     QByteArray clientToken = settings->clientToken();
 
-    if (forceNew || url.isEmpty() || clientToken.isEmpty()) {
+    if (forceNew || url.isEmpty() || clientToken.isEmpty())
+    {
         ServerInfoDialog dialog(NULL, url, clientToken, settings->selfSignedCertificatePath());
         return dialog.exec();
-    } else {
+    }
+    else
+    {
         return true;
     }
 }
-
 
 void MainApplication::connectComponents()
 {
@@ -131,7 +135,10 @@ void MainApplication::connectComponents()
     connect(tray->actionReconnect, &QAction::triggered, this, &MainApplication::reconnectCallback);
     connect(tray->actionQuit, &QAction::triggered, this, &MainApplication::quit);
     connect(tray, &Tray::activated, this, &MainApplication::trayActivated);
-    connect(tray, &Tray::messageClicked, mainWindow, [this]{if (settings->notificationClick()) mainWindow->bringToFront();});
+    connect(tray, &Tray::messageClicked, mainWindow, [this] {
+        if (settings->notificationClick())
+            mainWindow->bringToFront();
+    });
 
     connect(styleHints(), &QStyleHints::colorSchemeChanged, this, &MainApplication::themeChangedCallback);
 
@@ -140,7 +147,8 @@ void MainApplication::connectComponents()
     connect(requestHandler, &RequestHandler::finishedApplications, this, &MainApplication::applicationsCallback);
     connect(requestHandler, &RequestHandler::finishedImagePopup, this, &MainApplication::showImagePopup);
 
-    connect(&processApplicationsThread, &ProcessThread::Applications::processed, this, &MainApplication::insertApplications);
+    connect(&processApplicationsThread, &ProcessThread::Applications::processed, this,
+            &MainApplication::insertApplications);
 
     connect(listener, &Listener::connected, this, &MainApplication::listenerConnectedCallback);
     connect(listener, &Listener::disconnected, this, &MainApplication::listenerDisconnectedCallback);
@@ -152,13 +160,12 @@ void MainApplication::connectComponents()
     connect(heartbeatTimer, &QTimer::timeout, this, &MainApplication::heartbeat);
 }
 
-
 void MainApplication::initShortcuts()
 {
-    new QShortcut(Qt::CTRL | Qt::Key_Q, mainWindow, this, &MainApplication::quit);
-    new QShortcut(Qt::Key_F5, mainWindow, this, &MainApplication::refreshCallback);
+    new QShortcut(QKeySequence::StandardKey::Quit, mainWindow, this, &MainApplication::quit);
+    new QShortcut(QKeySequence::StandardKey::Refresh, mainWindow, this, &MainApplication::refreshCallback);
+    new QShortcut(QKeySequence::StandardKey::Preferences, mainWindow, this, &MainApplication::showSettings);
 }
-
 
 void MainApplication::showSettings()
 {
@@ -166,7 +173,6 @@ void MainApplication::showSettings()
     dialog.exec();
     tray->revertIcon();
 }
-
 
 void MainApplication::serverChangedCallback()
 {
@@ -178,7 +184,6 @@ void MainApplication::serverChangedCallback()
     reconnectCallback();
 }
 
-
 void MainApplication::reconnectCallback()
 {
     if (listener->isConnected())
@@ -187,23 +192,22 @@ void MainApplication::reconnectCallback()
         listener->startListening();
 }
 
-
 void MainApplication::trayActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason == QSystemTrayIcon::ActivationReason::Trigger) {
+    if (reason == QSystemTrayIcon::ActivationReason::Trigger)
+    {
         mainWindow->bringToFront();
     }
-    if (reason == QSystemTrayIcon::ActivationReason::MiddleClick) {
+    if (reason == QSystemTrayIcon::ActivationReason::MiddleClick)
+    {
         tray->revertIcon();
     }
 }
-
 
 void MainApplication::mainWindowHidden()
 {
     imagePopup->close();
 }
-
 
 void MainApplication::refreshCallback()
 {
@@ -214,15 +218,15 @@ void MainApplication::refreshCallback()
     messageItemModel.clear();
     applicationItemModel.clear();
 
-    QNetworkReply * reply = gotifyApi->applications();
+    QNetworkReply *reply = gotifyApi->applications();
     connect(reply, &QNetworkReply::finished, requestHandler, &RequestHandler::applications);
 }
 
-
-void MainApplication::messagesCallback(GotifyModel::Messages * messages)
+void MainApplication::messagesCallback(GotifyModel::Messages *messages)
 {
     messageItemModel.clear();
-    for (auto message : messages->messages) {
+    for (auto message : messages->messages)
+    {
         messageItemModel.appendMessage(message);
         message->deleteLater();
     }
@@ -231,41 +235,44 @@ void MainApplication::messagesCallback(GotifyModel::Messages * messages)
     mainWindow->enableApplications(false);
 }
 
-
-void MainApplication::missedMessagesCallback(GotifyModel::Messages * messages)
+void MainApplication::missedMessagesCallback(GotifyModel::Messages *messages)
 {
     int lastId = settings->lastId();
     QListIterator it(messages->messages);
     it.toBack();
-    while (it.hasPrevious()) {
-        GotifyModel::Message * message = it.previous();
-        if (message->id > lastId) {
-            if (settings->notifyMissed()) {
+    while (it.hasPrevious())
+    {
+        GotifyModel::Message *message = it.previous();
+        if (message->id > lastId)
+        {
+            if (settings->notifyMissed())
+            {
                 messageReceivedCallback(message);
-            } else {
+            }
+            else
+            {
                 addMessageToModel(message);
-            }  
+            }
         }
         message->deleteLater();
     }
     messages->deleteLater();
 }
 
-
-void MainApplication::applicationsCallback(GotifyModel::Applications * applications)
+void MainApplication::applicationsCallback(GotifyModel::Applications *applications)
 {
     applicationItemModel.clear();
     processApplicationsThread.process(applications);
 }
 
-
-void MainApplication::insertApplications(GotifyModel::Applications * applications)
+void MainApplication::insertApplications(GotifyModel::Applications *applications)
 {
-    ApplicationItem * item = new ApplicationItem("ALL MESSAGES");
+    ApplicationItem *item = new ApplicationItem("ALL MESSAGES");
     applicationItemModel.insertRow(0, item);
 
-    for (auto application : applications->applications) {
-        ApplicationItem * item = new ApplicationItem(application->name, application);
+    for (auto application : applications->applications)
+    {
+        ApplicationItem *item = new ApplicationItem(application->name, application);
         item->setIcon(QIcon(cache->getFile(application->id)));
         applicationItemModel.appendRow(item);
         application->deleteLater();
@@ -275,22 +282,21 @@ void MainApplication::insertApplications(GotifyModel::Applications * application
     applications->deleteLater();
 }
 
-
 void MainApplication::listenerConnectedCallback()
 {
     qDebug() << "Listener connected";
     mainWindow->setActive();
     tray->setActive();
 
-    if (firstConnect) {
+    if (firstConnect)
+    {
         firstConnect = false;
         return;
     }
 
-    QNetworkReply * reply = gotifyApi->messages();
-    connect(reply, &QNetworkReply::finished, requestHandler, [this]{requestHandler->messages(true);});
+    QNetworkReply *reply = gotifyApi->messages();
+    connect(reply, &QNetworkReply::finished, requestHandler, [this] { requestHandler->messages(true); });
 }
-
 
 void MainApplication::listenerDisconnectedCallback()
 {
@@ -301,27 +307,28 @@ void MainApplication::listenerDisconnectedCallback()
     listener->startListening();
 }
 
-
-void MainApplication::addMessageToModel(GotifyModel::Message * message)
+void MainApplication::addMessageToModel(GotifyModel::Message *message)
 {
     // Check if the message's appId is in the applicationItemModel
-    if (!applicationItemModel.itemFromId(message->appId)) {
+    if (!applicationItemModel.itemFromId(message->appId))
+    {
         qWarning() << "Application " << message->appId << " is not in applicationItemModel.";
         return;
     }
 
     // Get the selected ApplicationItem
-    ApplicationItem * applicationItem = applicationItemModel.itemFromIndex(applicationProxyModel->mapToSource(mainWindow->selectedApplication()));
+    ApplicationItem *applicationItem =
+        applicationItemModel.itemFromIndex(applicationProxyModel->mapToSource(mainWindow->selectedApplication()));
 
     // If the selected ApplicationItem is the 'All messages' item, or if the appIds match
     //      --> insert the message
-    if (applicationItem->allMessages() || (message->appId == applicationItem->id())) {
+    if (applicationItem->allMessages() || (message->appId == applicationItem->id()))
+    {
         messageItemModel.insertMessage(0, message);
     }
 }
 
-void
-MainApplication::updateToolTip(GotifyModel::Message* message)
+void MainApplication::updateToolTip(GotifyModel::Message *message)
 {
     qsizetype messageCutLength = qMin(20, message->message.length());
     QString toolTip;
@@ -336,12 +343,13 @@ MainApplication::updateToolTip(GotifyModel::Message* message)
     tray->setToolTip(toolTip);
 }
 
-void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
+void MainApplication::messageReceivedCallback(GotifyModel::Message *message)
 {
     addMessageToModel(message);
 
     // If the window is active, don't show a notification and don't change the tray icon
-    if (mainWindow->isActiveWindow()) {
+    if (mainWindow->isActiveWindow())
+    {
         message->deleteLater();
         return;
     }
@@ -367,7 +375,7 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
 
 #ifdef USE_KDE
     // KDE KNotification -- https://api.kde.org/frameworks/knotifications/html/classKNotification.html
-    KNotification* notification = new KNotification(QStringLiteral("notification"));
+    KNotification *notification = new KNotification(QStringLiteral("notification"));
     notification->setComponentName(QStringLiteral("plasma_workspace"));
 
     QString text = message->message;
@@ -386,25 +394,23 @@ void MainApplication::messageReceivedCallback(GotifyModel::Message * message)
         urls.append(QUrl::fromLocalFile(filePath));
     notification->setUrls(urls);
 
-    if (settings->notificationClick()) {
-        KNotificationAction* action = notification->addDefaultAction(QStringLiteral("Open")); // default action -> triggered when clicking the popup
+    if (settings->notificationClick())
+    {
+        KNotificationAction *action = notification->addDefaultAction(
+            QStringLiteral("Open")); // default action -> triggered when clicking the popup
         QObject::connect(action, &KNotificationAction::activated, this, [this] { mainWindow->bringToFront(); });
     }
     notification->sendEvent();
 #else
     // QSystemTrayIcon Notification
-    tray->showMessage(
-      message->title,
-      message->message,
-      QIcon(cache->getFile(message->appId)),
-      settings->notificationDurationMs());
+    tray->showMessage(message->title, message->message, QIcon(cache->getFile(message->appId)),
+                      settings->notificationDurationMs());
 #endif
 
     message->deleteLater();
 }
 
-
-void MainApplication::deleteAllCallback(ApplicationItem * applicationItem)
+void MainApplication::deleteAllCallback(ApplicationItem *applicationItem)
 {
     if (applicationItem->allMessages())
         gotifyApi->deleteMessages();
@@ -414,37 +420,32 @@ void MainApplication::deleteAllCallback(ApplicationItem * applicationItem)
     messageItemModel.clear();
 }
 
-
-void MainApplication::deleteMessageCallback(MessageItem * item)
+void MainApplication::deleteMessageCallback(MessageItem *item)
 {
     gotifyApi->deleteMessage(item->id());
     messageItemModel.removeRow(item->row());
 }
 
-
-void MainApplication::applicationChangedCallback(ApplicationItem * item)
+void MainApplication::applicationChangedCallback(ApplicationItem *item)
 {
     mainWindow->clearSearchField();
     mainWindow->disableButtons();
     mainWindow->disableApplications();
     messageItemModel.clear();
-    QNetworkReply * reply = item->allMessages() ? gotifyApi->messages() : gotifyApi->applicationMessages(item->id());
-    connect(reply, &QNetworkReply::finished, requestHandler, [this]{requestHandler->messages();});
+    QNetworkReply *reply = item->allMessages() ? gotifyApi->messages() : gotifyApi->applicationMessages(item->id());
+    connect(reply, &QNetworkReply::finished, requestHandler, [this] { requestHandler->messages(); });
 }
 
-
-void MainApplication::showImagePopup(const QString& fileName, const QUrl& url, QPoint pos)
+void MainApplication::showImagePopup(const QString &fileName, const QUrl &url, QPoint pos)
 {
     imagePopup->display(fileName, url, pos);
 }
-
 
 void MainApplication::themeChangedCallback(Qt::ColorScheme colorScheme)
 {
     mainWindow->setIcons();
     applyStyle();
 }
-
 
 void MainApplication::applyStyle()
 {
@@ -455,8 +456,7 @@ void MainApplication::applyStyle()
 #endif
 }
 
-void
-MainApplication::heartbeat()
+void MainApplication::heartbeat()
 {
     if (QDateTime::currentMSecsSinceEpoch() > (lastHeartbeat + 2 * settings->heartbeatInterval()))
         reconnectCallback();
@@ -464,7 +464,8 @@ MainApplication::heartbeat()
     lastHeartbeat = QDateTime::currentMSecsSinceEpoch();
 }
 
-void MainApplication::quit(){
+void MainApplication::quit()
+{
     qDebug() << "Quit requested";
 
     tray->hide();

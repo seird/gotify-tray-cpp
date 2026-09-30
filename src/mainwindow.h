@@ -20,8 +20,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    MainWindow(MessageItemModel * messageItemModel, ApplicationItemModel * applicationItemModel, ApplicationProxyModel * applicationProxyModel, QWidget *parent = nullptr);
+  public:
+    MainWindow(MessageItemModel* messageItemModel, MessageProxyModel* messageProxyModel, ApplicationItemModel* applicationItemModel, ApplicationProxyModel* applicationProxyModel, QWidget* parent = nullptr);
     ~MainWindow();
     void bringToFront();
     void enableButtons();
@@ -37,6 +37,9 @@ public:
     void setFonts();
     void setIcons();
     void showPriority(bool enabled);
+    void showSearch();
+    void hideSearch();
+    void toggleSearch();
     QModelIndex selectedApplication();
     bool eventFilter(QObject * watched, QEvent * event);
 
@@ -64,6 +67,8 @@ private:
     ApplicationProxyModel * applicationProxyModel;
     Ui::MainWindow * ui;
     
+    MessageProxyModel* messageProxyModel;
+
     void connectComponents();
 };
 
