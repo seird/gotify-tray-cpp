@@ -155,6 +155,7 @@ void MainApplication::initShortcuts()
 {
     new QShortcut(QKeySequence::StandardKey::Quit, mainWindow, this, &MainApplication::quit);
     new QShortcut(QKeySequence::StandardKey::Refresh, mainWindow, this, &MainApplication::refreshCallback);
+    new QShortcut(QKeySequence::StandardKey::Preferences, mainWindow, this, &MainApplication::showSettings);
 }
 
 
