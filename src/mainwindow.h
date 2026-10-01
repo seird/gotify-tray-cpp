@@ -10,6 +10,7 @@
 #include "messageitemmodel.h"
 #include "applicationitemmodel.h"
 #include "messageitemmodel.h"
+#include "requesthandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
