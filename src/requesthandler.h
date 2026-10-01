@@ -30,8 +30,15 @@ public:
     void messages(bool missed=false);
     void testServer();
     void imagePopup(QPoint pos);
+    QJsonArray getMessagesArray() const
+    {
+        return messagesArray;
+    }
 
-signals:
+  private:
+    QJsonArray messagesArray;
+
+  signals:
     /* Finished - successful or not */
     void finished();
     /* Finished successfully */

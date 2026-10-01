@@ -9,7 +9,7 @@
 #include "statuswidget.h"
 #include "messageitemmodel.h"
 #include "applicationitemmodel.h"
-
+#include "messageitemmodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,7 +25,8 @@ public:
     void bringToFront();
     void enableButtons();
     void disableButtons();
-    void enableApplications(bool select=true);
+    void clearSearchField();
+    void enableApplications(bool select = true);
     void disableApplications();
     void setActive();
     void setConnecting();
@@ -50,6 +51,7 @@ private slots:
     void displayMessageWidgets(const QModelIndex &parent, int first, int last);
     void currentChangedCallback(const QModelIndex &current, const QModelIndex &previous);
     void refreshCallback();
+    void searchMessages(QString query);
     void deleteAllCallback();
 
 protected:

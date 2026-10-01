@@ -177,9 +177,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>le_search</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>searchMessages(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>735</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>deleteAllCallback()</slot>
   <slot>refreshCallback()</slot>
+  <slot>searchMessages(QString)</slot>
  </slots>
 </ui>

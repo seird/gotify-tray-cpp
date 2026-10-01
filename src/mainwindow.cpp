@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QMessageBox>
 
+#include <rapidfuzz/fuzz.hpp>
 
 
 MainWindow::MainWindow(MessageItemModel * messageItemModel, ApplicationItemModel * applicationItemModel, ApplicationProxyModel * applicationProxyModel, QWidget *parent)
@@ -127,6 +128,7 @@ void MainWindow::enableButtons()
 {
     ui->pb_delete_all->setEnabled(true);
     ui->pb_refresh->setEnabled(true);
+    ui->le_search->setEnabled(true);
 }
 
 
@@ -134,8 +136,13 @@ void MainWindow::disableButtons()
 {
     ui->pb_delete_all->setDisabled(true);
     ui->pb_refresh->setDisabled(true);
+    ui->le_search->setDisabled(true);
 }
 
+void MainWindow::clearSearchField()
+{
+    ui->le_search->clear();
+}
 
 void MainWindow::enableApplications(bool select)
 {
@@ -205,6 +212,70 @@ void MainWindow::refreshCallback()
     emit refresh();
 }
 
+void MainWindow::searchMessages(QString query)
+{
+    RequestHandler *requestHandler = RequestHandler::getInstance();
+    GotifyModel::Messages gotifyMessageList(requestHandler->getMessagesArray());
+    if (query.isEmpty())
+    {
+        messageItemModel->clear();
+        for (GotifyModel::Message *message : gotifyMessageList.messages)
+        {
+            messageItemModel->appendMessage(message);
+        }
+        return;
+    }
+    // this score cutoff is arbitrary and can be adjusted. score range is [0,100]
+    const double score_cutoff = 10.0;
+    // using std strings and remove all special characters like emojis
+    std::string processed_query_string = query.toLower().toLatin1().constData();
+    processed_query_string.erase(std::remove(processed_query_string.begin(), processed_query_string.end(), '?'),
+                                 processed_query_string.end());
+    ApplicationItem *currentApplicationItem =
+        applicationItemModel->itemFromIndex(applicationProxyModel->mapToSource(selectedApplication()));
+    int currentAppId = currentApplicationItem->id();
+    std::vector<std::pair<GotifyModel::Message *, double>> results;
+    rapidfuzz::fuzz::CachedRatio<QString> scorer(processed_query_string);
+    QList<GotifyModel::Message *> messagesList = gotifyMessageList.messages;
+    // search
+    for (GotifyModel::Message *message : gotifyMessageList.messages)
+    {
+        if (currentAppId != message->appId && currentAppId != 0)
+            continue;
+        QString messageText = message->title.toLower() + " " + message->message.toLower();
+        std::string processed_message_string = messageText.toLatin1().constData();
+        processed_message_string.erase(
+            std::remove(processed_message_string.begin(), processed_message_string.end(), '?'),
+            processed_message_string.end());
+        double score = scorer.similarity(processed_message_string, score_cutoff);
+        if (messageText.toLatin1().indexOf(query.toLower().toLatin1()) != -1)
+        {
+            score += 100.0;
+        }
+        if (score >= score_cutoff)
+        {
+            results.emplace_back(std::make_pair(message, score));
+        }
+    }
+    // sort results by score and then by message id
+    std::sort(results.begin(), results.end(), [](const auto &a, const auto &b) {
+        if (a.second == b.second)
+        {
+            return a.first->id > b.first->id;
+        }
+        return a.second > b.second;
+    });
+    // clear and apply the new model. take only the first 10 results
+    messageItemModel->clear();
+    int count = 0;
+    for (const auto &result : results)
+    {
+        if (count >= 10)
+            break;
+        messageItemModel->appendMessage(result.first);
+        count++;
+    }
+}
 
 void MainWindow::deleteAllCallback()
 {
