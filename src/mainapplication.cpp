@@ -15,6 +15,8 @@
 #include <QStyle>
 #include <QSystemTrayIcon>
 
+#include <rapidfuzz/fuzz.hpp>
+
 #ifdef USE_KDE
 #include <KNotification>
 #endif
@@ -423,6 +425,7 @@ void MainApplication::deleteMessageCallback(MessageItem * item)
 
 void MainApplication::applicationChangedCallback(ApplicationItem * item)
 {
+    mainWindow->clearSearchField();
     mainWindow->disableButtons();
     mainWindow->disableApplications();
     messageItemModel.clear();
