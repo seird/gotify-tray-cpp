@@ -53,6 +53,7 @@ void MainWindow::connectComponents()
     connect(messageProxyModel, &QAbstractItemModel::rowsInserted, this, &MainWindow::displayMessageWidgets);
     connect(ui->listView_applications->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::currentChangedCallback);
     connect(ui->lineSearch, &QLineEdit::textChanged, messageProxyModel, &QSortFilterProxyModel::setFilterFixedString);
+    connect(ui->pb_search, &QPushButton::clicked, this, &MainWindow::toggleSearch);
     connect(settings, &Settings::fontChanged, this, &MainWindow::setFonts);
     connect(settings, &Settings::sizeChanged, this, &MainWindow::setIcons);
     connect(settings, &Settings::showPriorityChanged, this, &MainWindow::showPriority);
@@ -81,6 +82,7 @@ MainWindow::setIcons()
     QString theme = Utils::getTheme();
     ui->pb_refresh->setIcon(QIcon("://res/themes/" + theme + "/refresh.svg"));
     ui->pb_delete_all->setIcon(QIcon("://res/themes/" + theme + "/trashcan.svg"));
+    ui->pb_search->setIcon(QIcon("://res/themes/" + theme + "/search.svg"));
 
     QSize labelSize = settings->statusLabelSize();
     ui->statusWidget->setFixedSize(labelSize);
@@ -89,8 +91,10 @@ MainWindow::setIcons()
     QSize buttonSize = settings->mainButtonSize();
     ui->pb_refresh->setFixedSize(buttonSize);
     ui->pb_delete_all->setFixedSize(buttonSize);
+    ui->pb_search->setFixedSize(buttonSize);
     ui->pb_refresh->setIconSize(0.7 * buttonSize);
     ui->pb_delete_all->setIconSize(0.9 * buttonSize);
+    ui->pb_search->setIconSize(0.7 * buttonSize);
 
     ui->listView_applications->setIconSize(settings->applicationIconSize());
 
@@ -127,6 +131,7 @@ MainWindow::showSearch()
     ui->lineSearch->clear();
     ui->lineSearch->show();
     ui->lineSearch->setFocus();
+    ui->pb_search->setChecked(true);
 }
 
 void
@@ -134,6 +139,8 @@ MainWindow::hideSearch()
 {
     ui->lineSearch->clear();
     ui->lineSearch->hide();
+    ui->pb_search->setChecked(false);
+    ui->pb_search->clearFocus();
 }
 
 QModelIndex
@@ -157,6 +164,7 @@ void MainWindow::enableButtons()
 {
     ui->pb_delete_all->setEnabled(true);
     ui->pb_refresh->setEnabled(true);
+    ui->pb_search->setEnabled(true);
 }
 
 
@@ -164,6 +172,8 @@ void MainWindow::disableButtons()
 {
     ui->pb_delete_all->setDisabled(true);
     ui->pb_refresh->setDisabled(true);
+    ui->pb_search->setDisabled(true);
+    hideSearch();
 }
 
 

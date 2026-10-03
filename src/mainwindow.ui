@@ -97,10 +97,20 @@
            <widget class="QLineEdit" name="lineSearch"/>
           </item>
           <item>
-           <widget class="QPushButton" name="pb_refresh">
+           <widget class="QPushButton" name="pb_search">
             <property name="toolTip">
-             <string>Refresh</string>
+             <string>Toggle search</string>
             </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_refresh">
             <property name="text">
              <string/>
             </property>

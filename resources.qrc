@@ -19,5 +19,7 @@
         <file>res/themes/light/status_inactive.svg</file>
         <file>res/themes/light/ServerInfoDialog.qss</file>
         <file>res/themes/light/trashcan.svg</file>
+        <file>res/themes/dark/search.svg</file>
+        <file>res/themes/light/search.svg</file>
     </qresource>
 </RCC>
