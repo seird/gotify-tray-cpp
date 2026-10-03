@@ -33,6 +33,8 @@ MainWindow::MainWindow(MessageItemModel* messageItemModel, MessageProxyModel* me
     ui->splitter->setCollapsible(1, false);
 
     ui->lineSearch->hide();
+    ui->pb_refresh->setToolTip(QString(tr("Refresh (%1)")).arg(QKeySequence(QKeySequence::StandardKey::Refresh).toString(QKeySequence::NativeText)));
+    ui->pb_search->setToolTip(QString(tr("Toggle search (%1)")).arg(QKeySequence(QKeySequence::StandardKey::Find).toString(QKeySequence::NativeText)));
 
     setFonts();
     setIcons();
