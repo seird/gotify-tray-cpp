@@ -33,6 +33,8 @@ MainWindow::MainWindow(MessageItemModel * messageItemModel, ApplicationItemModel
     // Do not collapse the message list
     ui->splitter->setCollapsible(1, false);
 
+    ui->pb_refresh->setToolTip(QString(tr("Refresh (%1)")).arg(QKeySequence(QKeySequence::StandardKey::Refresh).toString(QKeySequence::NativeText)));
+    
     setFonts();
     setIcons();
     restoreWindowState();
