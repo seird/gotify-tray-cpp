@@ -26,12 +26,15 @@ class MessageProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
   public:
-    explicit MessageProxyModel(MessageItemModel* messageItemModel);
+    explicit MessageProxyModel(MessageItemModel *messageItemModel);
 
   protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 
   private:
+    double scoreForItem(MessageItem *item, const QString &pattern) const;
+    const double score_cutoff = 10.0;
 };
 
 #endif // MESSAGEITEMMODEL_H
