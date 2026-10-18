@@ -42,7 +42,6 @@ MessageProxyModel::MessageProxyModel(MessageItemModel* messageItemModel)
   : QSortFilterProxyModel()
 {
     setSourceModel(messageItemModel);
-    // setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 bool

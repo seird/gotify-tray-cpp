@@ -181,6 +181,5 @@
  <slots>
   <slot>deleteAllCallback()</slot>
   <slot>refreshCallback()</slot>
-  <slot>searchMessages(QString)</slot>
  </slots>
 </ui>
