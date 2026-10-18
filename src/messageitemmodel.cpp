@@ -67,9 +67,9 @@ double MessageProxyModel::scoreForItem(MessageItem *item, const QString &pattern
     std::string key = key_qstring.toLatin1().constData();
     key.erase(std::remove(key.begin(), key.end(), '?'), key.end());
     rapidfuzz::fuzz::CachedRatio<QString> scorer(query);
-    double offset =
-        (item->title().toLower().contains(pattern) || item->message().toLower().contains(pattern) ? 100. : 0.);
-    return scorer.similarity(key, score_cutoff) + offset;
+    double offset = (key_qstring.contains(pattern.toLower()) ? 100. : 0.);
+    double score = scorer.similarity(key, score_cutoff) + offset;
+    return score;
 }
 
 bool MessageProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
@@ -82,5 +82,18 @@ bool MessageProxyModel::lessThan(const QModelIndex &source_left, const QModelInd
         return false;
 
     const QString pattern = filterRegularExpression().pattern();
-    return scoreForItem(leftItem, pattern) > scoreForItem(rightItem, pattern);
+    if (pattern.isEmpty())
+    {
+        return leftItem->id() > rightItem->id();
+    }
+    double leftScore = scoreForItem(leftItem, pattern);
+    double rightScore = scoreForItem(rightItem, pattern);
+    if (leftScore == rightScore)
+    {
+        return leftItem->id() > rightItem->id();
+    }
+    else
+    {
+        return leftScore > rightScore;
+    }
 }

@@ -55,7 +55,6 @@ private slots:
     void displayMessageWidgets(const QModelIndex &parent, int first, int last);
     void currentChangedCallback(const QModelIndex &current, const QModelIndex &previous);
     void refreshCallback();
-    void searchMessages(QString query);
     void deleteAllCallback();
 
 protected:

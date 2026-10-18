@@ -6,16 +6,17 @@
 #include <QStandardItemModel>
 
 #include "messageitem.h"
+#include <rapidfuzz/fuzz.hpp>
 
 class MessageItemModel : public QStandardItemModel
 {
     Q_OBJECT
 
-public:
-    explicit MessageItemModel(QObject * parent = nullptr);
-    void insertMessage(int row, GotifyModel::Message * message);
-    void appendMessage(GotifyModel::Message * message);
-    MessageItem * itemFromIndex(const QModelIndex &index);
+  public:
+    explicit MessageItemModel(QObject *parent = nullptr);
+    void insertMessage(int row, GotifyModel::Message *message);
+    void appendMessage(GotifyModel::Message *message);
+    MessageItem *itemFromIndex(const QModelIndex &index);
 
 private:
     void updateLastId(int id);
@@ -34,7 +35,7 @@ class MessageProxyModel : public QSortFilterProxyModel
 
   private:
     double scoreForItem(MessageItem *item, const QString &pattern) const;
-    const double score_cutoff = 10.0;
+    const double score_cutoff = 1.0;
 };
 
 #endif // MESSAGEITEMMODEL_H
