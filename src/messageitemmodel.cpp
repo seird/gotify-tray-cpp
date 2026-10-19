@@ -49,6 +49,8 @@ MessageProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourcePare
     beginFilterChange();
     filterQuery = pattern;
     endFilterChange();
+    if (filterQuery.isEmpty())
+        invalidate();
 }
 
 bool MessageProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -57,6 +59,8 @@ bool MessageProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourc
     MessageItem *item = static_cast<MessageItem *>(source->item(sourceRow));
     if (filterQuery.isEmpty())
         return true;
+    if (!item)
+        return false;
     return scoreForItem(item) >= score_cutoff;
 }
 
@@ -80,7 +84,11 @@ bool MessageProxyModel::lessThan(const QModelIndex &source_left, const QModelInd
 
     if (filterQuery.isEmpty())
     {
-        return leftItem->id() > rightItem->id();
+        return false;
+    }
+    if (!leftItem || !rightItem)
+    {
+        return false;
     }
     double leftScore = scoreForItem(leftItem);
     double rightScore = scoreForItem(rightItem);
