@@ -43,8 +43,7 @@ MessageProxyModel::MessageProxyModel(MessageItemModel* messageItemModel)
     sort(0);
 }
 
-bool
-MessageProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
+void MessageProxyModel::setFilterQuery(const QString &pattern)
 {
     beginFilterChange();
     filterQuery = pattern;
