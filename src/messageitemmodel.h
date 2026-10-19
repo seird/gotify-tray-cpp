@@ -18,7 +18,7 @@ class MessageItemModel : public QStandardItemModel
     void appendMessage(GotifyModel::Message *message);
     MessageItem *itemFromIndex(const QModelIndex &index);
 
-private:
+  private:
     void updateLastId(int id);
 };
 
@@ -28,14 +28,16 @@ class MessageProxyModel : public QSortFilterProxyModel
 
   public:
     explicit MessageProxyModel(MessageItemModel *messageItemModel);
+    void setFilterQuery(const QString &pattern);
 
   protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 
   private:
-    double scoreForItem(MessageItem *item, const QString &pattern) const;
-    const double score_cutoff = 1.0;
+    double scoreForItem(MessageItem *item) const;
+    const double score_cutoff = 10.0;
+    QString filterQuery;
 };
 
 #endif // MESSAGEITEMMODEL_H

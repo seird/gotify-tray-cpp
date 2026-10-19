@@ -53,11 +53,7 @@ void MainWindow::connectComponents()
     connect(messageProxyModel, &QAbstractItemModel::rowsInserted, this, &MainWindow::displayMessageWidgets);
     connect(ui->listView_applications->selectionModel(), &QItemSelectionModel::currentChanged, this,
             &MainWindow::currentChangedCallback);
-    connect(ui->le_search, &QLineEdit::textEdited, this, [&](QString pattern) {
-        messageProxyModel->setFilterFixedString(pattern);
-        messageProxyModel->sort(0);
-        messageItemModel->sort(0);
-    });
+    connect(ui->le_search, &QLineEdit::textEdited, messageProxyModel, &MessageProxyModel::setFilterQuery);
     connect(settings, &Settings::fontChanged, this, &MainWindow::setFonts);
     connect(settings, &Settings::sizeChanged, this, &MainWindow::setIcons);
     connect(settings, &Settings::showPriorityChanged, this, &MainWindow::showPriority);
