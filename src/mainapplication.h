@@ -33,6 +33,7 @@ public:
     MainWindow * mainWindow;
     Tray * tray;
     MessageItemModel messageItemModel;
+    MessageProxyModel* messageProxyModel;
     ApplicationItemModel applicationItemModel;
     ApplicationProxyModel * applicationProxyModel;
     QLockFile * lockfile;

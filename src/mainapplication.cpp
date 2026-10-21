@@ -42,11 +42,18 @@ MainApplication::MainApplication(int& argc, char* argv[])
 MainApplication::~MainApplication()
 {
     delete lockfile;
-    if (gotifyApi) delete gotifyApi;
-    if (listener) delete listener;
-    if (applicationProxyModel) delete applicationProxyModel;
-    if (mainWindow) delete mainWindow;
-    if (tray) delete tray;
+    if (gotifyApi)
+        delete gotifyApi;
+    if (listener)
+        delete listener;
+    if (messageProxyModel)
+        delete messageProxyModel;
+    if (applicationProxyModel)
+        delete applicationProxyModel;
+    if (mainWindow)
+        delete mainWindow;
+    if (tray)
+        delete tray;
 }
 
 
@@ -73,8 +80,9 @@ void MainApplication::initComponents()
     QString certPath = settings->selfSignedCertificatePath();
     gotifyApi = new GotifyApi(serverUrl, clientToken, certPath);
     listener = new Listener(serverUrl, clientToken, certPath);
+    messageProxyModel = new MessageProxyModel(&messageItemModel);
     applicationProxyModel = new ApplicationProxyModel(&applicationItemModel);
-    mainWindow = new MainWindow(&messageItemModel, &applicationItemModel, applicationProxyModel);
+    mainWindow = new MainWindow(&messageItemModel, messageProxyModel, &applicationItemModel, applicationProxyModel);
     tray = new Tray();
     imagePopup = new ImagePopup(mainWindow);
     heartbeatTimer = new QTimer(this);
@@ -156,6 +164,8 @@ void MainApplication::initShortcuts()
     new QShortcut(QKeySequence::StandardKey::Quit, mainWindow, this, &MainApplication::quit);
     new QShortcut(QKeySequence::StandardKey::Refresh, mainWindow, this, &MainApplication::refreshCallback);
     new QShortcut(QKeySequence::StandardKey::Preferences, mainWindow, this, &MainApplication::showSettings);
+    new QShortcut(QKeySequence::StandardKey::Find, mainWindow, mainWindow, &MainWindow::toggleSearch);
+    new QShortcut(QKeySequence(Qt::Key_Escape), mainWindow, mainWindow, &MainWindow::hideSearch);
 }
 
 
