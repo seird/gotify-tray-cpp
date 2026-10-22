@@ -12,8 +12,8 @@ public:
     GotifyApi(QUrl severUrl, QByteArray clientToken, QString certPath = "", QObject* parent = nullptr);
     void updateAuth(QUrl serverUrl, QByteArray clientToken, QString certPath = "");
     QNetworkReply * applications();
-    QNetworkReply * applicationMessages(int applicationId, int limit = 100, int since = 0);
-    QNetworkReply * messages(int limit = 100, int since = 0);
+    QNetworkReply * applicationMessages(int applicationId, int limit = 20, int since = 0);
+    QNetworkReply * messages(int limit = 20, int since = 0);
     QNetworkReply * deleteMessage(int messageId);
     QNetworkReply * deleteMessages();
     QNetworkReply * deleteApplicaitonMessages(int applicationId);
