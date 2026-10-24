@@ -35,6 +35,10 @@ MainWindow::MainWindow(MessageItemModel *messageItemModel, MessageProxyModel *me
     // Do not collapse the message list
     ui->splitter->setCollapsible(1, false);
 
+    ui->pb_refresh->setToolTip(QString(tr("Refresh (%1)")).arg(QKeySequence(QKeySequence::StandardKey::Refresh).toString(QKeySequence::NativeText)));
+    
+    ui->lineSearch->hide();
+
     setFonts();
     setIcons();
     restoreWindowState();
@@ -66,17 +70,16 @@ void MainWindow::setFonts()
     QFont font = settings->applicationFont();
     for (int r = 0; r < applicationItemModel->rowCount(); ++r)
         applicationItemModel->item(r)->setFont(font);
-
-    for (int r = 0; r < messageProxyModel->rowCount(); ++r)
-    {
+    for (int r = 0; r < messageProxyModel->rowCount(); ++r) {
         QModelIndex index = messageProxyModel->index(r, 0);
-        MessageWidget *messageWidget = static_cast<MessageWidget *>(ui->listView_messages->indexWidget(index));
+        MessageWidget* messageWidget = static_cast<MessageWidget*>(ui->listView_messages->indexWidget(index));
         if (messageWidget)
             messageWidget->setFonts();
     }
 }
 
-void MainWindow::setIcons()
+void
+MainWindow::setIcons()
 {
     QString theme = Utils::getTheme();
     ui->pb_refresh->setIcon(QIcon("://res/themes/" + theme + "/refresh.svg"));
@@ -94,30 +97,37 @@ void MainWindow::setIcons()
 
     ui->listView_applications->setIconSize(settings->applicationIconSize());
 
-    for (int r = 0; r < messageProxyModel->rowCount(); ++r)
-    {
+    for (int r = 0; r < messageProxyModel->rowCount(); ++r) {
         QModelIndex index = messageProxyModel->index(r, 0);
-        MessageWidget *messageWidget = static_cast<MessageWidget *>(ui->listView_messages->indexWidget(index));
+        MessageWidget* messageWidget = static_cast<MessageWidget*>(ui->listView_messages->indexWidget(index));
         messageWidget->setIcons();
     }
 }
 
-void MainWindow::showPriority(bool enabled)
+void
+MainWindow::showPriority(bool enabled)
 {
-    for (int r = 0; r < messageProxyModel->rowCount(); ++r)
-    {
+    for (int r = 0; r < messageProxyModel->rowCount(); ++r) {
         QModelIndex index = messageProxyModel->index(r, 0);
-        MessageWidget *messageWidget = static_cast<MessageWidget *>(ui->listView_messages->indexWidget(index));
+        MessageWidget* messageWidget = static_cast<MessageWidget*>(ui->listView_messages->indexWidget(index));
         messageWidget->showPriority(enabled);
     }
 }
 
-QModelIndex MainWindow::selectedApplication()
+void
+MainWindow::toggleSearch()
+{
+    ui->le_search->setFocus();
+}
+
+QModelIndex
+MainWindow::selectedApplication()
 {
     return ui->listView_applications->selectionModel()->currentIndex();
 }
 
-void MainWindow::bringToFront()
+void
+MainWindow::bringToFront()
 {
     ensurePolished();
     show();
@@ -174,11 +184,11 @@ void MainWindow::setError()
     ui->statusWidget->setError();
 }
 
-void MainWindow::displayMessageWidgets(const QModelIndex &parent, int first, int last)
+void
+MainWindow::displayMessageWidgets(const QModelIndex& parent, int first, int last)
 {
-    QApplication *app = qApp;
-    for (int i = first; i <= last; ++i)
-    {
+    QApplication* app = qApp;
+    for (int i = first; i <= last; ++i) {
         QModelIndex proxyIndex = messageProxyModel->index(i, 0, parent);
 
         if (!proxyIndex.isValid())
@@ -188,12 +198,11 @@ void MainWindow::displayMessageWidgets(const QModelIndex &parent, int first, int
             continue;
 
         QModelIndex sourceIndex = messageProxyModel->mapToSource(proxyIndex);
-        MessageItem *item = messageItemModel->itemFromIndex(sourceIndex);
+        MessageItem* item = messageItemModel->itemFromIndex(sourceIndex);
         if (!item)
             continue;
 
-        MessageWidget *messageWidget =
-            new MessageWidget(item, QIcon(cache->getFile(item->appId())), ui->listView_messages);
+        MessageWidget* messageWidget = new MessageWidget(item, QIcon(cache->getFile(item->appId())), ui->listView_messages);
         connect(messageWidget, &MessageWidget::deletionRequested, this, [this, item] { emit deleteMessage(item); });
         ui->listView_messages->setIndexWidget(proxyIndex, messageWidget);
 

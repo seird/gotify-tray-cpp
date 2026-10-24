@@ -37,8 +37,6 @@ class MainWindow : public QMainWindow
     void setFonts();
     void setIcons();
     void showPriority(bool enabled);
-    void showSearch();
-    void hideSearch();
     void toggleSearch();
     QModelIndex selectedApplication();
     bool eventFilter(QObject * watched, QEvent * event);

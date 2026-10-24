@@ -30,7 +30,8 @@ void MessageItemModel::appendMessage(GotifyModel::Message * message)
     appendRow(item);
 }
 
-MessageItem *MessageItemModel::itemFromIndex(const QModelIndex &index)
+MessageItem*
+MessageItemModel::itemFromIndex(const QModelIndex& index)
 {
 
     return static_cast<MessageItem*>(QStandardItemModel::itemFromIndex(index));
