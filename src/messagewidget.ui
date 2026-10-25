@@ -293,6 +293,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>label_content_image</sender>
+   <signal>clicked()</signal>
+   <receiver>MessageWidget</receiver>
+   <slot>clickedContentImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>85</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>deleteCallback()</slot>
