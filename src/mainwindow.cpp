@@ -1,17 +1,20 @@
 #include "mainwindow.h"
+#include "cache.h"
+#include "messagewidget.h"
 #include "settings.h"
 #include "ui_mainwindow.h"
-#include "messagewidget.h"
-#include "cache.h"
 #include "utils.h"
 
-#include <QtCore>
 #include <QApplication>
 #include <QMessageBox>
+#include <QtCore>
 
-MainWindow::MainWindow(MessageItemModel* messageItemModel, MessageProxyModel* messageProxyModel, ApplicationItemModel* applicationItemModel, ApplicationProxyModel* applicationProxyModel, QWidget* parent)
-  : QMainWindow(parent)
-  , ui(new Ui::MainWindow)
+#include <rapidfuzz/fuzz.hpp>
+
+MainWindow::MainWindow(MessageItemModel *messageItemModel, MessageProxyModel *messageProxyModel,
+                       ApplicationItemModel *applicationItemModel, ApplicationProxyModel *applicationProxyModel,
+                       QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -49,17 +52,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::connectComponents()
 {
     connect(messageProxyModel, &QAbstractItemModel::rowsInserted, this, &MainWindow::displayMessageWidgets);
-    connect(ui->listView_applications->selectionModel(), &QItemSelectionModel::currentChanged, this, &MainWindow::currentChangedCallback);
-    connect(ui->lineSearch, &QLineEdit::textChanged, messageProxyModel, &QSortFilterProxyModel::setFilterFixedString);
+    connect(ui->listView_applications->selectionModel(), &QItemSelectionModel::currentChanged, this,
+            &MainWindow::currentChangedCallback);
+    connect(ui->le_search, &QLineEdit::textEdited, messageProxyModel, &MessageProxyModel::setFilterQuery);
     connect(settings, &Settings::fontChanged, this, &MainWindow::setFonts);
     connect(settings, &Settings::sizeChanged, this, &MainWindow::setIcons);
     connect(settings, &Settings::showPriorityChanged, this, &MainWindow::showPriority);
 }
-
 
 void MainWindow::setFonts()
 {
@@ -68,7 +70,6 @@ void MainWindow::setFonts()
     QFont font = settings->applicationFont();
     for (int r = 0; r < applicationItemModel->rowCount(); ++r)
         applicationItemModel->item(r)->setFont(font);
-
     for (int r = 0; r < messageProxyModel->rowCount(); ++r) {
         QModelIndex index = messageProxyModel->index(r, 0);
         MessageWidget* messageWidget = static_cast<MessageWidget*>(ui->listView_messages->indexWidget(index));
@@ -116,26 +117,7 @@ MainWindow::showPriority(bool enabled)
 void
 MainWindow::toggleSearch()
 {
-    if (ui->lineSearch->isVisible()) {
-        hideSearch();
-    } else {
-        showSearch();
-    }
-}
-
-void
-MainWindow::showSearch()
-{
-    ui->lineSearch->clear();
-    ui->lineSearch->show();
-    ui->lineSearch->setFocus();
-}
-
-void
-MainWindow::hideSearch()
-{
-    ui->lineSearch->clear();
-    ui->lineSearch->hide();
+    ui->le_search->setFocus();
 }
 
 QModelIndex
@@ -154,20 +136,24 @@ MainWindow::bringToFront()
     raise();
 }
 
-
 void MainWindow::enableButtons()
 {
     ui->pb_delete_all->setEnabled(true);
     ui->pb_refresh->setEnabled(true);
+    ui->le_search->setEnabled(true);
 }
-
 
 void MainWindow::disableButtons()
 {
     ui->pb_delete_all->setDisabled(true);
     ui->pb_refresh->setDisabled(true);
+    ui->le_search->setDisabled(true);
 }
 
+void MainWindow::clearSearchField()
+{
+    ui->le_search->clear();
+}
 
 void MainWindow::enableApplications(bool select)
 {
@@ -177,25 +163,21 @@ void MainWindow::enableApplications(bool select)
         ui->listView_applications->setCurrentIndex(applicationProxyModel->index(0, 0));
 }
 
-
 void MainWindow::disableApplications()
 {
     ui->listView_applications->clearSelection();
     ui->listView_applications->setDisabled(true);
 }
 
-
 void MainWindow::setActive()
 {
     ui->statusWidget->setActive();
 }
 
-
 void MainWindow::setConnecting()
 {
     ui->statusWidget->setConnecting();
 }
-
 
 void MainWindow::setError()
 {
@@ -228,41 +210,39 @@ MainWindow::displayMessageWidgets(const QModelIndex& parent, int first, int last
     }
 }
 
-
 void MainWindow::currentChangedCallback(const QModelIndex &current, const QModelIndex &previous)
 {
-    ApplicationItem * item = applicationItemModel->itemFromIndex(applicationProxyModel->mapToSource(current));
-    if (item) {
+    ApplicationItem *item = applicationItemModel->itemFromIndex(applicationProxyModel->mapToSource(current));
+    if (item)
+    {
         ui->label_application->setText(item->text());
         emit applicationChanged(item);
     }
 }
-
 
 void MainWindow::refreshCallback()
 {
     emit refresh();
 }
 
-
 void MainWindow::deleteAllCallback()
 {
     if (!messageItemModel->rowCount())
         return;
 
-    ApplicationItem * item = applicationItemModel->itemFromIndex(applicationProxyModel->mapToSource(selectedApplication()));
+    ApplicationItem *item =
+        applicationItemModel->itemFromIndex(applicationProxyModel->mapToSource(selectedApplication()));
 
     QString text = item->allMessages() ? "Delete ALL messages?" : "Delete all '" + item->name() + "' messages?";
     if (QMessageBox::warning(this, "Are you sure?", text,
                              QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::Cancel,
-                             QMessageBox::StandardButton::Cancel)
-        != QMessageBox::StandardButton::Ok) {
+                             QMessageBox::StandardButton::Cancel) != QMessageBox::StandardButton::Ok)
+    {
         return;
     }
 
     emit deleteAll(item);
 }
-
 
 void MainWindow::storeWindowState()
 {
@@ -278,7 +258,6 @@ void MainWindow::restoreWindowState()
     ui->splitter->restoreState(settings->splitterState());
 }
 
-
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     hide();
@@ -286,10 +265,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     emit hidden();
 }
 
-
-bool MainWindow::eventFilter(QObject * watched, QEvent * event)
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    switch (event->type()) {
+    switch (event->type())
+    {
     case QEvent::Type::WindowActivate:
         emit activated();
         break;

@@ -9,7 +9,8 @@
 #include "statuswidget.h"
 #include "messageitemmodel.h"
 #include "applicationitemmodel.h"
-
+#include "messageitemmodel.h"
+#include "requesthandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,7 +26,8 @@ class MainWindow : public QMainWindow
     void bringToFront();
     void enableButtons();
     void disableButtons();
-    void enableApplications(bool select=true);
+    void clearSearchField();
+    void enableApplications(bool select = true);
     void disableApplications();
     void setActive();
     void setConnecting();
@@ -35,8 +37,6 @@ class MainWindow : public QMainWindow
     void setFonts();
     void setIcons();
     void showPriority(bool enabled);
-    void showSearch();
-    void hideSearch();
     void toggleSearch();
     QModelIndex selectedApplication();
     bool eventFilter(QObject * watched, QEvent * event);

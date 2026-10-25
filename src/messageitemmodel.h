@@ -6,18 +6,19 @@
 #include <QStandardItemModel>
 
 #include "messageitem.h"
+#include <rapidfuzz/fuzz.hpp>
 
 class MessageItemModel : public QStandardItemModel
 {
     Q_OBJECT
 
-public:
-    explicit MessageItemModel(QObject * parent = nullptr);
-    void insertMessage(int row, GotifyModel::Message * message);
-    void appendMessage(GotifyModel::Message * message);
-    MessageItem * itemFromIndex(const QModelIndex &index);
+  public:
+    explicit MessageItemModel(QObject *parent = nullptr);
+    void insertMessage(int row, GotifyModel::Message *message);
+    void appendMessage(GotifyModel::Message *message);
+    MessageItem *itemFromIndex(const QModelIndex &index);
 
-private:
+  private:
     void updateLastId(int id);
 };
 
@@ -26,12 +27,17 @@ class MessageProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
   public:
-    explicit MessageProxyModel(MessageItemModel* messageItemModel);
+    explicit MessageProxyModel(MessageItemModel *messageItemModel);
+    void setFilterQuery(const QString &pattern);
 
   protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 
   private:
+    double scoreForItem(MessageItem *item) const;
+    const double score_cutoff = 10.0;
+    QString filterQuery;
 };
 
 #endif // MESSAGEITEMMODEL_H

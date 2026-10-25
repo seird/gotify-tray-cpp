@@ -75,7 +75,7 @@ void RequestHandler::messages(bool missed)
     }
 
     QJsonObject object = document.object();
-    QJsonArray messagesArray = object["messages"].toArray();
+    messagesArray = object["messages"].toArray();
 
     if (missed) {
         emit finishedMissedMessages(new GotifyModel::Messages(messagesArray));
