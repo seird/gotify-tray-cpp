@@ -59,6 +59,7 @@ MainApplication::~MainApplication()
 
 void MainApplication::init()
 {
+    loadTranslation();
     initComponents();
     initGui();
     connectComponents();
@@ -107,6 +108,24 @@ bool MainApplication::acquireLock()
     lockfile->setStaleLockTime(0);
     return lockfile->tryLock();
 #endif
+}
+
+void
+MainApplication::loadTranslation()
+{
+    QString language = settings->interfaceLanguageOverride();
+    if (language.isEmpty())
+        language = QLocale::system().name().section('_', 0, 0);
+    
+    if (translator.load("gotify-tray_" + language, ":/translations")) {
+        if (QCoreApplication::installTranslator(&translator)) {
+            qDebug() << "Installed translator";
+        } else {
+            qWarning() << "Failed to install translator";
+        }
+    } else {
+        qWarning() << "Failed to load translator";
+    }
 }
 
 bool MainApplication::verifyServer(bool forceNew)

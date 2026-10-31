@@ -51,6 +51,9 @@ public:
     void setWindowState(QByteArray state);
     QByteArray windowState();
 
+    void setInterfaceLanguageOverride(QString value);
+    QString interfaceLanguageOverride();
+
     void setSplitterState(QByteArray state);
     QByteArray splitterState();
 

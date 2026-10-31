@@ -8,6 +8,7 @@
 #include <QLockFile>
 #include <QStandardPaths>
 #include <QString>
+#include <QTranslator>
 #include <QPoint>
 
 #include "mainwindow.h"
@@ -44,6 +45,7 @@ public:
     ProcessThread::Applications processApplicationsThread;
     QTimer* heartbeatTimer;
     qint64 lastHeartbeat;
+    QTranslator translator;
 
     void initGui();
     void initComponents();
@@ -52,6 +54,7 @@ public:
     void initShortcuts();
     void addMessageToModel(GotifyModel::Message * message);
     void updateToolTip(GotifyModel::Message* message);
+    void loadTranslation();
 
   private slots:
     void showSettings();

@@ -147,6 +147,18 @@ QByteArray Settings::windowState()
 
 
 //------------------------------------------------------------------------------
+void Settings::setInterfaceLanguageOverride(QString value)
+{
+    setValue("interfaceLanguageOverride", value);
+}
+
+QString Settings::interfaceLanguageOverride()
+{
+    return value("interfaceLanguageOverride", "").toString();
+}
+
+
+//------------------------------------------------------------------------------
 void Settings::setSplitterState(QByteArray state)
 {
     setValue("state/splitterState", state);

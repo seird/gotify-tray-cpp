@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.19)
 
 project(gotify-tray++ VERSION 0.1 LANGUAGES CXX)
 
@@ -16,8 +16,8 @@ if(KF6Notifications_FOUND)
     add_definitions(-DUSE_KDE)
 endif()
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network WebSockets Sql)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network WebSockets Sql)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network WebSockets Sql LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network WebSockets Sql LinguistTools)
 
 if (WIN32)
     set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/gotify-tray++.rc")
@@ -59,6 +59,12 @@ qt_add_executable(gotify-tray++
     src/processthread.h src/processthread.cpp
     src/imagepopup.h src/imagepopup.cpp
 
+)
+
+qt_add_translations(gotify-tray++
+    TS_FILES
+        translations/gotify-tray_en.ts
+    RESOURCE_PREFIX "/translations"
 )
 
 if(KF6Notifications_FOUND)
