@@ -1,0 +1,75 @@
+name: develop
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # Pin Qt and install the MinGW toolchain Qt was built with (GCC 13.1, msvcrt).
+      # The runner's default MinGW (GCC 15, UCRT) is not compatible with the Qt binaries.
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4.5.0
+        with:
+          version: '6.8.3'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw'
+          modules: 'qtwebsockets qtimageformats'
+          tools: 'tools_mingw1310,qt.tools.win64_mingw1310'
+          dir: ${{ runner.temp }}
+
+      # install-qt-action@v4 no longer sets Qt6_DIR (only QT_ROOT_DIR),
+      # but scripts/build-win.ps1 relies on it.
+      - name: Set Qt6_DIR and verify toolchain
+        shell: pwsh
+        run: |
+          "Qt6_DIR=$env:QT_ROOT_DIR" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $gpp = (Get-Command g++).Source
+          g++ --version
+          if ($gpp -notmatch 'mingw1310') { throw "Wrong compiler in PATH: $gpp" }
+
+      # Fail on the first error instead of passing an incomplete package on to ISCC
+      - name: build-package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+          & ./scripts/build-win.ps1
+
+      - name: verify-package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $pkg = Resolve-Path package
+          # Dependencies must be located in the application directory itself
+          # (plugins in subdirectories load them from there as well)
+          $have = Get-ChildItem $pkg -Filter *.dll | ForEach-Object { $_.Name.ToLower() }
+          $missing = @()
+          foreach ($f in @("$pkg\gotify-tray++.exe") + (Get-ChildItem $pkg -Recurse -Filter *.dll).FullName) {
+            $deps = objdump -p $f | Select-String 'DLL Name: (.+)$' | ForEach-Object { $_.Matches[0].Groups[1].Value.Trim().ToLower() }
+            foreach ($d in $deps) {
+              if ($d -match '^(qt6|lib)' -and $have -notcontains $d) { $missing += "$($f.Substring($pkg.Path.Length)) -> $d" }
+            }
+          }
+          if ($missing) { $missing | ForEach-Object { Write-Host "MISSING: $_" }; throw "Package incomplete" }
+          Write-Host "All Qt/MinGW DLLs present."
+
+      - name: create-installer
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+          iscc scripts/gotify-tray++.iss
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: gotify-tray++-setup.exe
+          path: dist/gotify-tray++-setup.exe
+          if-no-files-found: error
